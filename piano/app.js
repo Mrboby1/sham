@@ -529,7 +529,7 @@
 
   function renderKeys() {
     const calKey = cal && cal.step === "keys" ? CAL_KEYS[cal.idx] : null;
-    const next = calKey !== null ? [calKey] : state.follow ? state.follow.next.slice(0, 3) : [];
+    const next = calKey !== null ? [calKey] : state.follow ? state.follow.next.slice(0, 4) : [];
     for (const [m, el] of keys) {
       const on = state.sounding.includes(m);
       const ni = next.indexOf(m);
@@ -583,7 +583,7 @@
     } else lock.textContent = !f.sure
       ? "Sounds like this. Keep playing to make sure."
       : f.lost
-        ? "Off the melody. Pick it up from the teal keys, or play the lowest key to clear."
+        ? "Off the melody. Pick it up from the teal keys. If you keep playing something else, it lets go."
         : "Locked on this piece. Play the lowest key (A0) to clear.";
     box.append(lock);
     if (f.next.length) {
@@ -642,7 +642,7 @@
     g.fillText("\u{1D122}", 14, bt + 4 * hs + 2);
 
     const colW = 30;
-    const next = state.follow ? state.follow.next.slice(0, 3) : [];
+    const next = state.follow ? state.follow.next.slice(0, 4) : [];
     const room = Math.max(1, Math.floor((right - left - (next.length ? next.length * colW + 14 : 0)) / colW));
     const events = state.history.slice(-room);
 

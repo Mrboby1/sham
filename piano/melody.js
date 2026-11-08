@@ -74,6 +74,7 @@
   const SURE_MID = 12;    // joining mid-piece: about 7 notes
   const SHOW = 7;         // a guess below this isn't shown
   const MARGIN = 3;       // the best piece must beat every other piece by this much to lock
+  const LET_GO = 7;       // notes in a row off the locked piece before it lets go
 
   // Best local alignment of played notes P against tune T shifted by t semitones (mod 12), ending
   // with the last played note matched. Returns {score, end, start} or null.
@@ -111,11 +112,20 @@
   // played: midi notes in the order they were played (repeats allowed).
   function follow(played, prev) {
     const P = pcCollapse(played).slice(-14);
-    if (P.length < 2) return null;
+    if (!P.length) return prev && prev.practice ? prev : null;
     // Locked: once a piece is recognised it stays the piece until the player clears it.
     // Wrong notes never switch to another tune; the follower just finds its place again.
     // A guess that isn't sure yet is re-checked on every note.
-    if (prev && prev.song && prev.sure) return stayOn(prev, P);
+    if (prev && prev.song && prev.sure) {
+      const r = stayOn(prev, P);
+      r.practice = prev.practice;
+      // Holds through mistakes, but after LET_GO notes in a row that don't fit, the player is clearly
+      // playing something else: let go and listen fresh (only the latest notes count).
+      // A piece chosen in Songs is never dropped.
+      if (!r.practice && r.lost >= LET_GO) return follow(played.slice(-LET_GO), null);
+      return r;
+    }
+    if (P.length < 2) return null;
     if (P.length < 4) return null;
 
     const perSong = [];
@@ -176,6 +186,7 @@
     if (!s) return null;
     const r = result(s, -1, 0, 0, 0, true);
     r.at = 0;
+    r.practice = true;
     return r;
   }
   // A melody the player recorded (midi notes). Returns the library entry.

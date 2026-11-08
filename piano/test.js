@@ -142,20 +142,26 @@ for (let trial = 0; trial < 300; trial++) {
 }
 console.log(`random 10-note melodies that matched a tune: ${fakes}/300`);
 
-// lock: after recognising Ode to Joy, wrong notes don't switch tunes, and it finds its place again
+// lock: after recognising Ode to Joy, a few wrong notes don't switch tunes and it finds its place
+// again; a different piece played for long enough makes it let go and recognise the new one.
 {
   const ode2 = M.LIBRARY[0].tune;
   let s4 = null;
   const p4 = [];
-  for (let i = 0; i < 6; i++) { p4.push(ode2[i]); s4 = M.follow(p4, s4); }
-  const was = s4 && s4.pos;
-  // play the opening of Twinkle (would match another tune if not locked)
-  for (const n of M.LIBRARY[1].tune.slice(0, 8)) { p4.push(n); s4 = M.follow(p4, s4); }
-  check(s4 && s4.title === "Ode to Joy", "lock held: " + (s4 && s4.title));
-  // jump to a later phrase of Ode to Joy: it should find its place
+  for (let i = 0; i < 7; i++) { p4.push(ode2[i]); s4 = M.follow(p4, s4); }
+  for (const n of [70, 49, 75]) { p4.push(n); s4 = M.follow(p4, s4); }
+  check(s4 && s4.title === "Ode to Joy" && s4.sure, "lock held through 3 wrong notes: " + (s4 && s4.title));
   for (const n of ode2.slice(20, 24)) { p4.push(n); s4 = M.follow(p4, s4); }
-  check(s4 && s4.title === "Ode to Joy" && s4.lost === 0 && s4.pos >= 20, `resync pos ${s4 && s4.pos} lost ${s4 && s4.lost} (was ${was})`);
-  console.log(`lock: still "${s4 && s4.title}" after wrong notes; found its place again at note ${s4 && s4.at}`);
+  check(s4 && s4.title === "Ode to Joy" && s4.lost === 0 && s4.pos >= 20, `resync pos ${s4 && s4.pos} lost ${s4 && s4.lost}`);
+  console.log(`lock: held through wrong notes, found its place again at note ${s4 && s4.at}`);
+  const fe = M.LIBRARY.find((x) => x.title === "Fur Elise").tune;
+  for (const n of fe.slice(0, 16)) { p4.push(n); s4 = M.follow(p4, s4); }
+  check(s4 && s4.title === "Fur Elise", "let go and switched: " + (s4 && s4.title));
+  console.log(`after playing Fur Elise for 16 notes it shows: ${s4 && s4.title} (sure: ${s4 && s4.sure})`);
+  let pr = M.start("Ode to Joy");
+  const p5 = [];
+  for (const n of fe.slice(0, 16)) { p5.push(n); pr = M.follow(p5, pr); }
+  check(pr && pr.title === "Ode to Joy", "practice never drops: " + (pr && pr.title));
 }
 
 // every song recognisable from its opening
