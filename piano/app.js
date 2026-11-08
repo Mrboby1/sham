@@ -61,7 +61,7 @@
   function buildLibrary() {
     SONGS = [
       ...mySongs.map((x) => ({ title: x.title, composer: "", notes: x.notes, mine: true })),
-      ...fullPieces.map((x) => ({ title: x.title, composer: x.composer, notes: x.notes })),
+      ...fullPieces.map((x) => ({ title: x.title, composer: x.composer, notes: x.notes, beats: x.beats })),
       ...LIBRARY.filter((x) => !x.mine && !x.title.includes(" - ") && !fullPieces.some((f) => f.title === x.title))
         .map((x) => ({ title: x.title, composer: "", notes: x.full })),
     ];
@@ -233,6 +233,7 @@
     p.pos += step + 1;
     state.follow = practiceView();
     render();
+    animateRoll();
     if (p.pos < n.length) scrollToKey(n[p.pos]);
   }
   function practiceView() {
@@ -443,7 +444,14 @@
     if (!song) return;
     clearAll("");
     if (!song.fingers) song.fingers = window.Fingering.fingerRH(song.notes);
+    if (!song.durs) {
+      // onsets in beats (one beat per note when the song has no rhythm) and how long each note lasts
+      const b = song.beats && song.beats.length === song.notes.length ? song.beats : song.notes.map((_, i) => i);
+      song.onsets = b;
+      song.durs = b.map((t, i) => (i + 1 < b.length ? Math.max(0.25, Math.min(4, b[i + 1] - t)) : 1));
+    }
     state.practice = { song, pos: 0 };
+    roll.beat = song.onsets[0] - 2;
     state.follow = practiceView();
     closeSongs();
     render();
@@ -656,6 +664,85 @@
     renderHand();
   }
 
+  // ---------------------------------------------------------------- falling notes
+  // A waterfall above the keyboard: every note is a bar over its own key, as long as it is held,
+  // in its finger's colour with the finger number. The bottom edge is "now". It waits for the player:
+  // when the right note is played, everything slides down to the next one.
+  const rollCanvas = $("roll");
+  const roll = { beat: 0, raf: 0 };
+  function rollTarget() {
+    const p = state.practice;
+    if (!p) return 0;
+    const o = p.song.onsets;
+    return p.pos < o.length ? o[p.pos] : o[o.length - 1] + p.song.durs[o.length - 1];
+  }
+  function animateRoll() {
+    cancelAnimationFrame(roll.raf);
+    const tick = () => {
+      const target = rollTarget();
+      const d = target - roll.beat;
+      roll.beat = Math.abs(d) < 0.002 || reduceMotion() ? target : roll.beat + d * 0.22;
+      drawRoll();
+      if (roll.beat !== target) roll.raf = requestAnimationFrame(tick);
+    };
+    roll.raf = requestAnimationFrame(tick);
+  }
+  function drawRoll() {
+    const p = state.practice;
+    const dpr = window.devicePixelRatio || 1;
+    const Wc = rollCanvas.clientWidth, Hc = rollCanvas.clientHeight;
+    if (!p || !Wc || !Hc) return;
+    if (rollCanvas.width !== Math.round(Wc * dpr) || rollCanvas.height !== Math.round(Hc * dpr)) {
+      rollCanvas.width = Math.round(Wc * dpr); rollCanvas.height = Math.round(Hc * dpr);
+    }
+    const g = rollCanvas.getContext("2d");
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    g.clearRect(0, 0, Wc, Hc);
+    const css = getComputedStyle(document.documentElement);
+    const lineC = css.getPropertyValue("--line").trim(), muted = css.getPropertyValue("--muted").trim();
+    const dx = kbd.getBoundingClientRect().left - rollCanvas.getBoundingClientRect().left;
+    // faint guides at every C, so a bar can be traced down to its key
+    g.strokeStyle = lineC; g.lineWidth = 1;
+    for (const [m, el] of keys) {
+      if (m % 12 !== 0) continue;
+      const x = Math.round(dx + el.offsetLeft) + 0.5;
+      g.beginPath(); g.moveTo(x, 0); g.lineTo(x, Hc); g.stroke();
+    }
+    const { notes, onsets, durs, fingers } = p.song;
+    // pixels per beat: the piece's typical note gets a bar about 24px tall, and at least ~4 notes show
+    if (!p.song.medDur) { const d = durs.slice().sort((x, y) => x - y); p.song.medDur = d[Math.floor(d.length / 2)] || 1; }
+    const ppb = Math.max(Hc / 5, Math.min(Hc / 1.2, 24 / p.song.medDur));
+    const font = getComputedStyle(document.body).fontFamily;
+    for (let i = Math.max(0, p.pos - 4); i < notes.length; i++) {
+      const bottom = Hc - (onsets[i] - roll.beat) * ppb;
+      if (bottom < 0) break;
+      const top = bottom - durs[i] * ppb + 2;
+      if (top > Hc) continue;
+      const el = keys.get(notes[i]);
+      if (!el) continue;
+      const x = dx + el.offsetLeft + 1, w = el.offsetWidth - 2;
+      const color = FINGER_COLORS[fingers[i]] || muted;
+      g.globalAlpha = i < p.pos ? 0.25 : 1;
+      g.fillStyle = color;
+      const r = Math.min(5, w / 2, (bottom - top) / 2);
+      g.beginPath();
+      g.roundRect ? g.roundRect(x, top, w, bottom - top - 1, r) : g.rect(x, top, w, bottom - top - 1);
+      g.fill();
+      if (i === p.pos) { g.strokeStyle = "#000"; g.lineWidth = 3; g.stroke(); g.strokeStyle = "#fff"; g.lineWidth = 1; g.stroke(); }
+      if (bottom - top > 14 && w >= 9) {
+        g.fillStyle = "#fff";
+        g.font = `700 ${Math.max(9, Math.min(13, w * 0.75))}px ${font}`;
+        g.textAlign = "center";
+        g.fillText(String(fingers[i]), x + w / 2, bottom - 6);
+        g.textAlign = "start";
+      }
+      g.globalAlpha = 1;
+    }
+    // the "now" line where the bars meet the keys
+    g.fillStyle = muted;
+    g.fillRect(0, Hc - 2, Wc, 2);
+  }
+
   // ---------------------------------------------------------------- the hand picture
   const FINGER_NAMES = ["", "thumb", "index finger", "middle finger", "ring finger", "little finger"];
   const FINGER_COLORS = ["", "#e93d82", "#f76b15", "#29a383", "#3e63dd", "#8e4ec6"]; // pink orange green blue violet
@@ -704,6 +791,12 @@
     const f = state.follow;
     const show = !!(state.practice && f && f.fingers && f.fingers.length);
     $("handbox").hidden = !show;
+    const playing = !!state.practice;
+    if (document.body.classList.contains("playing") !== playing) {
+      document.body.classList.toggle("playing", playing);
+      $("rollwrap").hidden = !playing;
+      requestAnimationFrame(() => { buildKeyboard(); renderKeys(); drawRoll(); drawStaff(); });
+    }
     document.querySelector(".now").classList.toggle("practising", show);
     if (!show) return;
     const finger = f.fingers[0];
@@ -933,7 +1026,7 @@
   let resizeT = 0;
   window.addEventListener("resize", () => {
     clearTimeout(resizeT);
-    resizeT = setTimeout(() => { buildKeyboard(); render(); }, 150);
+    resizeT = setTimeout(() => { buildKeyboard(); render(); drawRoll(); }, 150);
   });
   if (window.matchMedia) {
     window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", drawStaff);

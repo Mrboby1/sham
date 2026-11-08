@@ -15,6 +15,10 @@ Live app: https://mrboby1.github.io/sham/piano/
 5. **Left hand in play-along**: the left-hand part in red, with its own fingering, so both hands
    can be practised.
 6. **Check the fingering on real playing**: Sham reports anything that feels awkward and I fix it.
+7. **Falling notes** ("piano keys" view): bars drop onto the keys showing which key comes next and
+   how long to hold it, coloured and numbered by finger. *(done 2026-11-08, first version)*
+8. **Projector "AR" mode**: project the app onto the real piano so the keys to play light up on the
+   physical keyboard. This needs a projector and a full-screen mode that can be lined up with the real keys.
 
 ## Done
 

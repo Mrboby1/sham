@@ -291,10 +291,25 @@ input:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
   .kbd, .kbd.tiny { height: auto; flex: 1; }
   .foot { display: none; }
 }
+@media (orientation: landscape) and (min-width: 560px) {
+  body.playing .middle { display: block; }
+  body.playing .now, body.playing .songhead { display: none; }
+  body.playing .song { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 4px 12px; min-height: 0; }
+  body.playing .song .title { font-size: 16px; }
+  body.playing .rollwrap { flex: 1 1 auto; height: auto; min-height: 70px; }
+  body.playing .kbd-scroll { flex: 0 0 auto; height: 34vh; min-height: 90px; }
+  body.playing .now .big { font-size: 34px; }
+}
 @media (orientation: landscape) and (min-width: 560px) and (min-height: 600px) {
   #staff { height: 170px; }
   .big { font-size: 60px; }
 }
+/* Play-along: the falling-notes waterfall takes the staff's place, right above the keyboard. */
+.rollwrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+#roll { display: block; width: 100%; height: 100%; background: color-mix(in srgb, var(--panel) 70%, var(--bg)); border-radius: 10px 10px 0 0; }
+body.playing .staff { display: none; }
+body.playing .rollwrap { height: 220px; }
+body.playing .kbd-scroll { margin-top: 0; }
 /* Fingering on the keyboard: keys take the colour of the finger that plays them; the key to play now
    gets a black frame. The hand layer floats above the keys and never takes taps. */
 .kbd.fingered .key.next { box-shadow: none; background: color-mix(in srgb, var(--fc) 38%, var(--ivory)); }
@@ -408,6 +423,7 @@ input:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
   </section>
   </div>
 
+  <div class="rollwrap" id="rollwrap" hidden><canvas id="roll" aria-label="Falling notes: each bar is a note over its key, as long as it is held, numbered by finger"></canvas></div>
   <div class="kbd-scroll" id="kbdScroll"><div class="kbd" id="kbd"></div></div>
   <div class="foot wrap">All 88 keys, A0 to C8.<span class="rotate"> Turn your phone sideways for bigger keys.</span></div>
 </div>
