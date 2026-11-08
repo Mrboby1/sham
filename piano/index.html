@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Piano Notes</title>
+<meta name="description" content="Shows the piano keys you play, the notes on a staff, and what comes next in tunes it knows.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Piano Notes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#121519">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+/* Layout: one screen, top to bottom - controls, the note you're playing, a grand staff, the tune it
+   recognised, then the full 88-key keyboard you swipe sideways. Dark lacquer by default (it sits on a
+   music stand), with a light version. Brass = sounding now, teal = play next. */
+:root {
+  --bg: #121519;
+  --panel: #1a1e24;
+  --line: #2a3039;
+  --ink: #eceae4;
+  --muted: #8f97a3;
+  --brass: #e2b04e;
+  --brass-ink: #1d1606;
+  --teal: #4fcac0;
+  --danger: #ff8a7a;
+  --ivory: #f7f4ec;
+  --ivory-edge: #c9c5ba;
+  --ebony: #1a1c20;
+  --ebony-top: #3a3e46;
+  --font-display: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --font-ui: "Atkinson Hyperlegible", -apple-system, "Segoe UI", system-ui, sans-serif;
+  --wkey: 34px;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #edeff2; --panel: #ffffff; --line: #d6dae1; --ink: #16191e; --muted: #5d6573;
+    --brass: #b07d12; --brass-ink: #ffffff; --teal: #0d8a81; --danger: #b3261e;
+    --ivory-edge: #b9b5aa; color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #edeff2; --panel: #ffffff; --line: #d6dae1; --ink: #16191e; --muted: #5d6573;
+  --brass: #b07d12; --brass-ink: #ffffff; --teal: #0d8a81; --danger: #b3261e;
+  --ivory-edge: #b9b5aa; color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.4 var(--font-ui);
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+.app {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: max(10px, env(safe-area-inset-top, 0px));
+  padding-bottom: max(12px, env(safe-area-inset-bottom, 0px));
+}
+.wrap {
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+h1 { margin: 0; font: 700 22px/1.1 var(--font-display); letter-spacing: 0.01em; }
+.status { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.status i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); display: inline-block; }
+.status.on i { background: var(--brass); box-shadow: 0 0 0 4px color-mix(in srgb, var(--brass) 25%, transparent); }
+
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+button, .seg label {
+  font: 700 14px/1 var(--font-ui);
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  min-height: 40px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+button:focus-visible, .seg input:focus-visible + label { outline: 2px solid var(--teal); outline-offset: 2px; }
+#listen { background: var(--brass); color: var(--brass-ink); border-color: transparent; padding-inline: 16px; }
+#listen.on { background: transparent; color: var(--brass); border-color: var(--brass); }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg label { border: 0; border-radius: 0; background: transparent; color: var(--muted); }
+.seg input:checked + label { background: var(--panel); color: var(--ink); box-shadow: inset 0 -2px 0 var(--teal); }
+.ghost { background: transparent; color: var(--muted); }
+
+.msg { margin: 0; color: var(--danger); font-size: 14px; }
+
+.now { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; align-items: center; min-height: 86px; }
+.big { font: 700 56px/0.95 var(--font-display); min-width: 2.4ch; font-variant-numeric: lining-nums; }
+.big.idle { color: var(--muted); font-weight: 500; }
+.big sub { font-size: 0.42em; vertical-align: baseline; margin-left: 2px; font-weight: 500; }
+.detail { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.alt { font-size: 17px; }
+.freq { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.meter { position: relative; height: 8px; border-radius: 4px; background: var(--line); max-width: 220px; }
+.meter::after { content: ""; position: absolute; left: 50%; top: -3px; bottom: -3px; width: 2px; margin-left: -1px; background: var(--muted); }
+.meter b { position: absolute; top: 0; width: 10px; height: 8px; margin-left: -5px; border-radius: 4px; background: var(--brass); left: 50%; transition: left 80ms linear; }
+.meter.off b { display: none; }
+
+.staff { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+#staff { display: block; width: 100%; height: 190px; }
+
+.song { display: flex; flex-direction: column; gap: 8px; min-height: 64px; }
+.song h2 { margin: 0; font: 500 13px/1.2 var(--font-ui); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.song .title { font: 700 20px/1.2 var(--font-display); }
+.song .title small { font: 400 13px var(--font-ui); color: var(--muted); margin-left: 6px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 14px; font-weight: 700; padding: 5px 10px; border-radius: 999px; border: 1.5px solid var(--teal); color: var(--teal); font-variant-numeric: tabular-nums; }
+.chip:first-child { background: var(--teal); color: var(--bg); }
+.hint { color: var(--muted); font-size: 14px; margin: 0; }
+
+.kbd-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 6px;
+  margin-top: auto;
+  scrollbar-width: thin;
+}
+.kbd { position: relative; height: 190px; margin-inline: max(16px, env(safe-area-inset-left, 0px)); }
+.key { position: absolute; top: 0; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; user-select: none; -webkit-user-select: none; touch-action: pan-x; }
+.white {
+  width: var(--wkey); height: 100%;
+  background: linear-gradient(var(--ivory) 80%, #ece8de);
+  border: 1px solid var(--ivory-edge);
+  border-top: 0;
+  border-radius: 0 0 6px 6px;
+  color: #6b6658;
+  font-size: 11px;
+  padding-bottom: 8px;
+  z-index: 1;
+}
+.white .nm { font-weight: 700; }
+.white.c .nm { color: #22201b; font-size: 12px; }
+.black {
+  width: calc(var(--wkey) * 0.62); height: 62%;
+  background: linear-gradient(var(--ebony-top), var(--ebony) 12%);
+  border: 1px solid #000;
+  border-top: 0;
+  border-radius: 0 0 4px 4px;
+  color: #c8c4b8;
+  font-size: 9px;
+  padding-bottom: 6px;
+  z-index: 2;
+}
+.black .nm { visibility: hidden; }
+.key.on { background: var(--brass); border-color: color-mix(in srgb, var(--brass) 70%, #000); color: var(--brass-ink); }
+.key.on .nm { visibility: visible; color: var(--brass-ink); }
+.key.next { box-shadow: inset 0 0 0 3px var(--teal); }
+.key.next .nm { visibility: visible; }
+.key .ord { display: none; width: 20px; height: 20px; border-radius: 50%; background: var(--teal); color: #071b19; font-size: 12px; font-weight: 700; align-items: center; justify-content: center; margin-bottom: 6px; }
+.key.next .ord { display: flex; }
+.black .ord { width: 16px; height: 16px; font-size: 10px; }
+.foot { font-size: 12px; color: var(--muted); }
+@media (min-width: 700px) { :root { --wkey: 40px; } .big { font-size: 68px; } }
+@media (prefers-reduced-motion: reduce) { .meter b { transition: none; } }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="wrap">
+    <h1>Piano Notes</h1>
+    <div class="status" id="status"><i></i><span>Mic off</span></div>
+  </header>
+
+  <div class="controls wrap">
+    <button id="listen" type="button">Listen</button>
+    <div class="seg" role="radiogroup" aria-label="What to listen for">
+      <input type="radio" name="mode" id="mode-single" value="single" checked><label for="mode-single">Notes</label>
+      <input type="radio" name="mode" id="mode-chords" value="chords"><label for="mode-chords">Chords</label>
+    </div>
+    <div class="seg" role="radiogroup" aria-label="Note names">
+      <input type="radio" name="names" id="names-letter" value="letter" checked><label for="names-letter">C D E</label>
+      <input type="radio" name="names" id="names-solfege" value="solfege"><label for="names-solfege">Do Re Mi</label>
+    </div>
+    <button id="demo" type="button" class="ghost">Demo</button>
+    <button id="clear" type="button" class="ghost">Clear</button>
+  </div>
+  <p class="msg wrap" id="msg" hidden></p>
+
+  <section class="now wrap" aria-live="polite">
+    <div class="big idle" id="big">&ndash;</div>
+    <div class="detail">
+      <div class="alt" id="alt">Tap <b>Listen</b> and play, or tap the keys.</div>
+      <div class="freq" id="freq">Middle C is C4 (Do).</div>
+      <div class="meter off" id="meter" title="Tuning: centre = in tune"><b id="needle"></b></div>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="staff"><canvas id="staff" aria-label="Notes played, on a grand staff"></canvas></div></div>
+
+  <section class="song wrap" id="song">
+    <h2>Tune</h2>
+    <p class="hint" id="songHint">Play four notes of a tune it knows and it shows what comes next.</p>
+  </section>
+
+  <div class="kbd-scroll" id="kbdScroll"><div class="kbd" id="kbd"></div></div>
+  <div class="foot wrap">88 keys, A0 to C8. Swipe the keyboard sideways.</div>
+</div>
+
+<script src="detect.js"></script>
+<script src="melody.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
