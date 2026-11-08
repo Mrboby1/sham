@@ -59,81 +59,99 @@
     return { title, tune, steps: steps(tune) };
   });
 
-  const MIN_MATCH = 4; // matching steps needed (= 5 different notes in a row)
+  // Matching compares pitch classes (C, C#, D ... ignoring the octave) in any key, and forgives a
+  // missed note, an extra note or a wrong note. Through a phone mic notes are often heard an octave
+  // off, or a fast one is missed; an exact step-by-step comparison broke on every such slip.
+  const pcEq = (a, b) => (((a - b) % 12) + 12) % 12 === 0;
+  function pcCollapse(seq) {
+    const out = [];
+    for (const n of seq) if (!out.length || !pcEq(out[out.length - 1], n)) out.push(n);
+    return out;
+  }
+
+  const MATCH = 2, WRONG = -3, GAP = -1.5;
+  const SURE_START = 9;   // from a piece's first note: about 5 notes
+  const SURE_MID = 12;    // joining mid-piece: about 7 notes
+  const SHOW = 7;         // a guess below this isn't shown
+  const MARGIN = 3;       // the best piece must beat every other piece by this much to lock
+
+  // Best local alignment of played notes P against tune T shifted by t semitones (mod 12), ending
+  // with the last played note matched. Returns {score, end, start} or null.
+  function align(P, T, t) {
+    const n = P.length, m = T.length;
+    let pS = new Float32Array(m + 1), pSt = new Int16Array(m + 1).fill(-1);
+    let cS = new Float32Array(m + 1), cSt = new Int16Array(m + 1).fill(-1);
+    let best = null;
+    for (let i = 1; i <= n; i++) {
+      cS[0] = 0; cSt[0] = -1;
+      for (let j = 1; j <= m; j++) {
+        const hit = pcEq(P[i - 1], T[j - 1] + t);
+        let s = 0, st = -1;
+        if (hit) {
+          if (pS[j - 1] > 0) { s = pS[j - 1] + MATCH; st = pSt[j - 1]; } else { s = MATCH; st = j - 1; }
+        } else if (pS[j - 1] + WRONG > 0) { s = pS[j - 1] + WRONG; st = pSt[j - 1]; }
+        if (i === n && hit && (!best || s > best.score)) best = { score: s, end: j - 1, start: st };
+        if (pS[j] + GAP > s) { s = pS[j] + GAP; st = pSt[j]; }         // an extra note was heard
+        if (cS[j - 1] + GAP > s) { s = cS[j - 1] + GAP; st = cSt[j - 1]; } // a note of the tune was missed
+        cS[j] = s; cSt[j] = st;
+      }
+      [pS, cS] = [cS, pS];
+      [pSt, cSt] = [cSt, pSt];
+    }
+    return best;
+  }
+
+  // Semitone offset that puts the tune's note at `end` in the octave the player is using.
+  function octaveOffset(P, T, end, t) {
+    const recent = P.slice(-4), ref = T.slice(Math.max(0, end - 3), end + 1);
+    const mean = (a) => a.reduce((x, y) => x + y, 0) / a.length;
+    return t + 12 * Math.round((mean(recent) - mean(ref) - t) / 12);
+  }
 
   // played: midi notes in the order they were played (repeats allowed).
-  // Returns {title, at, of, next: [midi...], confidence} or null.
   function follow(played, prev) {
-    const P = collapse(played).slice(-12);
+    const P = pcCollapse(played).slice(-14);
     if (P.length < 2) return null;
-    const last = P[P.length - 1];
-
     // Locked: once a piece is recognised it stays the piece until the player clears it.
     // Wrong notes never switch to another tune; the follower just finds its place again.
     // A guess that isn't sure yet is re-checked on every note.
     if (prev && prev.song && prev.sure) return stayOn(prev, P);
-    if (P.length < MIN_MATCH + 1) return null;
+    if (P.length < 4) return null;
 
-    const ps = steps(P);
     const perSong = [];
     for (const s of LIBRARY) {
       let best = null;
-      for (let end = 0; end < s.steps.length; end++) {
-        if (s.steps[end] !== ps[ps.length - 1]) continue; // the newest step must match exactly
-        let score = 0, misses = 0, k = 0;
-        for (; k < ps.length && end - k >= 0; k++) {
-          if (ps[ps.length - 1 - k] === s.steps[end - k]) score++;
-          else if (++misses > 1) break;
-          else score -= 0.5;
-        }
-        const fromStart = end - k < 0 && misses === 0; // matched right back to the first note of the piece
-        if (fromStart) score += 1;
-        if (score >= MIN_MATCH && (!best || score > best.score)) {
-          const pos = end + 1; // index in tune of the note just played
-          best = { s, pos, offset: last - s.tune[pos], score, fromStart };
-        }
+      for (let t = 0; t < 12; t++) {
+        const a = align(P, s.tune, t);
+        if (!a) continue;
+        const score = a.score + (a.start === 0 ? 1 : 0);
+        if (!best || score > best.score) best = { s, t, score, end: a.end, fromStart: a.start === 0 };
       }
-      if (best) perSong.push(best);
+      if (best && best.score >= SHOW) perSong.push(best);
     }
     if (!perSong.length) return null;
     perSong.sort((a, b) => b.score - a.score);
     const [a, b] = perSong;
-    // Sure = clearly better than any other piece. Only then does it lock.
-    // From the start of a piece, 5 notes are enough; joining mid-piece takes 7.
-    const sure = (!b || a.score >= b.score + 1) && (a.fromStart || a.score >= 6);
-    return result(a.s, a.pos, a.offset, a.score, 0, sure);
+    const sure = (!b || a.score >= b.score + MARGIN) && (a.fromStart ? a.score >= SURE_START : a.score >= SURE_MID);
+    return result(a.s, a.end, octaveOffset(P, a.s.tune, a.end, a.t), a.score, 0, sure);
   }
 
   function stayOn(prev, P) {
     const s = prev.song, off = prev.offset, len = s.tune.length;
     const last = P[P.length - 1];
-    if (prev.pos + 1 < len && last === s.tune[prev.pos + 1] + off) return result(s, prev.pos + 1, off, prev.score + 1, 0);
-    if (last === s.tune[prev.pos] + off) return result(s, prev.pos, off, prev.score, prev.lost);
-    if (prev.pos + 1 >= len && last === s.tune[0] + off) return result(s, 0, off, prev.score, 0); // starting over
+    if (prev.pos + 1 < len && pcEq(last, s.tune[prev.pos + 1] + off)) return result(s, prev.pos + 1, off, prev.score + MATCH, 0);
+    if (pcEq(last, s.tune[prev.pos] + off)) return result(s, prev.pos, off, prev.score, prev.lost);
+    if (prev.pos + 1 >= len && pcEq(last, s.tune[0] + off)) return result(s, 0, off, prev.score, 0); // starting over
 
-    // Off the expected path. Look for the last 3 notes (then 2) somewhere in this piece, in the same
-    // key, and take the place closest ahead of where we were.
-    for (const k of [3, 2]) {
-      if (P.length < k) continue;
-      const R = P.slice(-k);
-      let best = -1, bestDist = Infinity;
-      for (let i = k - 1; i < len; i++) {
-        let ok = true;
-        for (let j = 0; j < k && ok; j++) ok = s.tune[i - k + 1 + j] + off === R[j];
-        if (!ok) continue;
-        const dist = (i - prev.pos + len) % len;
-        if (dist < bestDist) { bestDist = dist; best = i; }
-      }
-      if (best >= 0) return result(s, best, off, prev.score, 0);
-    }
-    // Same shape in another key (the player moved hands): match the last 4 steps.
-    if (P.length >= 5) {
-      const ps = steps(P.slice(-5));
-      for (let i = 4; i < len; i++) {
-        let ok = true;
-        for (let j = 0; j < 4 && ok; j++) ok = s.steps[i - 4 + j] === ps[j];
-        if (ok) return result(s, i, last - s.tune[i], prev.score, 0);
-      }
+    // Off the expected path: find the last few notes elsewhere in this piece (same key first, then
+    // any key in case the player moved hands). Take the best place, nearest ahead on a tie.
+    const R = P.slice(-6);
+    const tries = [((off % 12) + 12) % 12, ...Array.from({ length: 12 }, (_, t) => t)];
+    for (let i = 0; i < tries.length; i++) {
+      const t = tries[i];
+      const a = align(R, s.tune, t);
+      const need = i === 0 ? 5 : 8; // ~3 notes in the same key, ~5 in a new key
+      if (a && a.score >= need) return result(s, a.end, i === 0 ? off : octaveOffset(P, s.tune, a.end, t), prev.score, 0);
     }
     return result(s, prev.pos, off, prev.score, prev.lost + 1); // stay put until the player finds it
   }

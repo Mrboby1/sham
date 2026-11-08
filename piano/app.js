@@ -438,9 +438,11 @@
     box.append(title);
     const lock = document.createElement("div");
     lock.className = "chips lockline";
-    lock.textContent = f.lost
-      ? "Off the melody. Pick it up from the teal keys, or play the lowest key to clear."
-      : "Locked on this piece. Play the lowest key (A0) to clear.";
+    lock.textContent = !f.sure
+      ? "Sounds like this. Keep playing to make sure."
+      : f.lost
+        ? "Off the melody. Pick it up from the teal keys, or play the lowest key to clear."
+        : "Locked on this piece. Play the lowest key (A0) to clear.";
     box.append(lock);
     if (f.next.length) {
       const chips = document.createElement("div");

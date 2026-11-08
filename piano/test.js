@@ -107,7 +107,26 @@ st = null;
 const rnd = [60, 61, 70, 52, 66, 59, 73];
 const pr = [];
 for (const n of rnd) { pr.push(n); st = M.follow(pr, st); }
-check(!st, "random matched " + (st && st.title));
+check(!(st && st.sure), "random locked " + (st && st.title));
+
+// mic slips: a missed note, an octave error, an extra note - each piece should still lock
+{
+  const slips = {
+    "missed note": (t) => t.filter((_, i) => i !== 2),
+    "octave error": (t) => t.map((n, i) => (i === 3 ? n - 12 : n)),
+    "extra note": (t) => [...t.slice(0, 3), t[2] + 5, ...t.slice(3)],
+  };
+  for (const [kind, f] of Object.entries(slips)) {
+    let okN = 0;
+    for (const s of M.LIBRARY) {
+      const seq = f(s.tune.slice(0, 9));
+      let st = null; const pl = [];
+      for (const n of seq) { pl.push(n); st = M.follow(pl, st); }
+      if (st && st.sure && st.title === s.title) okN++;
+    }
+    console.log(`with a ${kind}: ${okN}/${M.LIBRARY.length} pieces still locked correctly within 9 notes`);
+  }
+}
 
 // random wandering melodies: how often does a made-up tune "match" something?
 let fakes = 0;
