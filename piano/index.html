@@ -127,6 +127,21 @@ button:focus-visible, .seg input:focus-visible + label { outline: 2px solid var(
 .chip:first-child { background: var(--teal); color: var(--bg); }
 .hint { color: var(--muted); font-size: 14px; margin: 0; }
 .lockline { font-size: 12px; color: var(--muted); }
+.tuned { font-size: 11px; font-weight: 700; letter-spacing: 0.04em; color: var(--teal); border: 1px solid var(--teal); border-radius: 999px; padding: 2px 8px; white-space: nowrap; }
+.cal {
+  position: fixed; z-index: 20;
+  top: calc(env(safe-area-inset-top, 0px) + 12px);
+  left: max(16px, env(safe-area-inset-left, 0px)); right: max(16px, env(safe-area-inset-right, 0px));
+  max-width: 560px; margin-inline: auto;
+  background: var(--panel); border: 1.5px solid var(--teal); border-radius: 14px;
+  padding: 14px 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  display: flex; flex-direction: column; gap: 8px;
+}
+.cal h2 { margin: 0; font: 700 18px/1.2 var(--font-display); }
+.cal p { margin: 0; }
+.calprog { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+.calbtns { display: flex; flex-wrap: wrap; gap: 8px; }
+#calSave { background: var(--teal); color: #071b19; border-color: transparent; }
 .key.clearkey { box-shadow: inset 0 -5px 0 var(--danger); }
 
 .kbd-scroll {
@@ -225,6 +240,7 @@ button:focus-visible, .seg input:focus-visible + label { outline: 2px solid var(
   <header>
     <h1>Piano Notes</h1>
     <div class="status" id="status"><i></i><span>Mic off</span></div>
+    <div class="tuned" id="tuned" hidden></div>
   </header>
 
   <div class="controls">
@@ -239,9 +255,22 @@ button:focus-visible, .seg input:focus-visible + label { outline: 2px solid var(
     </div>
     <button id="demo" type="button" class="ghost">Demo</button>
     <button id="clear" type="button" class="ghost">Clear</button>
+    <button id="tune" type="button" class="ghost">Tune to my piano</button>
   </div>
   </div>
   <p class="msg wrap" id="msg" hidden></p>
+
+  <div class="cal" id="cal" role="dialog" aria-labelledby="calTitle" hidden>
+    <h2 id="calTitle">Tune to my piano</h2>
+    <p id="calText"></p>
+    <p class="calprog" id="calProg"></p>
+    <div class="calbtns">
+      <button id="calSave" type="button" hidden>Save</button>
+      <button id="calSkip" type="button" class="ghost" hidden>Skip this key</button>
+      <button id="calCancel" type="button" class="ghost">Cancel</button>
+      <button id="calReset" type="button" class="ghost">Forget tuning</button>
+    </div>
+  </div>
 
   <div class="middle wrap">
   <section class="now" aria-live="polite">

@@ -15,6 +15,27 @@
     set(k, v) { try { localStorage.setItem("pn." + k, v); } catch (e) { /* private mode */ } },
   };
 
+  // ---------------------------------------------------------------- this piano's tuning profile
+  // {gate, points: [[midi, cents], ...]} measured by "Tune to my piano". Pianos drift from standard
+  // pitch, and differently in bass and treble, so each measured C gets its own offset and the keys in
+  // between are interpolated.
+  let profile = null;
+  try { profile = JSON.parse(store.get("profile", "null")); } catch (e) { profile = null; }
+  function offsetAt(m) {
+    if (!profile || !profile.points.length) return 0;
+    const pts = profile.points;
+    if (m <= pts[0][0]) return pts[0][1];
+    if (m >= pts[pts.length - 1][0]) return pts[pts.length - 1][1];
+    for (let i = 1; i < pts.length; i++) {
+      if (m <= pts[i][0]) {
+        const [m0, c0] = pts[i - 1], [m1, c1] = pts[i];
+        return c0 + ((c1 - c0) * (m - m0)) / (m1 - m0);
+      }
+    }
+    return 0;
+  }
+  const avgOffset = () => (profile && profile.points.length ? profile.points.reduce((s, p) => s + p[1], 0) / profile.points.length : 0);
+
   const state = {
     mode: store.get("mode", "single"),
     names: store.get("names", "letter"),
@@ -181,6 +202,7 @@
     render();
   }
   function stopListening() {
+    if (cal) endCalibration(false);
     state.listening = false;
     cancelAnimationFrame(raf);
     if (stream) stream.getTracks().forEach((t) => t.stop());
@@ -202,7 +224,8 @@
     const r = rms(timeBuf.subarray(timeBuf.length - 1024));
     // background level: drops fast, rises slowly
     det.noise = r < det.noise ? r : det.noise + (r - det.noise) * 0.003;
-    const gate = Math.max(0.004, det.noise * 3);
+    const gate = Math.max(profile ? profile.gate : 0.004, det.noise * 3);
+    if (cal) { calibrate(r, now, sr); return; }
     const strike = r > gate * 2 && r > det.env * 1.6; // a fresh hammer strike, even on the same key
     det.env = Math.max(r, det.env * 0.9);
 
@@ -219,10 +242,12 @@
 
     if (state.mode === "single") {
       const p = yinPitch(timeBuf.subarray(timeBuf.length - 4096), sr);
-      if (!p || p.clarity < 0.8) return;
-      const fm = freqToMidi(p.freq);
+      if (!p || p.clarity < (profile ? 0.85 : 0.8)) return;
+      const raw = freqToMidi(p.freq);
+      const fm = raw - offsetAt(raw) / 100; // in this piano's own tuning
       const m = Math.round(fm);
       if (m < A0 || m > C8) return;
+      if (profile && Math.abs(fm - m) > 0.35) return; // between two of this piano's keys: not a key press
       det.freq = p.freq;
       det.cents = (fm - m) * 100;
       if (m === det.cand) det.candN++;
@@ -239,7 +264,8 @@
       analyser.getFloatFrequencyData(freqBuf);
       const mag = new Float32Array(freqBuf.length);
       for (let i = 0; i < mag.length; i++) mag[i] = Math.pow(10, freqBuf[i] / 20);
-      const notes = chordNotes(mag, sr, analyser.fftSize).filter((n) => n.strength >= 0.3).map((n) => n.midi).sort((a, b) => a - b);
+      // a piano tuned sharp or flat shifts every harmonic: tell the detector by scaling the bin width
+      const notes = chordNotes(mag, sr * Math.pow(2, -avgOffset() / 1200), analyser.fftSize).filter((n) => n.strength >= 0.3).map((n) => n.midi).sort((a, b) => a - b);
       if (!notes.length) return;
       det.freq = 0;
       const key = notes.join(",");
@@ -255,6 +281,82 @@
         render();
       }
     }
+  }
+
+  // ---------------------------------------------------------------- "Tune to my piano"
+  const CAL_KEYS = [36, 48, 60, 72, 84, 96]; // C2 .. C7, one per octave
+  let cal = null; // {step: "quiet"|"keys"|"done", t0, noiseMax, idx, samples, points}
+
+  async function startCalibration() {
+    if (!state.listening) await startListening();
+    if (!state.listening) return; // mic refused; startListening showed why
+    cal = { step: "quiet", t0: performance.now(), noiseMax: 0, idx: 0, samples: [], points: [] };
+    $("cal").hidden = false;
+    renderCal();
+  }
+  function endCalibration(save) {
+    if (save && cal) {
+      const gate = Math.max(0.003, cal.noiseMax * 2.5);
+      profile = { gate, points: cal.points.slice().sort((a, b) => a[0] - b[0]), when: new Date().toISOString().slice(0, 10) };
+      store.set("profile", JSON.stringify(profile));
+    }
+    cal = null;
+    $("cal").hidden = true;
+    render();
+  }
+  function calibrate(r, now, sr) {
+    if (cal.step === "quiet") {
+      cal.noiseMax = Math.max(cal.noiseMax, r);
+      if (now - cal.t0 > 2000) { cal.step = "keys"; renderCal(); }
+      return;
+    }
+    if (cal.step !== "keys") return;
+    const target = CAL_KEYS[cal.idx];
+    const gate = Math.max(0.003, cal.noiseMax * 2.5);
+    if (r < gate) return;
+    const p = yinPitch(timeBuf.subarray(timeBuf.length - 4096), sr);
+    if (!p || p.clarity < 0.85) return;
+    const cents = (freqToMidi(p.freq) - target) * 100;
+    if (Math.abs(cents) > 150) return; // not the key we asked for (or a harmonic)
+    cal.samples.push(cents);
+    if (cal.samples.length >= 12) {
+      const s = cal.samples.slice().sort((a, b) => a - b);
+      cal.points.push([target, s[Math.floor(s.length / 2)]]);
+      nextCalKey();
+    } else renderCal();
+  }
+  function nextCalKey() {
+    cal.samples = [];
+    cal.idx++;
+    if (cal.idx >= CAL_KEYS.length) cal.step = "done";
+    renderCal();
+  }
+  function renderCal() {
+    if (!cal) return;
+    const t = $("calText"), prog = $("calProg");
+    $("calSkip").hidden = cal.step !== "keys";
+    $("calSave").hidden = cal.step !== "done";
+    if (cal.step === "quiet") {
+      t.textContent = "Step 1 of 2: stay quiet for 2 seconds while it listens to the room.";
+      prog.textContent = "";
+    } else if (cal.step === "keys") {
+      const m = CAL_KEYS[cal.idx];
+      t.textContent = `Step 2 of 2: play ${fullName(m)} (the teal key) and hold it for a second.`;
+      prog.textContent = `Key ${cal.idx + 1} of ${CAL_KEYS.length}` + (cal.samples.length ? ` · hearing it ${Math.round((cal.samples.length / 12) * 100)}%` : "");
+      scrollToKey(m);
+    } else {
+      const pts = cal.points;
+      if (!pts.length) {
+        t.textContent = "No keys were measured. Make sure the mic can hear the piano, then try again.";
+      } else {
+        const avg = pts.reduce((s, p) => s + p[1], 0) / pts.length;
+        const word = Math.abs(avg) < 5 ? "in tune with standard pitch" : `${Math.abs(Math.round(avg))} cents ${avg > 0 ? "sharp (high)" : "flat (low)"}`;
+        t.textContent = `Done. Your piano is ${word} on average. ` + pts.map((p) => `${fullName(p[0])} ${p[1] >= 0 ? "+" : ""}${Math.round(p[1])}`).join(", ") + ".";
+      }
+      prog.textContent = "";
+      $("calSave").hidden = !pts.length;
+    }
+    renderKeys();
   }
 
   // ---------------------------------------------------------------- drawing
@@ -303,13 +405,20 @@
   }
 
   function renderKeys() {
-    const next = state.follow ? state.follow.next.slice(0, 3) : [];
+    const calKey = cal && cal.step === "keys" ? CAL_KEYS[cal.idx] : null;
+    const next = calKey !== null ? [calKey] : state.follow ? state.follow.next.slice(0, 3) : [];
     for (const [m, el] of keys) {
       const on = state.sounding.includes(m);
       const ni = next.indexOf(m);
       el.classList.toggle("on", on);
       el.classList.toggle("next", ni >= 0 && !on);
-      el.querySelector(".ord").textContent = ni >= 0 ? ni + 1 : "";
+      el.querySelector(".ord").textContent = ni < 0 ? "" : calKey !== null ? "♪" : ni + 1;
+    }
+    const tuned = $("tuned");
+    tuned.hidden = !profile;
+    if (profile) {
+      const a = Math.round(avgOffset());
+      tuned.textContent = "Tuned to your piano" + (a ? ` (${a > 0 ? "+" : ""}${a}¢)` : "");
     }
   }
 
@@ -509,6 +618,15 @@
   }
   const HINT = $("songHint").textContent;
   $("clear").addEventListener("click", () => clearAll(""));
+  $("tune").addEventListener("click", startCalibration);
+  $("calCancel").addEventListener("click", () => endCalibration(false));
+  $("calSkip").addEventListener("click", () => cal && nextCalKey());
+  $("calSave").addEventListener("click", () => endCalibration(true));
+  $("calReset").addEventListener("click", () => {
+    profile = null;
+    store.set("profile", "null");
+    endCalibration(false);
+  });
   document.querySelectorAll("input[name=mode]").forEach((r) => {
     r.checked = r.value === state.mode;
     r.addEventListener("change", () => { state.mode = r.value; store.set("mode", r.value); det.held = null; det.chordKey = ""; render(); });
