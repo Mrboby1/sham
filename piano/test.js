@@ -119,9 +119,25 @@ for (let trial = 0; trial < 300; trial++) {
     seq.push(n);
     s3 = M.follow(seq, s3);
   }
-  if (s3) fakes++;
+  if (s3 && s3.sure) fakes++;
 }
 console.log(`random 10-note melodies that matched a tune: ${fakes}/300`);
+
+// lock: after recognising Ode to Joy, wrong notes don't switch tunes, and it finds its place again
+{
+  const ode2 = M.LIBRARY[0].tune;
+  let s4 = null;
+  const p4 = [];
+  for (let i = 0; i < 6; i++) { p4.push(ode2[i]); s4 = M.follow(p4, s4); }
+  const was = s4 && s4.pos;
+  // play the opening of Twinkle (would match another tune if not locked)
+  for (const n of M.LIBRARY[1].tune.slice(0, 8)) { p4.push(n); s4 = M.follow(p4, s4); }
+  check(s4 && s4.title === "Ode to Joy", "lock held: " + (s4 && s4.title));
+  // jump to a later phrase of Ode to Joy: it should find its place
+  for (const n of ode2.slice(20, 24)) { p4.push(n); s4 = M.follow(p4, s4); }
+  check(s4 && s4.title === "Ode to Joy" && s4.lost === 0 && s4.pos >= 20, `resync pos ${s4 && s4.pos} lost ${s4 && s4.lost} (was ${was})`);
+  console.log(`lock: still "${s4 && s4.title}" after wrong notes; found its place again at note ${s4 && s4.at}`);
+}
 
 // every song recognisable from its opening
 for (const s of M.LIBRARY) {
@@ -130,7 +146,7 @@ for (const s of M.LIBRARY) {
   for (let i = 0; i < s.tune.length; i++) {
     p2.push(s.tune[i]);
     st2 = M.follow(p2, st2);
-    if (st2 && st2.title === s.title && at < 0) at = i + 1;
+    if (st2 && st2.sure && st2.title === s.title && at < 0) at = i + 1;
   }
   console.log(`${s.title.padEnd(32)} recognised after ${at} notes; ended on ${st2 && st2.title}`);
   check(at > 0 && st2 && st2.title === s.title, "song " + s.title);

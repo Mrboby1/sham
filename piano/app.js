@@ -2,7 +2,7 @@
 (function () {
   "use strict";
   const { yinPitch, chordNotes, rms, midiToFreq, freqToMidi, A0, C8 } = window.Detect;
-  const { follow } = window.Melody;
+  const { follow, CLEAR_KEYS } = window.Melody;
 
   const LETTER = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"];
   const SOLFEGE = ["Do", "Do♯", "Re", "Re♯", "Mi", "Fa", "Fa♯", "Sol", "Sol♯", "La", "La♯", "Si"];
@@ -48,7 +48,7 @@
     for (let m = A0; m <= C8; m++) {
       const el = document.createElement("div");
       const black = IS_BLACK[m % 12] === 1;
-      el.className = "key " + (black ? "black" : "white") + (m % 12 === 0 ? " c" : "");
+      el.className = "key " + (black ? "black" : "white") + (m % 12 === 0 ? " c" : "") + (m === A0 ? " clearkey" : "");
       el.dataset.midi = m;
       el.setAttribute("role", "button");
       el.setAttribute("aria-label", fullName(m));
@@ -133,6 +133,7 @@
   // ---------------------------------------------------------------- note events
   function noteEvent(notes) {
     notes = [...new Set(notes)].sort((a, b) => a - b);
+    if (notes.some((n) => CLEAR_KEYS.includes(n))) { clearAll("Cleared. Play a new piece."); return; }
     state.history.push({ notes, t: performance.now() });
     if (state.history.length > 64) state.history.shift();
     state.melody.push(notes[notes.length - 1]); // the top note carries the tune
@@ -326,6 +327,12 @@
     small.textContent = (composer ? composer + " · " : "") + (f.done ? "end of the theme" : "note " + f.at + " of " + f.of);
     title.append(small);
     box.append(title);
+    const lock = document.createElement("div");
+    lock.className = "chips lockline";
+    lock.textContent = f.lost
+      ? "Off the melody. Pick it up from the teal keys, or play the lowest key to clear."
+      : "Locked on this piece. Play the lowest key (A0) to clear.";
+    box.append(lock);
     if (f.next.length) {
       const chips = document.createElement("div");
       chips.className = "chips";
@@ -488,10 +495,20 @@
   function showMsg(text) { const m = $("msg"); m.textContent = text; m.hidden = !text; }
   $("listen").addEventListener("click", () => (state.listening ? stopListening() : startListening()));
   $("demo").addEventListener("click", demo);
-  $("clear").addEventListener("click", () => {
+  let noteTimer = 0;
+  function clearAll(note) {
     state.history = []; state.melody = []; state.follow = null; state.sounding = [];
+    det.held = null; det.chordKey = "";
     render();
-  });
+    if (note) {
+      const hint = $("songHint");
+      hint.textContent = note;
+      clearTimeout(noteTimer);
+      noteTimer = setTimeout(() => { hint.textContent = HINT; }, 2500);
+    }
+  }
+  const HINT = $("songHint").textContent;
+  $("clear").addEventListener("click", () => clearAll(""));
   document.querySelectorAll("input[name=mode]").forEach((r) => {
     r.checked = r.value === state.mode;
     r.addEventListener("change", () => { state.mode = r.value; store.set("mode", r.value); det.held = null; det.chordKey = ""; render(); });
