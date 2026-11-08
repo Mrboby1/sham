@@ -2,7 +2,7 @@
 (function () {
   "use strict";
   const { yinPitch, chordNotes, rms, midiToFreq, freqToMidi, A0, C8 } = window.Detect;
-  const { follow, CLEAR_KEYS } = window.Melody;
+  const { follow, start, addSong, removeSong, LIBRARY, CLEAR_KEYS } = window.Melody;
 
   const LETTER = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"];
   const SOLFEGE = ["Do", "Do♯", "Re", "Re♯", "Mi", "Fa", "Fa♯", "Sol", "Sol♯", "La", "La♯", "Si"];
@@ -45,7 +45,19 @@
     melody: [],       // top note of each event, for tune following
     follow: null,
     tapUntil: 0,      // ignore the mic briefly after a key tap (it hears the phone's own sound)
+    practice: null,   // title of the piece chosen in Songs, or null
+    recording: null,  // notes being recorded for "Record my own", or null
   };
+
+  // the player's own recorded melodies, kept on this phone
+  function loadMySongs() {
+    let list = [];
+    try { list = JSON.parse(store.get("mysongs", "[]")) || []; } catch (e) { list = []; }
+    list.forEach((x) => addSong(x.title, x.notes, true));
+    return list;
+  }
+  let mySongs = loadMySongs();
+  const saveMySongs = () => store.set("mysongs", JSON.stringify(mySongs));
 
   const octave = (m) => Math.floor(m / 12) - 1;
   const pcName = (m) => (state.names === "solfege" ? SOLFEGE : LETTER)[m % 12];
@@ -156,6 +168,11 @@
     notes = [...new Set(notes)].sort((a, b) => a - b);
     if (notes.some((n) => CLEAR_KEYS.includes(n))) { clearAll("Cleared. Play a new piece."); return; }
     state.history.push({ notes, t: performance.now() });
+    if (state.recording) {
+      state.recording.push(notes[notes.length - 1]);
+      if (state.history.length > 64) state.history.shift();
+      return;
+    }
     if (state.history.length > 64) state.history.shift();
     state.melody.push(notes[notes.length - 1]); // the top note carries the tune
     if (state.melody.length > 64) state.melody.shift();
@@ -359,6 +376,96 @@
     renderKeys();
   }
 
+  // ---------------------------------------------------------------- Songs: practise or record your own
+  function practise(title) {
+    clearAll("");
+    state.practice = title;
+    state.follow = start(title);
+    closeSongs();
+    render();
+    if (state.follow) scrollToKey(state.follow.next[0]);
+  }
+  function openSongs() {
+    buildSongList();
+    $("songs").hidden = false;
+    $("songSearch").value = "";
+  }
+  function closeSongs() { $("songs").hidden = true; }
+  function buildSongList(filter = "") {
+    const list = $("songList");
+    list.textContent = "";
+    const groups = new Map();
+    const q = filter.trim().toLowerCase();
+    for (const s of LIBRARY) {
+      if (q && !s.title.toLowerCase().includes(q)) continue;
+      const [name, composer] = s.title.split(" - ");
+      const g = s.mine ? "My songs" : composer || "Traditional and folk";
+      if (!groups.has(g)) groups.set(g, []);
+      groups.get(g).push({ s, name });
+    }
+    const order = [...groups.keys()].sort((a, b) => (a === "My songs" ? -1 : b === "My songs" ? 1 : a === "Traditional and folk" ? 1 : b === "Traditional and folk" ? -1 : a.localeCompare(b)));
+    if (!order.length) {
+      const p = document.createElement("p");
+      p.className = "hint";
+      p.textContent = "No piece matches that.";
+      list.append(p);
+    }
+    for (const g of order) {
+      const h = document.createElement("h3");
+      h.textContent = g;
+      list.append(h);
+      for (const { s, name } of groups.get(g)) {
+        const row = document.createElement("div");
+        row.className = "songrow";
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "songbtn";
+        b.innerHTML = "";
+        const t = document.createElement("span");
+        t.textContent = name;
+        const n = document.createElement("small");
+        n.textContent = `${s.tune.length} notes`;
+        b.append(t, n);
+        b.addEventListener("click", () => practise(s.title));
+        row.append(b);
+        if (s.mine) {
+          const del = document.createElement("button");
+          del.type = "button";
+          del.className = "ghost delbtn";
+          del.textContent = "Delete";
+          del.setAttribute("aria-label", "Delete " + name);
+          del.addEventListener("click", () => {
+            if (del.dataset.armed !== "1") { del.dataset.armed = "1"; del.textContent = "Sure?"; return; }
+            removeSong(s.title);
+            mySongs = mySongs.filter((x) => x.title !== s.title);
+            saveMySongs();
+            buildSongList($("songSearch").value);
+          });
+          row.append(del);
+        }
+        list.append(row);
+      }
+    }
+  }
+  function startRecording() {
+    clearAll("");
+    state.recording = [];
+    closeSongs();
+    $("recName").value = "";
+    render();
+  }
+  function saveRecording() {
+    const notes = state.recording || [];
+    if (notes.length < 3) return;
+    let name = $("recName").value.trim() || "My melody " + (mySongs.length + 1);
+    const title = name + " - My songs";
+    addSong(title, notes, true);
+    mySongs = mySongs.filter((x) => x.title !== title).concat([{ title, notes }]);
+    saveMySongs();
+    state.recording = null;
+    practise(title);
+  }
+
   // ---------------------------------------------------------------- drawing
   function render() {
     renderNow();
@@ -426,6 +533,16 @@
     const box = $("song");
     const f = state.follow;
     box.querySelectorAll(".title,.chips").forEach((n) => n.remove());
+    const rec = $("rec");
+    rec.hidden = !state.recording;
+    if (state.recording) {
+      $("songHint").hidden = true;
+      $("recCount").textContent = state.recording.length
+        ? `Recording: ${state.recording.length} notes so far.`
+        : "Recording. Play your melody.";
+      $("recSave").disabled = state.recording.length < 3;
+      return;
+    }
     $("songHint").hidden = !!f;
     if (!f) return;
     const title = document.createElement("div");
@@ -438,7 +555,16 @@
     box.append(title);
     const lock = document.createElement("div");
     lock.className = "chips lockline";
-    lock.textContent = !f.sure
+    if (state.practice) {
+      const done = f.done || f.at >= f.of;
+      lock.textContent = done ? "Finished! " : `Practising · ${Math.round((f.at / f.of) * 100)}% `;
+      const again = document.createElement("button");
+      again.type = "button";
+      again.className = "linkbtn";
+      again.textContent = "Start over";
+      again.addEventListener("click", () => practise(state.practice));
+      lock.append(again);
+    } else lock.textContent = !f.sure
       ? "Sounds like this. Keep playing to make sure."
       : f.lost
         ? "Off the melody. Pick it up from the teal keys, or play the lowest key to clear."
@@ -610,6 +736,7 @@
   let noteTimer = 0;
   function clearAll(note) {
     state.history = []; state.melody = []; state.follow = null; state.sounding = [];
+    state.practice = null; state.recording = null;
     det.held = null; det.chordKey = "";
     render();
     if (note) {
@@ -622,6 +749,13 @@
   const HINT = $("songHint").textContent;
   $("clear").addEventListener("click", () => clearAll(""));
   $("tune").addEventListener("click", startCalibration);
+  $("songsBtn").addEventListener("click", openSongs);
+  $("songsClose").addEventListener("click", closeSongs);
+  $("songSearch").addEventListener("input", (e) => buildSongList(e.target.value));
+  $("recStart").addEventListener("click", startRecording);
+  $("recSave").addEventListener("click", saveRecording);
+  $("recCancel").addEventListener("click", () => clearAll(""));
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !$("songs").hidden) closeSongs(); });
   $("calCancel").addEventListener("click", () => endCalibration(false));
   $("calSkip").addEventListener("click", () => cal && nextCalKey());
   $("calSave").addEventListener("click", () => endCalibration(true));

@@ -170,7 +170,29 @@
 
   const CLEAR_KEYS = [21, 22, 23]; // A0, A#0, B0: playing the lowest key unlocks (bottom 3 forgive mic errors)
 
-  const api = { follow, LIBRARY, parse, collapse, CLEAR_KEYS };
+  // Practice: lock onto a chosen piece before its first note, in its written key.
+  function start(title) {
+    const s = LIBRARY.find((x) => x.title === title);
+    if (!s) return null;
+    const r = result(s, -1, 0, 0, 0, true);
+    r.at = 0;
+    return r;
+  }
+  // A melody the player recorded (midi notes). Returns the library entry.
+  function addSong(title, notes, mine = true) {
+    const tune = collapse(notes);
+    if (tune.length < 2) return null;
+    const entry = { title, tune, steps: steps(tune), mine };
+    const i = LIBRARY.findIndex((x) => x.title === title);
+    if (i >= 0) LIBRARY[i] = entry; else LIBRARY.push(entry);
+    return entry;
+  }
+  function removeSong(title) {
+    const i = LIBRARY.findIndex((x) => x.title === title && x.mine);
+    if (i >= 0) LIBRARY.splice(i, 1);
+  }
+
+  const api = { follow, start, addSong, removeSong, LIBRARY, parse, collapse, CLEAR_KEYS };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.Melody = api;
 })(this);
