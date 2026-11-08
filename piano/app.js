@@ -320,9 +320,10 @@
     if (!f) return;
     const title = document.createElement("div");
     title.className = "title";
-    title.textContent = f.title;
+    const [name, composer] = f.title.split(" - ");
+    title.textContent = name;
     const small = document.createElement("small");
-    small.textContent = f.done ? "end of the tune" : "note " + f.at + " of " + f.of;
+    small.textContent = (composer ? composer + " · " : "") + (f.done ? "end of the theme" : "note " + f.at + " of " + f.of);
     title.append(small);
     box.append(title);
     if (f.next.length) {

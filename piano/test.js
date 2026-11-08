@@ -109,6 +109,20 @@ const pr = [];
 for (const n of rnd) { pr.push(n); st = M.follow(pr, st); }
 check(!st, "random matched " + (st && st.title));
 
+// random wandering melodies: how often does a made-up tune "match" something?
+let fakes = 0;
+for (let trial = 0; trial < 300; trial++) {
+  let n = 60, s3 = null;
+  const seq = [];
+  for (let i = 0; i < 10; i++) {
+    n += [-4, -3, -2, -1, 1, 2, 3, 4][Math.floor(Math.random() * 8)];
+    seq.push(n);
+    s3 = M.follow(seq, s3);
+  }
+  if (s3) fakes++;
+}
+console.log(`random 10-note melodies that matched a tune: ${fakes}/300`);
+
 // every song recognisable from its opening
 for (const s of M.LIBRARY) {
   let st2 = null, at = -1;
