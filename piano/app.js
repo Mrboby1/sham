@@ -82,6 +82,9 @@
   // ---------------------------------------------------------------- keyboard
   const kbd = $("kbd"), scroller = $("kbdScroll");
   const keys = new Map();
+  const whiteIdx = new Map(); // midi -> position in white keys from A0 (black keys halfway)
+  const SVGNS = "http://www.w3.org/2000/svg";
+  let handSvg = null, keyW = 20;
   function buildKeyboard() {
     kbd.textContent = "";
     keys.clear();
@@ -93,7 +96,9 @@
     kbd.classList.toggle("slim", w < 24);
     kbd.classList.toggle("tiny", w < 12);
     let white = 0;
+    whiteIdx.clear();
     for (let m = A0; m <= C8; m++) {
+      whiteIdx.set(m, IS_BLACK[m % 12] === 1 ? white - 0.5 : white);
       const el = document.createElement("div");
       const black = IS_BLACK[m % 12] === 1;
       el.className = "key " + (black ? "black" : "white") + (m % 12 === 0 ? " c" : "") + (m === A0 ? " clearkey" : "") + (isLeft(m) ? " lh" : "");
@@ -111,6 +116,11 @@
       keys.set(m, el);
     }
     kbd.style.width = white * w + "px";
+    keyW = w;
+    handSvg = document.createElementNS(SVGNS, "svg");
+    handSvg.setAttribute("class", "handover");
+    handSvg.setAttribute("aria-hidden", "true");
+    kbd.append(handSvg);
     labelKeys();
   }
   function labelKeys() {
@@ -576,8 +586,11 @@
       el.classList.toggle("next", ni >= 0 && !on);
       el.classList.toggle("first", ni === 0);
       const useFinger = calKey === null && state.follow && state.follow.fingers && keyNums === "finger";
+      if (useFinger && ni >= 0) el.style.setProperty("--fc", FINGER_COLORS[state.follow.fingers[ni]]);
       el.querySelector(".ord").textContent = ni < 0 ? "" : calKey !== null ? "♪" : useFinger ? state.follow.fingers[ni] : ni + 1;
     }
+    kbd.classList.toggle("fingered", !!(calKey === null && state.follow && state.follow.fingers && keyNums === "finger"));
+    renderHandOverlay();
     const tuned = $("tuned");
     tuned.hidden = !profile;
     if (profile) {
@@ -635,6 +648,7 @@
         const c = document.createElement("span");
         c.className = "chip";
         c.textContent = fullName(m) + (f.fingers ? " · " + f.fingers[i] : "");
+        if (f.fingers && keyNums === "finger") { c.classList.add("fchip"); c.style.setProperty("--fc", FINGER_COLORS[f.fingers[i]]); }
         chips.append(c);
       });
       box.append(chips);
@@ -644,6 +658,47 @@
 
   // ---------------------------------------------------------------- the hand picture
   const FINGER_NAMES = ["", "thumb", "index finger", "middle finger", "ring finger", "little finger"];
+  const FINGER_COLORS = ["", "#e93d82", "#f76b15", "#29a383", "#3e63dd", "#8e4ec6"]; // pink orange green blue violet
+
+  // A small hand hovering over the keyboard: each fingertip rests on the key that finger covers in
+  // the current hand position (the upcoming notes' own keys where they fall inside it).
+  function renderHandOverlay() {
+    if (!handSvg) return;
+    const f = state.follow;
+    const show = !!(state.practice && f && f.fingers && f.fingers.length && keyNums === "finger" && !cal);
+    if (!show) { handSvg.textContent = ""; return; }
+    const H = kbd.clientHeight, w = keyW;
+    const thumb = Math.round(whiteIdx.get(f.next[0]) - (f.fingers[0] - 1));
+    const tips = [null];
+    for (let i = 1; i <= 5; i++) tips.push({ x: (thumb + i - 1) * w + w / 2, black: false });
+    const placed = new Set();
+    f.next.forEach((m, j) => {
+      const fj = f.fingers[j];
+      if (placed.has(fj) || !keys.has(m)) return;
+      if (Math.abs(whiteIdx.get(m) - (thumb + fj - 1)) > 1.01) return; // outside this hand position
+      const el = keys.get(m);
+      tips[fj] = { x: el.offsetLeft + el.offsetWidth / 2, black: IS_BLACK[m % 12] === 1 };
+      placed.add(fj);
+    });
+    const x0 = tips[1].x;
+    const r = Math.max(5, Math.min(10, w * 0.5));
+    const palmTop = 2, palmH = Math.max(12, H * 0.13);
+    const xs = tips.slice(1).map((t) => t.x - x0);
+    let g = handSvg.querySelector("g");
+    if (!g) { g = document.createElementNS(SVGNS, "g"); handSvg.append(g); }
+    const parts = [];
+    parts.push(`<rect class="hpalm" x="${Math.min(...xs) - r - 4}" y="${palmTop}" width="${Math.max(...xs) - Math.min(...xs) + 2 * r + 8}" height="${palmH}" rx="${palmH / 2}"/>`);
+    for (let i = 1; i <= 5; i++) {
+      const t = tips[i], x = t.x - x0;
+      const y = t.black ? H * 0.36 : H * 0.56;
+      const next = f.fingers[0] === i;
+      parts.push(`<line x1="${x}" y1="${palmTop + palmH - 2}" x2="${x}" y2="${y}" stroke="${FINGER_COLORS[i]}" stroke-width="${Math.max(3, r * 0.55)}" stroke-linecap="round"/>`);
+      parts.push(`<circle cx="${x}" cy="${y}" r="${next ? r + 2 : r}" fill="${FINGER_COLORS[i]}" stroke="${next ? "#000" : "#fff"}" stroke-width="${next ? 3 : 1.5}"/>`);
+      parts.push(`<text x="${x}" y="${y}" dy="0.35em" font-size="${Math.round(r * 1.15)}">${i}</text>`);
+    }
+    g.innerHTML = parts.join("");
+    g.style.transform = `translateX(${x0}px)`;
+  }
   let keyNums = store.get("keynums", "finger");
   function renderHand() {
     const f = state.follow;
@@ -770,7 +825,7 @@
         const x = x0 + 8 + i * colW;
         head(x, m, teal, true, 1 - i * 0.22);
         if (fingersNext) {
-          g.fillStyle = teal;
+          g.fillStyle = FINGER_COLORS[fingersNext[i]] || teal;
           g.font = "700 12px " + getComputedStyle(document.body).fontFamily;
           g.textAlign = "center";
           g.fillText(String(fingersNext[i]), x, Math.min(place(m).y - 12, trebleTop - 6));
@@ -833,7 +888,7 @@
   $("songsBtn").addEventListener("click", openSongs);
   document.querySelectorAll("input[name=keynums]").forEach((r) => {
     r.checked = r.value === keyNums;
-    r.addEventListener("change", () => { keyNums = r.value; store.set("keynums", r.value); renderKeys(); });
+    r.addEventListener("change", () => { keyNums = r.value; store.set("keynums", r.value); render(); });
   });
   // Copy what was played (names with octaves, both naming styles) to paste into a chat.
   $("copyNotes").addEventListener("click", async () => {

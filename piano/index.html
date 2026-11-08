@@ -128,16 +128,24 @@ button:focus-visible, .seg input:focus-visible + label { outline: 2px solid var(
 .chip { font-size: 14px; font-weight: 700; padding: 5px 10px; border-radius: 999px; border: 1.5px solid var(--teal); color: var(--teal); font-variant-numeric: tabular-nums; }
 .chip:first-child { background: var(--teal); color: var(--bg); }
 .handbox { display: flex; gap: 12px; align-items: center; }
-#hand { width: 70px; height: 66px; flex: none; }
+#hand { width: 58px; height: 56px; flex: none; }
+.chip.fchip { border-color: var(--fc); color: var(--fc); }
+.chip.fchip:first-child { background: var(--fc); color: #fff; box-shadow: 0 0 0 2px var(--ink); }
 .now.practising .meter, .now.practising .handkey, .now.practising .freq { display: none; }
 #hand .palm { fill: var(--line); }
 #hand .finger rect { fill: var(--line); stroke: var(--muted); stroke-width: 1; }
 #hand .finger text { fill: var(--muted); font: 700 11px var(--font-ui); text-anchor: middle; }
-#hand .finger.on rect { fill: var(--teal); stroke: var(--teal); }
-#hand .finger.on text { fill: #071b19; }
+#hand .finger[data-f="1"] rect { fill: #e93d82; }
+#hand .finger[data-f="2"] rect { fill: #f76b15; }
+#hand .finger[data-f="3"] rect { fill: #29a383; }
+#hand .finger[data-f="4"] rect { fill: #3e63dd; }
+#hand .finger[data-f="5"] rect { fill: #8e4ec6; }
+#hand .finger text { fill: #fff; }
+#hand .finger:not(.on) { opacity: 0.45; }
+#hand .finger.on rect { stroke: var(--ink); stroke-width: 2.5; }
 .handside { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .handside p { margin: 0; font-size: 13px; }
-.seg-sm label { min-height: 28px; padding: 4px 7px; font-size: 11px; }
+.seg-sm label { min-height: 28px; padding: 4px 6px; font-size: 11px; white-space: nowrap; }
 .handside .seg { align-self: flex-start; max-width: 100%; }
 .key.next.first { box-shadow: inset 0 0 0 4px var(--teal); }
 .key.next:not(.first) .ord { background: transparent; color: var(--teal); border: 2px solid var(--teal); }
@@ -287,7 +295,19 @@ input:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
   #staff { height: 170px; }
   .big { font-size: 60px; }
 }
-@media (prefers-reduced-motion: reduce) { .meter b { transition: none; } }
+/* Fingering on the keyboard: keys take the colour of the finger that plays them; the key to play now
+   gets a black frame. The hand layer floats above the keys and never takes taps. */
+.kbd.fingered .key.next { box-shadow: none; background: color-mix(in srgb, var(--fc) 38%, var(--ivory)); }
+.kbd.fingered .black.next { background: color-mix(in srgb, var(--fc) 75%, var(--ebony)); }
+.kbd.fingered .key.next .ord { background: var(--fc); color: #fff; border: 0; }
+.kbd.fingered .key.next.first { background: var(--fc); outline: 3px solid #000; outline-offset: -3px; }
+.kbd.fingered .black.next.first { outline-color: #fff; box-shadow: 0 0 0 3px #000; }
+.kbd.fingered .key.next.first .ord { background: #000; color: #fff; }
+.handover { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; overflow: visible; }
+.handover g { transition: transform 0.25s ease; }
+.handover .hpalm { fill: var(--panel); stroke: var(--muted); stroke-width: 1; opacity: 0.92; }
+.handover text { fill: #fff; font-family: var(--font-ui); font-weight: 700; text-anchor: middle; }
+@media (prefers-reduced-motion: reduce) { .meter b, .handover g { transition: none; } }
 </style>
 </head>
 <body>
@@ -363,7 +383,7 @@ input:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
         <div class="handside">
           <p id="handText"></p>
           <div class="seg seg-sm" role="radiogroup" aria-label="Numbers on the keys">
-            <input type="radio" name="keynums" id="keynums-finger" value="finger" checked><label for="keynums-finger">Fingers</label>
+            <input type="radio" name="keynums" id="keynums-finger" value="finger" checked><label for="keynums-finger">Finger</label>
             <input type="radio" name="keynums" id="keynums-order" value="order"><label for="keynums-order">Order</label>
           </div>
         </div>
