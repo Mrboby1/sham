@@ -2,7 +2,7 @@
 (function () {
   "use strict";
   const { yinPitch, chordNotes, rms, midiToFreq, freqToMidi, A0, C8 } = window.Detect;
-  const { follow, start, addSong, removeSong, LIBRARY, CLEAR_KEYS } = window.Melody;
+  const { LIBRARY, CLEAR_KEYS } = window.Melody;
 
   const LETTER = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"];
   const SOLFEGE = ["Do", "Do♯", "Re", "Re♯", "Mi", "Fa", "Fa♯", "Sol", "Sol♯", "La", "La♯", "Si"];
@@ -45,19 +45,34 @@
     melody: [],       // top note of each event, for tune following
     follow: null,
     tapUntil: 0,      // ignore the mic briefly after a key tap (it hears the phone's own sound)
-    practice: null,   // title of the piece chosen in Songs, or null
+    practice: null,   // {song, pos}: the piece chosen in Songs and the index of the next note to play
     recording: null,  // notes being recorded for "Record my own", or null
   };
 
-  // the player's own recorded melodies, kept on this phone
-  function loadMySongs() {
-    let list = [];
-    try { list = JSON.parse(store.get("mysongs", "[]")) || []; } catch (e) { list = []; }
-    list.forEach((x) => addSong(x.title, x.notes, true));
-    return list;
-  }
-  let mySongs = loadMySongs();
+  // ---------------------------------------------------------------- the song library
+  // Whole pieces from songs.json (Mutopia Project scores, right-hand melody note by note), the
+  // traditional tunes in melody.js, and the player's own recordings (kept on this phone).
+  let fullPieces = [];
+  let mySongs = [];
+  try { mySongs = JSON.parse(store.get("mysongs", "[]")) || []; } catch (e) { mySongs = []; }
+  mySongs = mySongs.map((x) => ({ title: x.title.replace(/ - My songs$/, ""), notes: x.notes }));
   const saveMySongs = () => store.set("mysongs", JSON.stringify(mySongs));
+  let SONGS = [];
+  function buildLibrary() {
+    SONGS = [
+      ...mySongs.map((x) => ({ title: x.title, composer: "", notes: x.notes, mine: true })),
+      ...fullPieces.map((x) => ({ title: x.title, composer: x.composer, notes: x.notes })),
+      ...LIBRARY.filter((x) => !x.mine && !x.title.includes(" - ") && !fullPieces.some((f) => f.title === x.title))
+        .map((x) => ({ title: x.title, composer: "", notes: x.full })),
+    ];
+    SONGS.forEach((x) => { x.key = (x.mine ? "mine:" : "") + x.title + (x.composer ? " - " + x.composer : ""); });
+  }
+  buildLibrary();
+  fetch("songs.json")
+    .then((r) => (r.ok ? r.json() : []))
+    .then((list) => { fullPieces = list; buildLibrary(); if (!$("songs").hidden) buildSongList($("songSearch").value); })
+    .catch(() => { /* offline: the traditional tunes and my songs still work */ });
+  const pcEq = (a, b) => (((a - b) % 12) + 12) % 12 === 0;
 
   const octave = (m) => Math.floor(m / 12) - 1;
   const pcName = (m) => (state.names === "solfege" ? SOLFEGE : LETTER)[m % 12];
@@ -174,7 +189,8 @@
   }
   function noteEvent(notes) {
     notes = [...new Set(notes)].sort((a, b) => a - b);
-    if (notes.some((n) => CLEAR_KEYS.includes(n))) { clearAll("Cleared. Play a new piece."); return; }
+    if (notes.some((n) => CLEAR_KEYS.includes(n))) { clearAll("Cleared."); return; }
+    if (state.practice) { playAlong(notes); return; }
     state.history.push({ notes, t: performance.now() });
     if (state.recording) {
       state.recording.push(melodyNote(notes));
@@ -187,14 +203,35 @@
     const now = performance.now();
     if (notes.some((m) => !isLeft(m))) { state.lastRight = now; state.lastRightNote = melodyNote(notes); }
     else if (now - (state.lastRight || -1e9) < 4000 && notes[notes.length - 1] < state.lastRightNote - 7) { render(); return; }
-    state.melody.push(melodyNote(notes)); // the right hand's top note carries the tune
-    if (state.melody.length > 64) state.melody.shift();
-    state.follow = follow(state.melody, state.follow);
-    scrollToKey(state.follow && state.follow.next.length ? state.follow.next[0] : notes[0]);
-    if (state.follow && state.follow.next.length) {
-      // keep the note just played in view too
-      scrollToKey(notes[0]);
+    // Recognising the piece from what's played is switched off for now (melody.js keeps the code).
+    render();
+  }
+
+  // Play-following: only the next note of the chosen piece counts. Anything else is ignored: not
+  // saved, not drawn on the staff. The note after next is accepted too, so a repeated note the mic
+  // heard once, or a fast note it missed, doesn't block the piece.
+  function playAlong(notes) {
+    const p = state.practice, n = p.song.notes;
+    if (p.pos >= n.length) return;
+    let step = -1;
+    for (let d = 0; d < 2 && step < 0; d++) {
+      if (p.pos + d < n.length && notes.some((m) => pcEq(m, n[p.pos + d]))) step = d;
     }
+    if (step < 0) return;
+    for (let d = 0; d <= step; d++) state.history.push({ notes: [n[p.pos + d]], t: performance.now() });
+    while (state.history.length > 64) state.history.shift();
+    p.pos += step + 1;
+    state.follow = practiceView();
+    render();
+    if (p.pos < n.length) scrollToKey(n[p.pos]);
+  }
+  function practiceView() {
+    const p = state.practice, n = p.song.notes;
+    return {
+      title: p.song.title + (p.song.composer ? " - " + p.song.composer : ""),
+      at: p.pos, of: n.length, next: n.slice(p.pos, p.pos + 4), done: p.pos >= n.length,
+      sure: true, lost: 0, practice: true,
+    };
   }
 
   // ---------------------------------------------------------------- microphone loop
@@ -390,13 +427,15 @@
   }
 
   // ---------------------------------------------------------------- Songs: practise or record your own
-  function practise(title) {
+  function practise(key) {
+    const song = SONGS.find((x) => x.key === key);
+    if (!song) return;
     clearAll("");
-    state.practice = title;
-    state.follow = start(title);
+    state.practice = { song, pos: 0 };
+    state.follow = practiceView();
     closeSongs();
     render();
-    if (state.follow) scrollToKey(state.follow.next[0]);
+    scrollToKey(song.notes[0]);
   }
   function openSongs() {
     buildSongList();
@@ -409,12 +448,11 @@
     list.textContent = "";
     const groups = new Map();
     const q = filter.trim().toLowerCase();
-    for (const s of LIBRARY) {
-      if (q && !s.title.toLowerCase().includes(q)) continue;
-      const [name, composer] = s.title.split(" - ");
-      const g = s.mine ? "My songs" : composer || "Traditional and folk";
+    for (const s of SONGS) {
+      if (q && !(s.title + " " + s.composer).toLowerCase().includes(q)) continue;
+      const g = s.mine ? "My songs" : s.composer || "Traditional and folk";
       if (!groups.has(g)) groups.set(g, []);
-      groups.get(g).push({ s, name });
+      groups.get(g).push({ s, name: s.title });
     }
     const order = [...groups.keys()].sort((a, b) => (a === "My songs" ? -1 : b === "My songs" ? 1 : a === "Traditional and folk" ? 1 : b === "Traditional and folk" ? -1 : a.localeCompare(b)));
     if (!order.length) {
@@ -437,9 +475,9 @@
         const t = document.createElement("span");
         t.textContent = name;
         const n = document.createElement("small");
-        n.textContent = `${s.tune.length} notes`;
+        n.textContent = `${s.notes.length} notes`;
         b.append(t, n);
-        b.addEventListener("click", () => practise(s.title));
+        b.addEventListener("click", () => practise(s.key));
         row.append(b);
         if (s.mine) {
           const del = document.createElement("button");
@@ -449,9 +487,9 @@
           del.setAttribute("aria-label", "Delete " + name);
           del.addEventListener("click", () => {
             if (del.dataset.armed !== "1") { del.dataset.armed = "1"; del.textContent = "Sure?"; return; }
-            removeSong(s.title);
             mySongs = mySongs.filter((x) => x.title !== s.title);
             saveMySongs();
+            buildLibrary();
             buildSongList($("songSearch").value);
           });
           row.append(del);
@@ -470,13 +508,12 @@
   function saveRecording() {
     const notes = state.recording || [];
     if (notes.length < 3) return;
-    let name = $("recName").value.trim() || "My melody " + (mySongs.length + 1);
-    const title = name + " - My songs";
-    addSong(title, notes, true);
+    const title = $("recName").value.trim() || "My melody " + (mySongs.length + 1);
     mySongs = mySongs.filter((x) => x.title !== title).concat([{ title, notes }]);
     saveMySongs();
+    buildLibrary();
     state.recording = null;
-    practise(title);
+    practise("mine:" + title);
   }
 
   // ---------------------------------------------------------------- drawing
@@ -566,19 +603,19 @@
     const [name, composer] = f.title.split(" - ");
     title.textContent = name;
     const small = document.createElement("small");
-    small.textContent = (composer ? composer + " · " : "") + (f.done ? "end of the theme" : "note " + f.at + " of " + f.of);
+    small.textContent = (composer ? composer + " · " : "") + (f.done ? "the end" : "note " + (f.at + 1) + " of " + f.of);
     title.append(small);
     box.append(title);
     const lock = document.createElement("div");
     lock.className = "chips lockline";
     if (state.practice) {
       const done = f.done || f.at >= f.of;
-      lock.textContent = done ? "Finished! " : `Practising · ${Math.round((f.at / f.of) * 100)}% `;
+      lock.textContent = done ? "Finished! " : `Playing along · ${Math.round((f.at / f.of) * 100)}% done · wrong notes are ignored `;
       const again = document.createElement("button");
       again.type = "button";
       again.className = "linkbtn";
       again.textContent = "Start over";
-      again.addEventListener("click", () => practise(state.practice));
+      again.addEventListener("click", () => practise(state.practice.song.key));
       lock.append(again);
     } else lock.textContent = !f.sure
       ? "Sounds like this. Keep playing to make sure."

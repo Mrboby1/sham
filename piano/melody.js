@@ -19,24 +19,7 @@
     ["When the Saints Go Marching In", "C4 E4 F4 G4 C4 E4 F4 G4 C4 E4 F4 G4 E4 C4 E4 D4 E4 E4 D4 C4 C4 E4 G4 G4 F4 E4 F4 G4 E4 C4 D4 C4"],
     ["London Bridge", "G4 A4 G4 F4 E4 F4 G4 D4 E4 F4 E4 F4 G4 G4 A4 G4 F4 E4 F4 G4 D4 G4 E4 C4"],
 
-    // Classical: the main theme of each piece (top line of the right hand).
-    ["Eine kleine Nachtmusik - Mozart", "G4 D4 G4 D4 G4 D4 G4 B4 D5 C5 A4 C5 A4 C5 A4 F#4 A4 D4"],
-    ["Rondo alla Turca - Mozart", "B4 A4 G#4 A4 C5 D5 C5 B4 C5 E5 F5 E5 D#5 E5 B5 A5 G#5 A5 B5 A5 G#5 A5 C6"],
-    ["Symphony No. 40 - Mozart", "Eb5 D5 D5 Eb5 D5 D5 Eb5 D5 D5 Bb5 Bb5 A5 G5 G5 F5 Eb5 Eb5 D5 C5 C5 D5 C5 C5 D5 C5 C5 D5 C5 C5 A5 A5 G5 F#5 F#5 Eb5 D5 D5 C5 Bb4 Bb4"],
-    ["Piano Sonata No. 16 (K. 545) - Mozart", "C5 E5 G5 B4 C5 D5 C5 A5 G5 C6 G5"],
-    ["Minuet in G - Bach", "D5 G4 A4 B4 C5 D5 G4 G4 E5 C5 D5 E5 F#5 G5 G4 G4 C5 D5 C5 B4 A4 B4 C5 B4 A4 G4 F#4 G4 A4 B4 G4 A4"],
-    ["Toccata and Fugue in D minor - Bach", "A5 G5 A5 G5 F5 E5 D5 C#5 D5 A4 G4 A4 E4 F4 C#4 D4"],
-    ["Jesu, Joy of Man's Desiring - Bach", "G4 A4 B4 D5 C5 C5 E5 D5 D5 G5 F#5 G5 D5 B4 G4 A4 B4 C5 D5 E5 D5 C5 B4 A4 B4 G4 F#4 G4 A4 D4 F#4 A4 C5 B4 A4 B4"],
-    ["Prelude in C (Well-Tempered Clavier) - Bach", "C4 E4 G4 C5 E5 G4 C5 E5 C4 D4 A4 D5 F5 A4 D5 F5 B3 D4 G4 D5 F5 G4 D5 F5 C4 E4 G4 C5 E5 G4 C5 E5"],
-    ["Badinerie - Bach", "B5 D6 B5 F#5 B5 F#5 D5 F#5 D5 B4"],
-    ["Spring (Four Seasons) - Vivaldi", "E5 G#5 G#5 G#5 F#5 E5 B5 B5 A5 G#5 G#5 G#5 F#5 E5 B5 B5 A5 G#5 A5 B5 A5 G#5 F#5"],
-    ["Clair de Lune - Debussy", "Ab5 Ab5 F5 F5 Eb5 F5 Eb5 Db5 Eb5 Db5 C5 Db5 C5 Bb4 C5 Bb4"],
-    ["Symphony No. 5 - Beethoven", "G4 G4 G4 Eb4 F4 F4 F4 D4 G4 G4 G4 Eb4 Ab4 Ab4 Ab4 G4 Eb5 Eb5 Eb5 C5"],
-    ["Nocturne Op. 9 No. 2 - Chopin", "Bb4 G5 F5 G5 F5 Eb5 Bb4 G5 C5 C6 G5 Bb5 Ab5 G5"],
-    ["In the Hall of the Mountain King - Grieg", "B3 C#4 D4 E4 F#4 D4 F#4 F4 C#4 F4 E4 C4 E4 B3 C#4 D4 E4 F#4 D4 F#4 B4 A4 F#4 D4 F#4 A4"],
-    ["Canon in D - Pachelbel", "F#5 E5 D5 C#5 B4 A4 B4 C#5 D5 C#5 B4 A4 G4 F#4 G4 E4"],
-    ["Gymnopedie No. 1 - Satie", "F#5 A5 G5 F#5 C#5 B4 C#5 D5 A4 F#4"],
-    ["The Blue Danube - Strauss", "D4 D4 F#4 A4 A4 A5 A5 F#5 F#5 D4 D4 F#4 A4 A4 A5 A5 G5 G5 C#4 C#4 E4 B4 B4 B5 B5 G5 G5 C#4 C#4 E4 B4 B4 B5 B5 F#5 F#5"],
+    // Classical pieces come whole from songs.json (Mutopia Project scores), not from here.
   ];
 
   const PC = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 };
@@ -56,7 +39,7 @@
   const LIBRARY = SONGS.map(([title, notes]) => {
     const full = notes.split(/\s+/).map(parse);
     const tune = collapse(full);
-    return { title, tune, steps: steps(tune) };
+    return { title, full, tune, steps: steps(tune) };
   });
 
   // Matching compares pitch classes (C, C#, D ... ignoring the octave) in any key, and forgives a
