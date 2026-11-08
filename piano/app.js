@@ -466,17 +466,18 @@
     const g = canvas.getContext("2d");
     g.setTransform(dpr, 0, 0, dpr, 0, 0);
     g.clearRect(0, 0, W, H);
-    // the staff is drawn for a 190px-tall box and scaled to fit (smaller in widescreen)
-    const k = H / 190;
+    // the staff is drawn for a 206px-tall box and scaled to fit (smaller in widescreen)
+    const k = H / 206;
     g.scale(k, k);
-    W = W / k; H = 190;
+    W = W / k; H = 206;
+    const showNames = k >= 0.8; // when the staff is small the names would be unreadable (the big name shows them)
     const css = getComputedStyle(document.documentElement);
     const ink = css.getPropertyValue("--ink").trim(), muted = css.getPropertyValue("--muted").trim();
     const brass = css.getPropertyValue("--brass").trim(), teal = css.getPropertyValue("--teal").trim();
     const line = css.getPropertyValue("--line").trim();
 
     const hs = 4.5;                 // half a staff space
-    const trebleTop = 34;            // F5 line
+    const trebleTop = 42;            // F5 line (room above for 8va notes)
     const tb = trebleTop + 8 * hs;   // E4 line
     const bt = tb + 10 * hs;         // A3 line
     const left = 52, right = W - 10;
@@ -554,7 +555,7 @@
       g.fillStyle = newest ? brass : muted;
       g.font = "700 10px " + getComputedStyle(document.body).fontFamily;
       g.textAlign = "center";
-      g.fillText(pcName(ev.notes[ev.notes.length - 1]), x, H - 6);
+      if (showNames) g.fillText(pcName(ev.notes[ev.notes.length - 1]), x, H - 6);
       g.textAlign = "start";
       g.globalAlpha = 1;
     });
@@ -569,7 +570,7 @@
         g.fillStyle = teal;
         g.font = "700 10px " + getComputedStyle(document.body).fontFamily;
         g.textAlign = "center";
-        g.fillText(pcName(m), x, H - 6);
+        if (showNames) g.fillText(pcName(m), x, H - 6);
         g.textAlign = "start";
       });
     }
