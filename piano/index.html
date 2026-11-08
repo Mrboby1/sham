@@ -292,7 +292,8 @@ input:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
   .foot { display: none; }
 }
 @media (orientation: landscape) and (min-width: 560px) {
-  body.playing .middle { display: block; }
+  body.playing .middle { display: block; flex: none; }
+  body.playing .song .chips:not(.lockline) { display: none; }
   body.playing .now, body.playing .songhead { display: none; }
   body.playing .song { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 4px 12px; min-height: 0; }
   body.playing .song .title { font-size: 16px; }
@@ -304,6 +305,10 @@ input:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
   #staff { height: 170px; }
   .big { font-size: 60px; }
 }
+.rollctl { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+.rollctl button { min-height: 32px; padding: 5px 12px; }
+.rollctl input[type=range] { width: 130px; accent-color: var(--teal); }
+.rollctl output { min-width: 3.2em; font-variant-numeric: tabular-nums; color: var(--ink); font-weight: 700; }
 /* Play-along: the falling-notes waterfall takes the staff's place, right above the keyboard. */
 .rollwrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 #roll { display: block; width: 100%; height: 100%; background: color-mix(in srgb, var(--panel) 70%, var(--bg)); border-radius: 10px 10px 0 0; }
@@ -418,6 +423,12 @@ body.playing .kbd-scroll { margin-top: 0; }
         <button id="recSave" type="button" disabled>Save</button>
         <button id="recCancel" type="button" class="ghost">Cancel</button>
       </div>
+    </div>
+    <div class="rollctl" id="rollctl" hidden>
+      <button id="rollPlay" type="button">Pause</button>
+      <label for="speed">Speed</label>
+      <input id="speed" type="range" min="20" max="150" step="5" value="60">
+      <output id="speedOut" for="speed">60%</output>
     </div>
     <p class="hint" id="songHint">Tap <b>Songs</b>, pick a piece and play along. It lights up the next keys and only moves on when you play the right one.</p>
   </section>

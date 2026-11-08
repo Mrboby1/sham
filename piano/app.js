@@ -451,7 +451,9 @@
       song.durs = b.map((t, i) => (i + 1 < b.length ? Math.max(0.25, Math.min(4, b[i + 1] - t)) : 1));
     }
     state.practice = { song, pos: 0 };
-    roll.beat = song.onsets[0] - 2;
+    roll.beat = song.onsets[0] - 2; // a short count-in before the first note
+    roll.running = true;
+    animateRoll();
     state.follow = practiceView();
     closeSongs();
     render();
@@ -662,6 +664,7 @@
       box.append(chips);
     }
     renderHand();
+    renderRollControls();
   }
 
   // ---------------------------------------------------------------- falling notes
@@ -669,7 +672,11 @@
   // in its finger's colour with the finger number. The bottom edge is "now". It waits for the player:
   // when the right note is played, everything slides down to the next one.
   const rollCanvas = $("roll");
-  const roll = { beat: 0, raf: 0 };
+  // Time runs at the tempo times the speed %, and stops at the next note until it is played
+  // ("wait for me"). Paused, the waterfall just steps to the next note as it is played.
+  const BPM = 80;
+  const roll = { beat: 0, raf: 0, running: true, last: 0 };
+  let speed = Math.max(20, Math.min(150, Number(store.get("speed", "60")) || 60));
   function rollTarget() {
     const p = state.practice;
     if (!p) return 0;
@@ -677,15 +684,33 @@
     return p.pos < o.length ? o[p.pos] : o[o.length - 1] + p.song.durs[o.length - 1];
   }
   function animateRoll() {
-    cancelAnimationFrame(roll.raf);
-    const tick = () => {
-      const target = rollTarget();
+    if (roll.raf) return; // already running
+    roll.last = performance.now();
+    roll.raf = requestAnimationFrame(rollFrame);
+  }
+  function rollFrame(now) {
+    const p = state.practice;
+    if (!p) { roll.raf = 0; return; }
+    const dt = Math.min(0.1, (now - roll.last) / 1000); // a hidden tab doesn't jump ahead
+    roll.last = now;
+    const target = rollTarget();
+    if (roll.running) {
+      // at the end there is nothing to wait for: run out to the last note's end
+      roll.beat = Math.min(target, roll.beat + dt * (BPM / 60) * (speed / 100));
+    } else {
       const d = target - roll.beat;
       roll.beat = Math.abs(d) < 0.002 || reduceMotion() ? target : roll.beat + d * 0.22;
-      drawRoll();
-      if (roll.beat !== target) roll.raf = requestAnimationFrame(tick);
-    };
-    roll.raf = requestAnimationFrame(tick);
+    }
+    drawRoll();
+    roll.raf = requestAnimationFrame(rollFrame);
+  }
+  function renderRollControls() {
+    const ctl = $("rollctl");
+    ctl.hidden = !state.practice;
+    $("rollPlay").textContent = roll.running ? "Pause" : "Play";
+    $("rollPlay").setAttribute("aria-pressed", String(!roll.running));
+    $("speed").value = speed;
+    $("speedOut").textContent = speed + "%";
   }
   function drawRoll() {
     const p = state.practice;
@@ -979,6 +1004,12 @@
   $("clear").addEventListener("click", () => clearAll(""));
   $("tune").addEventListener("click", startCalibration);
   $("songsBtn").addEventListener("click", openSongs);
+  $("rollPlay").addEventListener("click", () => { roll.running = !roll.running; renderRollControls(); animateRoll(); });
+  $("speed").addEventListener("input", (e) => {
+    speed = Number(e.target.value);
+    store.set("speed", String(speed));
+    $("speedOut").textContent = speed + "%";
+  });
   document.querySelectorAll("input[name=keynums]").forEach((r) => {
     r.checked = r.value === keyNums;
     r.addEventListener("change", () => { keyNums = r.value; store.set("keynums", r.value); render(); });

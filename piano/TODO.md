@@ -19,6 +19,8 @@ Live app: https://mrboby1.github.io/sham/piano/
    how long to hold it, coloured and numbered by finger. *(done 2026-11-08, first version)*
 8. **Projector "AR" mode**: project the app onto the real piano so the keys to play light up on the
    physical keyboard. This needs a projector and a full-screen mode that can be lined up with the real keys.
+9. **Smooth falling notes at tempo**: notes flow down continuously at the piece's speed, with a
+   speed % control and play/pause, and wait when the next note reaches the keys. *(done 2026-11-08)*
 
 ## Done
 
