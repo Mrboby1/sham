@@ -73,6 +73,7 @@ body {
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
+.top, .middle { display: flex; flex-direction: column; gap: 12px; }
 header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 h1 { margin: 0; font: 700 22px/1.1 var(--font-display); letter-spacing: 0.01em; }
 .status { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 6px; }
@@ -165,22 +166,66 @@ button:focus-visible, .seg input:focus-visible + label { outline: 2px solid var(
 .key.on .nm { visibility: visible; color: var(--brass-ink); }
 .key.next { box-shadow: inset 0 0 0 3px var(--teal); }
 .key.next .nm { visibility: visible; }
-.key .ord { display: none; width: 20px; height: 20px; border-radius: 50%; background: var(--teal); color: #071b19; font-size: 12px; font-weight: 700; align-items: center; justify-content: center; margin-bottom: 6px; }
+.key .ord { display: none; width: min(20px, calc(var(--wkey) - 2px)); aspect-ratio: 1; border-radius: 50%; background: var(--teal); color: #071b19; font-size: min(12px, calc(var(--wkey) * 0.6)); font-weight: 700; align-items: center; justify-content: center; margin-bottom: 6px; }
 .key.next .ord { display: flex; }
-.black .ord { width: 16px; height: 16px; font-size: 10px; }
+.black .ord { width: min(16px, calc(var(--wkey) * 0.6)); }
 .foot { font-size: 12px; color: var(--muted); }
-@media (min-width: 700px) { :root { --wkey: 40px; } .big { font-size: 68px; } }
+
+/* All 88 keys always fit the width. Narrow keys drop their labels (C keys keep the octave). */
+.kbd-scroll { overflow: hidden; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.kbd { margin-inline: 0; }
+.kbd.slim .white:not(.c) .nm { visibility: hidden; }
+.kbd.slim .white .nm { font-size: 9px; }
+.kbd.slim .white { padding-bottom: 4px; }
+.kbd.tiny .nm { display: none; }
+.kbd.tiny { height: 120px; }
+.kbd.slim .key.on .nm, .kbd.slim .key.next .nm { visibility: visible; }
+.kbd.slim .black .nm, .kbd.slim .key.next .nm { display: none; }
+.rotate { display: none; }
+@media (orientation: portrait) and (max-width: 700px) { .rotate { display: inline; } }
+@media (min-width: 900px) { .big { font-size: 68px; } }
+
+/* Widescreen: phone turned sideways (or any wide screen) - one screen, nothing scrolls.
+   Top: controls in one row. Middle: note | staff | tune. Bottom: the keyboard fills the rest. */
+@media (orientation: landscape) and (min-width: 560px) {
+  html, body { overflow: hidden; }
+  .app { height: 100%; min-height: 0; gap: 8px; padding-top: max(6px, env(safe-area-inset-top, 0px)); padding-bottom: max(6px, env(safe-area-inset-bottom, 0px)); }
+  .top { flex-direction: row; align-items: center; gap: 14px; }
+  .top header { flex: none; flex-direction: column; align-items: flex-start; gap: 2px; }
+  .top h1 { font-size: 18px; }
+  .controls { padding: 0; flex-wrap: nowrap; overflow-x: auto; }
+  button, .seg label { min-height: 34px; padding: 7px 10px; font-size: 13px; }
+  .middle { display: grid; grid-template-columns: minmax(150px, 0.8fr) 2fr minmax(170px, 0.9fr); gap: 12px; align-items: stretch; min-height: 0; flex: 0 1 auto; }
+  .middle > * { padding-inline: 0; min-width: 0; }
+  .now { grid-template-columns: 1fr; min-height: 0; align-content: center; gap: 2px; }
+  .big { font-size: 44px; }
+  .alt { font-size: 14px; }
+  .meter { max-width: none; }
+  #staff { height: 132px; }
+  .song { min-height: 0; justify-content: center; }
+  .song .title { font-size: 17px; }
+  .chip { font-size: 12px; padding: 3px 8px; }
+  .hint { font-size: 13px; }
+  .kbd-scroll { flex: 1 1 auto; min-height: 90px; display: flex; padding-bottom: 0; margin-top: 0; }
+  .kbd, .kbd.tiny { height: auto; flex: 1; }
+  .foot { display: none; }
+}
+@media (orientation: landscape) and (min-width: 560px) and (min-height: 600px) {
+  #staff { height: 170px; }
+  .big { font-size: 60px; }
+}
 @media (prefers-reduced-motion: reduce) { .meter b { transition: none; } }
 </style>
 </head>
 <body>
 <div class="app">
-  <header class="wrap">
+  <div class="top wrap">
+  <header>
     <h1>Piano Notes</h1>
     <div class="status" id="status"><i></i><span>Mic off</span></div>
   </header>
 
-  <div class="controls wrap">
+  <div class="controls">
     <button id="listen" type="button">Listen</button>
     <div class="seg" role="radiogroup" aria-label="What to listen for">
       <input type="radio" name="mode" id="mode-single" value="single" checked><label for="mode-single">Notes</label>
@@ -193,9 +238,11 @@ button:focus-visible, .seg input:focus-visible + label { outline: 2px solid var(
     <button id="demo" type="button" class="ghost">Demo</button>
     <button id="clear" type="button" class="ghost">Clear</button>
   </div>
+  </div>
   <p class="msg wrap" id="msg" hidden></p>
 
-  <section class="now wrap" aria-live="polite">
+  <div class="middle wrap">
+  <section class="now" aria-live="polite">
     <div class="big idle" id="big">&ndash;</div>
     <div class="detail">
       <div class="alt" id="alt">Tap <b>Listen</b> and play, or tap the keys.</div>
@@ -204,15 +251,16 @@ button:focus-visible, .seg input:focus-visible + label { outline: 2px solid var(
     </div>
   </section>
 
-  <div class="wrap"><div class="staff"><canvas id="staff" aria-label="Notes played, on a grand staff"></canvas></div></div>
+  <div class="staff"><canvas id="staff" aria-label="Notes played, on a grand staff"></canvas></div>
 
-  <section class="song wrap" id="song">
+  <section class="song" id="song">
     <h2>Tune</h2>
     <p class="hint" id="songHint">Play four notes of a tune it knows and it shows what comes next.</p>
   </section>
+  </div>
 
   <div class="kbd-scroll" id="kbdScroll"><div class="kbd" id="kbd"></div></div>
-  <div class="foot wrap">88 keys, A0 to C8. Swipe the keyboard sideways.</div>
+  <div class="foot wrap">All 88 keys, A0 to C8.<span class="rotate"> Turn your phone sideways for bigger keys.</span></div>
 </div>
 
 <script src="detect.js"></script>

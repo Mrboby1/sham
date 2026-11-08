@@ -37,7 +37,13 @@
   function buildKeyboard() {
     kbd.textContent = "";
     keys.clear();
-    const w = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--wkey")) || 34;
+    // all 52 white keys always fit the screen width
+    const cs = getComputedStyle(scroller);
+    const avail = scroller.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    const w = Math.max(5, Math.floor((avail / 52) * 100) / 100);
+    kbd.style.setProperty("--wkey", w + "px");
+    kbd.classList.toggle("slim", w < 24);
+    kbd.classList.toggle("tiny", w < 12);
     let white = 0;
     for (let m = A0; m <= C8; m++) {
       const el = document.createElement("div");
@@ -337,12 +343,16 @@
   const canvas = $("staff");
   function drawStaff() {
     const dpr = window.devicePixelRatio || 1;
-    const W = canvas.clientWidth, H = canvas.clientHeight;
+    let W = canvas.clientWidth, H = canvas.clientHeight;
     if (!W) return;
-    if (canvas.width !== Math.round(W * dpr)) { canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr); }
+    if (canvas.width !== Math.round(W * dpr) || canvas.height !== Math.round(H * dpr)) { canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr); }
     const g = canvas.getContext("2d");
     g.setTransform(dpr, 0, 0, dpr, 0, 0);
     g.clearRect(0, 0, W, H);
+    // the staff is drawn for a 190px-tall box and scaled to fit (smaller in widescreen)
+    const k = H / 190;
+    g.scale(k, k);
+    W = W / k; H = 190;
     const css = getComputedStyle(document.documentElement);
     const ink = css.getPropertyValue("--ink").trim(), muted = css.getPropertyValue("--muted").trim();
     const brass = css.getPropertyValue("--brass").trim(), teal = css.getPropertyValue("--teal").trim();
