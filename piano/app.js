@@ -230,6 +230,7 @@
     return {
       title: p.song.title + (p.song.composer ? " - " + p.song.composer : ""),
       at: p.pos, of: n.length, next: n.slice(p.pos, p.pos + 4), done: p.pos >= n.length,
+      fingers: (p.song.fingers || []).slice(p.pos, p.pos + 4),
       sure: true, lost: 0, practice: true,
     };
   }
@@ -431,6 +432,7 @@
     const song = SONGS.find((x) => x.key === key);
     if (!song) return;
     clearAll("");
+    if (!song.fingers) song.fingers = window.Fingering.fingerRH(song.notes);
     state.practice = { song, pos: 0 };
     state.follow = practiceView();
     closeSongs();
@@ -572,7 +574,9 @@
       const ni = next.indexOf(m);
       el.classList.toggle("on", on);
       el.classList.toggle("next", ni >= 0 && !on);
-      el.querySelector(".ord").textContent = ni < 0 ? "" : calKey !== null ? "♪" : ni + 1;
+      el.classList.toggle("first", ni === 0);
+      const useFinger = calKey === null && state.follow && state.follow.fingers && keyNums === "finger";
+      el.querySelector(".ord").textContent = ni < 0 ? "" : calKey !== null ? "♪" : useFinger ? state.follow.fingers[ni] : ni + 1;
     }
     const tuned = $("tuned");
     tuned.hidden = !profile;
@@ -610,7 +614,7 @@
     lock.className = "chips lockline";
     if (state.practice) {
       const done = f.done || f.at >= f.of;
-      lock.textContent = done ? "Finished! " : `Playing along · ${Math.round((f.at / f.of) * 100)}% done · wrong notes are ignored `;
+      lock.textContent = done ? "Finished! " : `${Math.round((f.at / f.of) * 100)}% done · wrong notes are ignored · `;
       const again = document.createElement("button");
       again.type = "button";
       again.className = "linkbtn";
@@ -627,14 +631,29 @@
       const chips = document.createElement("div");
       chips.className = "chips";
       chips.setAttribute("aria-label", "Play next");
-      f.next.forEach((m) => {
+      f.next.forEach((m, i) => {
         const c = document.createElement("span");
         c.className = "chip";
-        c.textContent = fullName(m);
+        c.textContent = fullName(m) + (f.fingers ? " · " + f.fingers[i] : "");
         chips.append(c);
       });
       box.append(chips);
     }
+    renderHand();
+  }
+
+  // ---------------------------------------------------------------- the hand picture
+  const FINGER_NAMES = ["", "thumb", "index finger", "middle finger", "ring finger", "little finger"];
+  let keyNums = store.get("keynums", "finger");
+  function renderHand() {
+    const f = state.follow;
+    const show = !!(state.practice && f && f.fingers && f.fingers.length);
+    $("handbox").hidden = !show;
+    document.querySelector(".now").classList.toggle("practising", show);
+    if (!show) return;
+    const finger = f.fingers[0];
+    document.querySelectorAll("#hand .finger").forEach((el) => el.classList.toggle("on", Number(el.dataset.f) === finger));
+    $("handText").textContent = `Next: ${fullName(f.next[0])} with finger ${finger}, your ${FINGER_NAMES[finger]}.`;
   }
 
   // grand staff: treble from E4 (bottom line) up, bass from A3 (top line) down; C4 and up on treble
@@ -746,9 +765,17 @@
       g.strokeStyle = line; g.setLineDash([3, 4]); g.lineWidth = 1;
       g.beginPath(); g.moveTo(x0 - 8, trebleTop - 8); g.lineTo(x0 - 8, bt + 8 * hs + 8); g.stroke();
       g.setLineDash([]);
+      const fingersNext = state.follow && state.follow.fingers ? state.follow.fingers : null;
       next.forEach((m, i) => {
         const x = x0 + 8 + i * colW;
         head(x, m, teal, true, 1 - i * 0.22);
+        if (fingersNext) {
+          g.fillStyle = teal;
+          g.font = "700 12px " + getComputedStyle(document.body).fontFamily;
+          g.textAlign = "center";
+          g.fillText(String(fingersNext[i]), x, Math.min(place(m).y - 12, trebleTop - 6));
+          g.textAlign = "start";
+        }
         g.fillStyle = teal;
         g.font = "700 10px " + getComputedStyle(document.body).fontFamily;
         g.textAlign = "center";
@@ -804,6 +831,10 @@
   $("clear").addEventListener("click", () => clearAll(""));
   $("tune").addEventListener("click", startCalibration);
   $("songsBtn").addEventListener("click", openSongs);
+  document.querySelectorAll("input[name=keynums]").forEach((r) => {
+    r.checked = r.value === keyNums;
+    r.addEventListener("change", () => { keyNums = r.value; store.set("keynums", r.value); renderKeys(); });
+  });
   // Copy what was played (names with octaves, both naming styles) to paste into a chat.
   $("copyNotes").addEventListener("click", async () => {
     const seq = state.history.map((h) => h.notes.map((m) => LETTER[m % 12] + octave(m)).join("+"));

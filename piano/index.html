@@ -127,6 +127,20 @@ button:focus-visible, .seg input:focus-visible + label { outline: 2px solid var(
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .chip { font-size: 14px; font-weight: 700; padding: 5px 10px; border-radius: 999px; border: 1.5px solid var(--teal); color: var(--teal); font-variant-numeric: tabular-nums; }
 .chip:first-child { background: var(--teal); color: var(--bg); }
+.handbox { display: flex; gap: 12px; align-items: center; }
+#hand { width: 70px; height: 66px; flex: none; }
+.now.practising .meter, .now.practising .handkey, .now.practising .freq { display: none; }
+#hand .palm { fill: var(--line); }
+#hand .finger rect { fill: var(--line); stroke: var(--muted); stroke-width: 1; }
+#hand .finger text { fill: var(--muted); font: 700 11px var(--font-ui); text-anchor: middle; }
+#hand .finger.on rect { fill: var(--teal); stroke: var(--teal); }
+#hand .finger.on text { fill: #071b19; }
+.handside { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.handside p { margin: 0; font-size: 13px; }
+.seg-sm label { min-height: 28px; padding: 4px 7px; font-size: 11px; }
+.handside .seg { align-self: flex-start; max-width: 100%; }
+.key.next.first { box-shadow: inset 0 0 0 4px var(--teal); }
+.key.next:not(.first) .ord { background: transparent; color: var(--teal); border: 2px solid var(--teal); }
 .hint { color: var(--muted); font-size: 14px; margin: 0; }
 .lockline { font-size: 12px; color: var(--muted); }
 .tuned { font-size: 11px; font-weight: 700; letter-spacing: 0.04em; color: var(--teal); border: 1px solid var(--teal); border-radius: 999px; padding: 2px 8px; white-space: nowrap; }
@@ -337,6 +351,23 @@ input:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
       <div class="freq" id="freq">Middle C is C4 (Do).</div>
       <div class="handkey"><b class="l">● Left hand</b><b class="r">● Right hand</b></div>
       <div class="meter off" id="meter" title="Tuning: centre = in tune"><b id="needle"></b></div>
+      <div class="handbox" id="handbox" hidden>
+        <svg id="hand" viewBox="0 0 104 100" role="img" aria-label="Right hand, fingers numbered 1 (thumb) to 5 (little finger)">
+          <rect class="palm" x="26" y="54" width="70" height="42" rx="16"/>
+          <g class="finger" data-f="1"><rect x="4" y="52" width="17" height="34" rx="8.5" transform="rotate(-28 12 69)"/><text x="10" y="60">1</text></g>
+          <g class="finger" data-f="2"><rect x="28" y="16" width="15" height="46" rx="7.5"/><text x="35.5" y="30">2</text></g>
+          <g class="finger" data-f="3"><rect x="46" y="6" width="15" height="56" rx="7.5"/><text x="53.5" y="20">3</text></g>
+          <g class="finger" data-f="4"><rect x="64" y="12" width="15" height="50" rx="7.5"/><text x="71.5" y="26">4</text></g>
+          <g class="finger" data-f="5"><rect x="82" y="28" width="13" height="36" rx="6.5"/><text x="88.5" y="41">5</text></g>
+        </svg>
+        <div class="handside">
+          <p id="handText"></p>
+          <div class="seg seg-sm" role="radiogroup" aria-label="Numbers on the keys">
+            <input type="radio" name="keynums" id="keynums-finger" value="finger" checked><label for="keynums-finger">Fingers</label>
+            <input type="radio" name="keynums" id="keynums-order" value="order"><label for="keynums-order">Order</label>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -363,6 +394,7 @@ input:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
 
 <script src="detect.js"></script>
 <script src="melody.js"></script>
+<script src="fingering.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
