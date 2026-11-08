@@ -81,7 +81,7 @@
     for (let m = A0; m <= C8; m++) {
       const el = document.createElement("div");
       const black = IS_BLACK[m % 12] === 1;
-      el.className = "key " + (black ? "black" : "white") + (m % 12 === 0 ? " c" : "") + (m === A0 ? " clearkey" : "");
+      el.className = "key " + (black ? "black" : "white") + (m % 12 === 0 ? " c" : "") + (m === A0 ? " clearkey" : "") + (isLeft(m) ? " lh" : "");
       el.dataset.midi = m;
       el.setAttribute("role", "button");
       el.setAttribute("aria-label", fullName(m));
@@ -164,17 +164,30 @@
   }
 
   // ---------------------------------------------------------------- note events
+  // Left hand = below middle C. When both hands play, the tune is the right hand's top note; a
+  // melody played by one hand alone counts wherever it is on the keyboard.
+  const SPLIT = 60;
+  const isLeft = (m) => m < SPLIT;
+  function melodyNote(notes) {
+    const right = notes.filter((m) => !isLeft(m));
+    return (right.length ? right : notes)[(right.length ? right : notes).length - 1];
+  }
   function noteEvent(notes) {
     notes = [...new Set(notes)].sort((a, b) => a - b);
     if (notes.some((n) => CLEAR_KEYS.includes(n))) { clearAll("Cleared. Play a new piece."); return; }
     state.history.push({ notes, t: performance.now() });
     if (state.recording) {
-      state.recording.push(notes[notes.length - 1]);
+      state.recording.push(melodyNote(notes));
       if (state.history.length > 64) state.history.shift();
       return;
     }
     if (state.history.length > 64) state.history.shift();
-    state.melody.push(notes[notes.length - 1]); // the top note carries the tune
+    // While the right hand is playing, left-hand notes well below it are accompaniment, not the tune
+    // (a melody that just dips under middle C still counts).
+    const now = performance.now();
+    if (notes.some((m) => !isLeft(m))) { state.lastRight = now; state.lastRightNote = melodyNote(notes); }
+    else if (now - (state.lastRight || -1e9) < 4000 && notes[notes.length - 1] < state.lastRightNote - 7) { render(); return; }
+    state.melody.push(melodyNote(notes)); // the right hand's top note carries the tune
     if (state.melody.length > 64) state.melody.shift();
     state.follow = follow(state.melody, state.follow);
     scrollToKey(state.follow && state.follow.next.length ? state.follow.next[0] : notes[0]);
@@ -493,7 +506,10 @@
     const shown = notes.slice(-3);
     shown.forEach((m, i) => {
       if (i) big.append(" ");
-      big.append(pcName(m));
+      const nm = document.createElement("span");
+      nm.textContent = pcName(m);
+      if (isLeft(m)) nm.className = "lh";
+      big.append(nm);
       const s = document.createElement("sub");
       s.textContent = octave(m);
       big.append(s);
@@ -602,6 +618,7 @@
     const css = getComputedStyle(document.documentElement);
     const ink = css.getPropertyValue("--ink").trim(), muted = css.getPropertyValue("--muted").trim();
     const brass = css.getPropertyValue("--brass").trim(), teal = css.getPropertyValue("--teal").trim();
+    const red = css.getPropertyValue("--lh").trim();
     const line = css.getPropertyValue("--line").trim();
 
     const hs = 4.5;                 // half a staff space
@@ -678,7 +695,7 @@
       const x = left + 12 + i * colW;
       const newest = i === events.length - 1;
       const alpha = 0.45 + 0.55 * ((i + 1) / events.length);
-      ev.notes.forEach((m) => head(x, m, newest ? brass : ink, false, alpha));
+      ev.notes.forEach((m) => head(x, m, isLeft(m) ? red : newest ? brass : ink, false, alpha));
       g.globalAlpha = alpha;
       g.fillStyle = newest ? brass : muted;
       g.font = "700 10px " + getComputedStyle(document.body).fontFamily;

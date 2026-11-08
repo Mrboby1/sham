@@ -27,6 +27,7 @@
   --ink: #eceae4;
   --muted: #8f97a3;
   --brass: #e2b04e;
+  --lh: #f0645c;
   --brass-ink: #1d1606;
   --teal: #4fcac0;
   --danger: #ff8a7a;
@@ -42,13 +43,13 @@
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
     --bg: #edeff2; --panel: #ffffff; --line: #d6dae1; --ink: #16191e; --muted: #5d6573;
-    --brass: #b07d12; --brass-ink: #ffffff; --teal: #0d8a81; --danger: #b3261e;
+    --brass: #b07d12; --brass-ink: #ffffff; --teal: #0d8a81; --danger: #b3261e; --lh: #c8322b;
     --ivory-edge: #b9b5aa; color-scheme: light;
   }
 }
 :root[data-theme="light"] {
   --bg: #edeff2; --panel: #ffffff; --line: #d6dae1; --ink: #16191e; --muted: #5d6573;
-  --brass: #b07d12; --brass-ink: #ffffff; --teal: #0d8a81; --danger: #b3261e;
+  --brass: #b07d12; --brass-ink: #ffffff; --teal: #0d8a81; --danger: #b3261e; --lh: #c8322b;
   --ivory-edge: #b9b5aa; color-scheme: light;
 }
 * { box-sizing: border-box; }
@@ -212,6 +213,13 @@ input:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
 }
 .black .nm { visibility: hidden; }
 .key.on { background: var(--brass); border-color: color-mix(in srgb, var(--brass) 70%, #000); color: var(--brass-ink); }
+.key.on.lh { background: var(--lh); border-color: color-mix(in srgb, var(--lh) 70%, #000); color: #fff; }
+.key.on.lh .nm { color: #fff; }
+.big .lh { color: var(--lh); }
+.handkey { display: inline-flex; gap: 10px; font-size: 12px; color: var(--muted); }
+.handkey b { font-weight: 700; }
+.handkey .l { color: var(--lh); }
+.handkey .r { color: var(--brass); }
 .key.on .nm { visibility: visible; color: var(--brass-ink); }
 .key.next { box-shadow: inset 0 0 0 3px var(--teal); }
 .key.next .nm { visibility: visible; }
@@ -327,6 +335,7 @@ input:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
     <div class="detail">
       <div class="alt" id="alt">Tap <b>Listen</b> and play, or tap the keys.</div>
       <div class="freq" id="freq">Middle C is C4 (Do).</div>
+      <div class="handkey"><b class="l">● Left hand</b><b class="r">● Right hand</b></div>
       <div class="meter off" id="meter" title="Tuning: centre = in tune"><b id="needle"></b></div>
     </div>
   </section>
