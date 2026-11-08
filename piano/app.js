@@ -750,6 +750,21 @@
   $("clear").addEventListener("click", () => clearAll(""));
   $("tune").addEventListener("click", startCalibration);
   $("songsBtn").addEventListener("click", openSongs);
+  // Copy what was played (names with octaves, both naming styles) to paste into a chat.
+  $("copyNotes").addEventListener("click", async () => {
+    const seq = state.history.map((h) => h.notes.map((m) => LETTER[m % 12] + octave(m)).join("+"));
+    const btn = $("copyNotes");
+    if (!seq.length) { btn.textContent = "Play something first"; setTimeout(() => (btn.textContent = "Copy the notes I played"), 1800); return; }
+    const text = "Notes I played: " + seq.join(" ");
+    try {
+      await navigator.clipboard.writeText(text);
+      btn.textContent = `Copied ${seq.length} notes`;
+    } catch (e) {
+      showMsg(text); // clipboard refused: show it so it can be selected and copied by hand
+      btn.textContent = "Select the notes above to copy";
+    }
+    setTimeout(() => (btn.textContent = "Copy the notes I played"), 2500);
+  });
   $("songsClose").addEventListener("click", closeSongs);
   $("songSearch").addEventListener("input", (e) => buildSongList(e.target.value));
   $("recStart").addEventListener("click", startRecording);

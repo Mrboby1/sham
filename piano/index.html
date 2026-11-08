@@ -153,6 +153,7 @@ input[type=text], input[type=search] {
 input:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
 .rec { display: flex; flex-direction: column; gap: 8px; }
 .rec p { margin: 0; font-weight: 700; color: var(--danger); }
+.songhead { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
 .linkbtn { background: none; border: 0; padding: 0; min-height: 0; color: var(--teal); font-size: 12px; text-decoration: underline; }
 .sheet {
   position: fixed; z-index: 30;
@@ -333,7 +334,7 @@ input:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
   <div class="staff"><canvas id="staff" aria-label="Notes played, on a grand staff"></canvas></div>
 
   <section class="song" id="song">
-    <h2>Tune</h2>
+    <div class="songhead"><h2>Tune</h2><button id="copyNotes" type="button" class="linkbtn">Copy the notes I played</button></div>
     <div class="rec" id="rec" hidden>
       <p id="recCount">Recording. Play your melody.</p>
       <label class="sr" for="recName">Name</label>
