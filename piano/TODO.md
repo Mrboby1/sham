@@ -43,12 +43,13 @@ Live app: https://mrboby1.github.io/sham/piano/
     price, a price target and a stop. Each is scored afterwards on real prices. *(done 2026-11-09)*
 17. **Opening a trading account** with the least paperwork. *(answered in Telegram 2026-11-09:
     an Israeli broker app for simple stock trading; Interactive Brokers for puts)*
+18. **Add Bach's Toccata and Fugue in D minor** (BWV 565) to the songs. *(done 2026-11-09)*
 
 ## Done
 
 - 88-key keyboard, listening through the mic, note names (C D E / Do Re Mi), grand staff
 - Widescreen layout with all 88 keys always on screen
-- Classical library: 17 complete pieces + 12 traditional tunes + "Record my own"
+- Classical library: 18 complete pieces + 12 traditional tunes + "Record my own"
 - Lock onto a piece, clear with the lowest key (A0)
 - "Tune to my piano" (room noise + this piano's tuning)
 - Songs tab and play-following: only the right note moves on, wrong notes are ignored

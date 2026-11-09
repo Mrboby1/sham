@@ -16,6 +16,7 @@ Melodies taken from Creative Commons Attribution-ShareAlike scores are shared un
 | Minuet in G | Bach | BachJS/BWVAnh114/anna-magdalena-04 | Public Domain |
 | Invention No. 1 | Bach | BachJS/BWV772/bach-invention-01 | Creative Commons Attribution-ShareAlike 3.0 |
 | Air on the G String | Bach | BachJS/BWV1068/bach-air/bach-air-lys | Creative Commons Attribution-ShareAlike 3.0 |
+| Toccata and Fugue in D minor | Bach | BachJS/BWV565/ToccataFugue | Public Domain |
 | Clair de Lune | Debussy | DebussyC/L75/debussy_Ste_Bergamesq_Clair | Public Domain |
 | Arabesque No. 1 | Debussy | DebussyC/L66/debussy_Arabesque_1 | Public Domain |
 | Gymnopedie No. 1 | Satie | SatieE/gymnopedie_1 | Public Domain |

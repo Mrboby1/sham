@@ -33,6 +33,7 @@ PIECES = [
     ("Minuet in G", "Bach", "ftp/BachJS/BWVAnh114/anna-magdalena-04", "anna-magdalena-04.ly"),
     ("Invention No. 1", "Bach", "ftp/BachJS/BWV772/bach-invention-01", "bach-invention-01.ly"),
     ("Air on the G String", "Bach", "ftp/BachJS/BWV1068/bach-air/bach-air-lys", "bach-air-score.ly"),
+    ("Toccata and Fugue in D minor", "Bach", "ftp/BachJS/BWV565/ToccataFugue", "ToccataFugue.ly"),
     ("Clair de Lune", "Debussy", "ftp/DebussyC/L75/debussy_Ste_Bergamesq_Clair", "debussy_Ste_Bergamesq_Clair.ly"),
     ("Arabesque No. 1", "Debussy", "ftp/DebussyC/L66/debussy_Arabesque_1", "debussy_Arabesque_1.ly"),
     ("Gymnopedie No. 1", "Satie", "ftp/SatieE/gymnopedie_1", "gymnopedie_1.ly"),
@@ -108,10 +109,10 @@ def melody(mid_path):
     top = max(tracks, key=lambda ns: sum(n for _, n in ns) / len(ns))
     by_onset = {}
     for t, n in top:
-        k = round(t / tpb * 8)  # 32nd-note grid
+        k = round(t / tpb * 16)  # 64th-note grid (fast runs, e.g. the Toccata, need it)
         by_onset[k] = max(by_onset.get(k, 0), n)
     keys = sorted(by_onset)
-    return [by_onset[k] for k in keys], [round(k / 8, 3) for k in keys]
+    return [by_onset[k] for k in keys], [round(k / 16, 4) for k in keys]
 
 
 def license_of(dest):
