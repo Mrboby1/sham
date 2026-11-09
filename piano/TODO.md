@@ -38,6 +38,9 @@ Live app: https://mrboby1.github.io/sham/piano/
     updates it every morning, see news/DAILY.md)*
 14. **Michael Burry's Palantir short**: how relevant is it today, is it too late to join, is it a
     wrong bet? *(answered in Telegram 2026-11-09)*
+15. **Signal: direct market calls** per asset, e.g. "European defence stocks ▼", with how likely and by when.
+16. **Signal: trade ideas**: who suffers most directly from each event, and put ideas with an entry
+    price, a price target and a stop. Each is scored afterwards on real prices.
 
 ## Done
 
