@@ -249,6 +249,9 @@
   // ---------------------------------------------------------------- microphone loop
   let stream = null, analyser = null, timeBuf = null, freqBuf = null, raf = 0, wake = null;
   const det = { noise: 0.002, env: 0, held: null, cand: null, candN: 0, quiet: 0, lastT: 0, chordKey: "", freq: 0 };
+  // Play-along hearing: each key's level over time, keys that just got louder (a hammer strike), and
+  // when each key last moved the piece on.
+  const hear = { hist: new Map(), pend: new Map() };
 
   async function startListening() {
     showMsg("");
@@ -309,6 +312,7 @@
     det.env = Math.max(r, det.env * 0.9);
 
     if (r < gate) {
+      if (state.practice) practiceHear(now, sr, true);
       if (++det.quiet > 4 && (det.held !== null || state.sounding.length)) {
         det.held = null; det.chordKey = ""; det.freq = 0;
         state.sounding = [];
@@ -318,6 +322,7 @@
     }
     det.quiet = 0;
     const tapEcho = now < state.tapUntil;
+    if (state.practice && !tapEcho) practiceHear(now, sr, false);
 
     if (state.mode === "single") {
       const p = yinPitch(timeBuf.subarray(timeBuf.length - 4096), sr);
@@ -336,7 +341,7 @@
       if (det.candN >= 2) {
         det.held = m;
         state.sounding = [m];
-        if ((isNew || again) && !tapEcho) noteEvent([m]);
+        if ((isNew || again) && !tapEcho && (!state.practice || CLEAR_KEYS.includes(m))) noteEvent([m]);
         render();
       }
     } else {
@@ -354,11 +359,92 @@
         const prev = det.chordKey ? det.chordKey.split(",").map(Number) : [];
         const added = notes.some((n) => !prev.includes(n));
         state.sounding = notes;
-        if ((added || strike) && key !== det.chordKey && !tapEcho) noteEvent(notes);
-        else if (strike && !tapEcho && key === det.chordKey) noteEvent(notes);
+        if ((!state.practice || notes.some((c) => CLEAR_KEYS.includes(c))) && (added || strike) && key !== det.chordKey && !tapEcho) noteEvent(notes);
+        else if (!state.practice && strike && !tapEcho && key === det.chordKey) noteEvent(notes);
         det.chordKey = key;
         render();
       }
+    }
+  }
+
+  // Play-along listening. A real piano rings: with the pedal, or just legato, the last notes are
+  // still sounding when the next one is struck, and the same key is often struck twice in a row.
+  // So the app doesn't ask "which single pitch is loudest". It watches the next few keys of the piece:
+  //  - each key's level is measured at its own harmonics over a short window (85 ms), so a strike
+  //    shows up as a jump even while that key, or others, are still ringing;
+  //  - a jump (x1.4 over its loudest moment 70-200 ms ago: notes ringing together make each other's
+  //    level wobble, and a wobble never beats its own peaks), bigger than the jump of the keys
+  //    on either side, is a possible strike of that key (a neighbour's strike leaks in, but less);
+  //    Its own lowest harmonics must jump too: a note a fifth or an octave away shares some upper
+  //    harmonics with it, never the lowest ones;
+  //  - 0.1 s later it must still be up (not just the hammer's noise) and the chord finder must hear
+  //    that note, in any octave. Then the piece moves on, one note per strike. Only the expected
+  //    note, or the one after it, counts; anything else is ignored.
+  const HEAR_N = 4096;
+  const hann = new Float32Array(HEAR_N).map((_, i) => 0.5 - 0.5 * Math.cos((2 * Math.PI * i) / (HEAR_N - 1)));
+  function keyLevel(m, sr) { // [all of its harmonics, its lowest two that a phone hears]
+    const x = timeBuf.subarray(timeBuf.length - HEAR_N);
+    const f0 = midiToFreq(m) * Math.pow(2, offsetAt(m) / 1200);
+    let sum = 0, low = 0, nLow = 0;
+    for (let h = 1; h <= 6; h++) {
+      const f = f0 * h;
+      if (f > 4500) break;
+      if (f < 120) continue; // a phone mic hears little down there; the higher harmonics do the work
+      const w = (2 * Math.PI * f) / sr, c = 2 * Math.cos(w);
+      let s1 = 0, s2 = 0;
+      for (let i = 0; i < HEAR_N; i++) { const s0 = x[i] * hann[i] + c * s1 - s2; s2 = s1; s1 = s0; }
+      const amp = Math.sqrt(Math.max(0, s1 * s1 + s2 * s2 - c * s1 * s2));
+      sum += amp;
+      if (nLow < 2) { low += amp; nLow++; }
+    }
+    return [sum, low];
+  }
+  function practiceHear(now, sr, quiet) {
+    const p = state.practice, n = p.song.notes;
+    if (p.pos >= n.length || !analyser) return;
+    const watch = [...new Set(n.slice(p.pos, p.pos + 4))];
+    const keysNow = new Set();
+    for (const m of watch) keysNow.add(m - 1).add(m).add(m + 1);
+    const level = new Map(), rise = new Map(), base = new Map(), lowUp = new Map();
+    for (const m of keysNow) {
+      const [a, l] = quiet ? [0, 0] : keyLevel(m, sr);
+      const h = hear.hist.get(m) || [];
+      const old = h.slice(0, -2), ready = old.length > 0;
+      const lo = ready ? Math.max(...old.map((v) => v[0])) : a;
+      const lowLo = ready ? Math.max(...old.map((v) => v[1])) : l;
+      level.set(m, a); base.set(m, lo); rise.set(m, ready ? a - lo : 0);
+      lowUp.set(m, ready && l > 1.4 * lowLo);
+      h.push([a, l]);
+      if (h.length > 6) h.shift();
+      hear.hist.set(m, h);
+    }
+    for (const m of watch) {
+      const lo = base.get(m), up = rise.get(m);
+      if (!hear.pend.has(m) && up > 0 && level.get(m) > 1.4 * lo && lowUp.get(m) && up > rise.get(m - 1) && up > rise.get(m + 1)) {
+        hear.pend.set(m, { t: now, base: lo });
+      }
+    }
+    for (const [m, q] of hear.pend) if (now - q.t > 450 || !watch.includes(m)) hear.pend.delete(m);
+    if (quiet) return;
+    let sounding = null;
+    for (let d = 0; d < 2; d++) {
+      const want = n[p.pos + d];
+      if (want === undefined) break;
+      const q = hear.pend.get(want);
+      if (!q || now - q.t < 100 || level.get(want) < 1.2 * q.base) continue;
+      if (!sounding) {
+        analyser.getFloatFrequencyData(freqBuf);
+        const mag = new Float32Array(freqBuf.length);
+        for (let i = 0; i < mag.length; i++) mag[i] = Math.pow(10, freqBuf[i] / 20);
+        sounding = chordNotes(mag, sr * Math.pow(2, -avgOffset() / 1200), analyser.fftSize, { maxNotes: 6, relative: 0.15 }).map((x) => x.midi);
+      }
+      if (!sounding.some((m) => pcEq(m, want))) continue;
+      // One strike, one step: whatever else this strike stirred up doesn't count as well, and every
+      // key's next strike is measured from where it is now.
+      hear.pend.clear();
+      for (const [m, h] of hear.hist) hear.hist.set(m, h.slice(-1));
+      playAlong([want]); // moves on to the note after `want`
+      return;
     }
   }
 

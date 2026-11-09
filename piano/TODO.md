@@ -25,6 +25,13 @@ Live app: https://mrboby1.github.io/sham/piano/
     keep everything else. *(done 2026-11-09)*
 11. **Clear "play this key now"**: the key to play now is filled with its finger's colour, with no
     black frame, so it is obvious which exact key it is. *(done 2026-11-09)*
+12. **Play-along must move on when the right key is played**: with the pedal or legato, ringing
+    notes hid the new one, and a key struck twice in a row wasn't heard the second time. Now each of
+    the next keys is followed on its own and a fresh strike of the right key moves on, while wrong
+    notes are still ignored. *(done 2026-11-09)*
+13. **News "closest to reality" website** (separate project, not the piano app): read news on the same
+    story from many sources with different points of view, extract what they agree on (the most likely
+    version of reality), and from that write a thesis of what may come next.
 
 ## Done
 
