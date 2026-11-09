@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Signal</title>
+<meta name="description" content="Political news from many sides, reduced to the most likely version of reality, and dated forecasts of what comes next for markets.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f6f4ef; --panel: #fffdf8; --ink: #1d1b16; --muted: #6b665c; --line: #e2ddd2;
+  --accent: #b4441f; --agree: #2e7d4f; --dispute: #b26b00; --bar: #1d1b16; --chip: #efeadf;
+  --serif: "Source Serif 4", Georgia, serif; --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14130f; --panel: #1c1b16; --ink: #ece8de; --muted: #a39d90; --line: #33302a;
+    --accent: #e0774f; --agree: #6cc08f; --dispute: #e3a84a; --bar: #ece8de; --chip: #2a2822;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14130f; --panel: #1c1b16; --ink: #ece8de; --muted: #a39d90; --line: #33302a;
+  --accent: #e0774f; --agree: #6cc08f; --dispute: #e3a84a; --bar: #ece8de; --chip: #2a2822;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 var(--sans); }
+a { color: inherit; text-decoration-color: color-mix(in srgb, var(--ink) 35%, transparent); text-underline-offset: 2px; }
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 16px 64px; }
+header.top { padding: 28px 0 18px; border-bottom: 2px solid var(--ink); margin-bottom: 22px; }
+.brand { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.brand h1 { font: 700 40px/1 var(--serif); margin: 0; letter-spacing: -0.5px; }
+.brand .tag { color: var(--muted); font-size: 14px; }
+.meta { margin-top: 10px; color: var(--muted); font-size: 13px; display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.big { font: 400 19px/1.55 var(--serif); margin: 0 0 26px; }
+h2 { font: 700 24px/1.2 var(--serif); margin: 34px 0 12px; }
+h3 { font: 600 13px/1.2 var(--sans); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 18px 0 8px; }
+.board { display: grid; gap: 8px; }
+.fc { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; display: grid; grid-template-columns: 58px 1fr; gap: 4px 12px; align-items: start; }
+.fc .p { font: 700 22px/1 var(--serif); font-variant-numeric: tabular-nums; padding-top: 2px; }
+.fc .meter { grid-column: 1; height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.fc .meter b { display: block; height: 100%; background: var(--bar); }
+.fc .s { grid-column: 2; grid-row: 1 / span 2; }
+.fc .s .q { font-weight: 500; }
+.fc .s .sub { color: var(--muted); font-size: 13px; margin-top: 2px; }
+.chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+.chip { background: var(--chip); border-radius: 999px; padding: 1px 8px; font-size: 12px; white-space: nowrap; }
+.chip .up { color: var(--agree); } .chip .down { color: var(--accent); }
+.fc.done.yes { border-color: var(--agree); } .fc.done.no { border-color: var(--accent); }
+.verdict { font-size: 12px; font-weight: 600; }
+.record { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; font-size: 14px; color: var(--muted); }
+.record strong { color: var(--ink); }
+.story { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px 18px 8px; margin: 16px 0; }
+.story h2 { margin: 0 0 4px; font-size: 22px; }
+.story .cov { color: var(--muted); font-size: 13px; }
+.reality { font: 400 17px/1.55 var(--serif); border-left: 3px solid var(--ink); padding-left: 12px; margin: 14px 0 6px; }
+ul.agreed, ul.disputed, ul.framing { list-style: none; margin: 0; padding: 0; }
+ul.agreed li { padding: 3px 0 3px 22px; position: relative; }
+ul.agreed li::before { content: "✓"; position: absolute; left: 2px; color: var(--agree); font-weight: 700; }
+ul.disputed li { padding: 8px 0; border-top: 1px solid var(--line); }
+ul.disputed li:first-child { border-top: 0; }
+.claim { font-weight: 600; }
+.claim::before { content: "?"; display: inline-block; width: 18px; color: var(--dispute); font-weight: 700; }
+.sides { font-size: 14px; margin: 4px 0 0 18px; display: grid; gap: 2px; }
+.sides .yes b { color: var(--agree); } .sides .no b { color: var(--accent); }
+.note { font-size: 14px; color: var(--muted); margin: 4px 0 0 18px; }
+ul.framing li { font-size: 14px; padding: 4px 0; }
+ul.framing .who { font-weight: 600; }
+details { margin: 14px 0 10px; }
+summary { cursor: pointer; font-size: 14px; font-weight: 500; color: var(--muted); padding: 6px 0; min-height: 32px; }
+.arts { display: grid; gap: 6px; margin-top: 8px; }
+.art { font-size: 14px; display: grid; grid-template-columns: 150px 1fr; gap: 10px; padding: 6px 0; border-top: 1px solid var(--line); }
+.art .src { color: var(--muted); font-size: 12px; line-height: 1.35; }
+.art .src b { color: var(--ink); font-weight: 600; display: block; font-size: 13px; }
+.more { color: var(--muted); font-size: 14px; }
+footer { margin-top: 44px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+footer p { margin: 6px 0; }
+.err { background: var(--panel); border: 1px solid var(--accent); padding: 12px; border-radius: 10px; }
+@media (max-width: 560px) {
+  .brand h1 { font-size: 32px; }
+  .big { font-size: 17px; }
+  .art { grid-template-columns: 1fr; gap: 2px; }
+  .story { padding: 14px 14px 6px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><h1>Signal</h1><span class="tag">many sides of the news → the most likely reality → what comes next</span></div>
+    <div class="meta" id="meta">Loading…</div>
+  </header>
+  <main id="main"></main>
+  <footer>
+    <p><strong>How it works.</strong> Every morning, headlines and short summaries from about 40 outlets in 14+ countries are collected, from left to right, Western, Russian, Chinese, Gulf, Israeli and others. Articles about the same event are grouped. For the stories that matter for markets, the page shows what all sides agree on, what is disputed and by whom, and how each side frames it. From that comes the most likely version of reality and dated forecasts with a probability.</p>
+    <p><strong>Keeping score.</strong> Every forecast is checked after its date: right or wrong. The Brier score measures accuracy: 0 is perfect, and 0.25 is what you'd get by always saying 50%.</p>
+    <p>Only headlines and the outlets' own summaries are used, with links to the original articles. Forecasts are estimates, not certainties. <strong>Not financial advice.</strong></p>
+    <p id="feeds"></p>
+  </footer>
+</div>
+<script>
+(function () {
+  "use strict";
+  const $ = (id) => document.getElementById(id);
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  const safeUrl = (u) => (/^https?:\/\//i.test(u || "") ? u : null);
+  const pct = (p) => Math.round(p * 100) + "%";
+  const fmtDate = (iso) => { const d = new Date(iso); return isNaN(d) ? iso : d.toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" }); };
+  const fmtTime = (iso) => { const d = new Date(iso); return isNaN(d) ? "" : d.toLocaleString(undefined, { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }); };
+  const get = (f) => fetch("data/" + f + "?v=" + Date.now()).then((r) => { if (!r.ok) throw new Error(f + ": " + r.status); return r.json(); });
+
+  Promise.all([get("analysis.json"), get("stories.json"), get("predictions.json").catch(() => null)])
+    .then(([an, st, log]) => render(an, st, log))
+    .catch((e) => { $("main").replaceChildren(el("div", "err", "Couldn't load today's data (" + e.message + ").")); $("meta").textContent = ""; });
+
+  function chipsFor(markets) {
+    const box = el("div", "chips");
+    for (const m of markets || []) {
+      const c = el("span", "chip");
+      c.append(m.asset + " ");
+      const dir = String(m.if_true || "");
+      const arrow = el("span", /^up/.test(dir) ? "up" : /^down/.test(dir) ? "down" : "", /^up/.test(dir) ? "▲" : /^down/.test(dir) ? "▼" : "•");
+      c.append(arrow);
+      c.title = "If this happens: " + m.asset + " " + dir;
+      box.append(c);
+    }
+    return box;
+  }
+
+  function forecast(p, withStory) {
+    const done = p.outcome === true || p.outcome === false;
+    const f = el("div", "fc" + (done ? " done " + (p.outcome ? "yes" : "no") : ""));
+    f.append(el("div", "p", pct(p.probability)));
+    const s = el("div", "s");
+    s.append(el("div", "q", p.statement));
+    const sub = el("div", "sub", "by " + fmtDate(p.by) + (withStory && p.story ? " · " + p.story : ""));
+    s.append(sub);
+    if (done) s.append(el("div", "verdict", (p.outcome ? "✓ Happened" : "✗ Didn't happen") + (p.evidence ? ": " + p.evidence : "")));
+    else if (p.watch) s.append(el("div", "sub", "Watch: " + p.watch));
+    s.append(chipsFor(p.markets));
+    f.append(s);
+    const meter = el("div", "meter"); const b = el("b"); b.style.width = pct(p.probability); meter.append(b);
+    f.append(meter);
+    return f;
+  }
+
+  function render(an, st, log) {
+    const outlets = new Set(), countries = new Set();
+    for (const s of st.stories) for (const a of s.articles) { outlets.add(a.source); if (a.country && a.country !== "?" && a.country !== "many") countries.add(a.country); }
+    const feedsOk = Object.values(st.feeds || {}).filter((v) => typeof v === "number").length;
+    $("meta").replaceChildren(
+      el("span", "", "Updated " + fmtTime(an.generated)),
+      el("span", "", st.articles + " political & economic articles, last " + st.hours + "h"),
+      el("span", "", feedsOk + " feeds · " + outlets.size + " outlets · " + countries.size + " countries"),
+    );
+    const main = $("main");
+    main.replaceChildren();
+    main.append(el("p", "big", an.big_picture));
+
+    // forecasts board
+    main.append(el("h2", "", "Forecasts"));
+    const all = (log && log.predictions) || an.stories.flatMap((s) => s.predictions.map((p) => ({ ...p, story: s.title })));
+    const open = all.filter((p) => p.outcome == null).sort((a, b) => a.by.localeCompare(b.by) || b.probability - a.probability);
+    const board = el("div", "board");
+    open.forEach((p) => board.append(forecast(p, true)));
+    main.append(board);
+
+    // track record
+    main.append(el("h2", "", "Track record"));
+    const rec = el("div", "record");
+    const stt = log && log.stats;
+    if (stt && stt.resolved) {
+      rec.append("Resolved: ", el("strong", "", String(stt.resolved)), " of " + stt.total + " · right: ", el("strong", "", stt.right + "/" + stt.resolved), " · Brier score: ", el("strong", "", String(stt.brier)), " (lower is better; 0.25 = coin flip)");
+    } else {
+      rec.append("No forecast has reached its date yet. The first ones resolve on " + (open.length ? fmtDate(open[0].by) : "—") + ". Every forecast stays on record, right or wrong.");
+    }
+    main.append(rec);
+    const past = all.filter((p) => p.outcome != null).sort((a, b) => b.by.localeCompare(a.by));
+    if (past.length) { const pb = el("div", "board"); pb.style.marginTop = "8px"; past.forEach((p) => pb.append(forecast(p, true))); main.append(pb); }
+
+    // stories
+    main.append(el("h2", "", "The stories"));
+    const byId = new Map(st.stories.map((s) => [s.id, s]));
+    for (const s of an.stories) {
+      const card = el("article", "story");
+      card.id = s.key;
+      card.append(el("h2", "", s.title));
+      const arts = (s.story_ids || []).flatMap((id) => (byId.get(id) || { articles: [] }).articles);
+      const outs = new Set(arts.map((a) => a.source)), cs = new Set(arts.map((a) => a.country).filter((c) => c && c !== "?" && c !== "many"));
+      card.append(el("div", "cov", outs.size + " outlets · " + cs.size + " countries"));
+      card.append(el("p", "reality", s.reality));
+      if (s.agreed && s.agreed.length) {
+        card.append(el("h3", "", "All sides agree"));
+        const ul = el("ul", "agreed"); s.agreed.forEach((t) => ul.append(el("li", "", t))); card.append(ul);
+      }
+      if (s.disputed && s.disputed.length) {
+        card.append(el("h3", "", "Disputed"));
+        const ul = el("ul", "disputed");
+        for (const d of s.disputed) {
+          const li = el("li");
+          li.append(el("div", "claim", d.claim));
+          const sides = el("div", "sides");
+          const y = el("div", "yes"); y.append(el("b", "", "Says yes: "), (d.for || []).join("; ")); sides.append(y);
+          const n = el("div", "no"); n.append(el("b", "", "Says no: "), (d.against || []).join("; ")); sides.append(n);
+          li.append(sides);
+          if (d.note) li.append(el("div", "note", d.note));
+          ul.append(li);
+        }
+        card.append(ul);
+      }
+      if (s.framing && s.framing.length) {
+        card.append(el("h3", "", "How each side tells it"));
+        const ul = el("ul", "framing");
+        for (const f of s.framing) { const li = el("li"); li.append(el("span", "who", f.who + ": "), f.how); ul.append(li); }
+        card.append(ul);
+      }
+      if (s.predictions && s.predictions.length) {
+        card.append(el("h3", "", "What comes next"));
+        const b = el("div", "board");
+        const logged = new Map(all.map((p) => [p.id, p]));
+        s.predictions.forEach((p) => b.append(forecast(logged.get(p.id) || p, false)));
+        card.append(b);
+      }
+      if (arts.length) {
+        const det = el("details");
+        det.append(el("summary", "", "All " + arts.length + " headlines, side by side"));
+        const box = el("div", "arts");
+        arts.slice().sort((a, b) => (a.country || "").localeCompare(b.country || "") || a.source.localeCompare(b.source)).forEach((a) => {
+          const row = el("div", "art");
+          const src = el("div", "src"); src.append(el("b", "", a.source), (a.country && a.country !== "?" ? a.country + " · " : "") + (a.kind || "") + " · " + fmtTime(a.time));
+          const t = el("div");
+          const u = safeUrl(a.link);
+          if (u) { const link = el("a", "", a.title); link.href = u; link.target = "_blank"; link.rel = "noopener noreferrer"; t.append(link); } else t.append(a.title);
+          row.append(src, t);
+          box.append(row);
+        });
+        det.append(box);
+        card.append(det);
+      }
+      main.append(card);
+    }
+
+    // the other stories, headline only
+    const used = new Set(an.stories.flatMap((s) => s.story_ids || []));
+    const rest = st.stories.filter((s) => !used.has(s.id));
+    if (rest.length) {
+      main.append(el("h2", "", "Also in the news"));
+      const ul = el("ul", "more");
+      rest.slice(0, 20).forEach((s) => {
+        const last = s.articles[s.articles.length - 1];
+        const li = el("li"); li.append(last.title + " ", el("span", "", "(" + s.outlets + " outlets)")); ul.append(li);
+      });
+      main.append(ul);
+    }
+    $("feeds").textContent = "Sources: " + Object.keys(st.feeds || {}).join(", ") + ".";
+  }
+})();
+</script>
+</body>
+</html>

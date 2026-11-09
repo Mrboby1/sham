@@ -1,0 +1,2906 @@
+{
+ "generated": "2026-11-09T10:44:46.570602+00:00",
+ "hours": 48,
+ "feeds": {
+  "BBC": 31,
+  "The Guardian": 45,
+  "Financial Times": 25,
+  "The Economist": 300,
+  "NYT World": 56,
+  "NYT Politics": 20,
+  "NPR": 10,
+  "The Intercept": 20,
+  "Politico": 30,
+  "The Hill": 15,
+  "WSJ World": 20,
+  "Bloomberg Politics": 20,
+  "Bloomberg Markets": 20,
+  "CNBC World": 30,
+  "CNBC Politics": 30,
+  "MarketWatch": 10,
+  "Fox News Politics": 25,
+  "Fox News World": 25,
+  "Washington Examiner": 10,
+  "National Review": 20,
+  "Breitbart": 48,
+  "Reason": 48,
+  "DW": 117,
+  "France 24": 24,
+  "Al Jazeera": 25,
+  "Middle East Eye": 20,
+  "Anadolu": 30,
+  "Times of Israel": 13,
+  "Jerusalem Post": 26,
+  "Kyiv Independent": 15,
+  "TASS": 91,
+  "RT": 100,
+  "Global Times": 50,
+  "SCMP": 50,
+  "Times of India": 20,
+  "Japan Times": 30,
+  "Nikkei Asia": 50,
+  "Google News World": 70,
+  "Google News Business": 70
+ },
+ "articles": 610,
+ "stories": [
+  {
+   "score": 116.5,
+   "outlets": 13,
+   "countries": [
+    "France",
+    "Germany",
+    "Hong Kong",
+    "Qatar",
+    "Russia",
+    "UK",
+    "US"
+   ],
+   "first": "2026-11-07T21:52:04+00:00",
+   "last": "2026-11-09T10:36:05+00:00",
+   "keywords": [
+    "eisenkot",
+    "government",
+    "netanyahu",
+    "form",
+    "israel",
+    "president"
+   ],
+   "articles": [
+    {
+     "title": "Eisenkot Seeks to Oust Netanyahu as Prime Minister. Here’s How.",
+     "summary": "Gadi Eisenkot gets the chance to form a new government, replacing Benjamin Netanyahu as prime minister. But the obstacles are formidable.",
+     "link": "https://www.nytimes.com/2026/11/07/world/middleeast/eisenkot-israel-new-government.html",
+     "time": "2026-11-07T21:52:04+00:00",
+     "source": "NYT World",
+     "via": null,
+     "country": "US",
+     "kind": "left-leaning"
+    },
+    {
+     "title": "Israeli president invites Netanyahu's opposition leader to broker new government",
+     "summary": "Israel's political landscape shifts as President Herzog hands opposition leader Gadi Eisenkot the mandate to form a government, dealing a blow to Benjamin Netanyahu's grip on power.",
+     "link": "https://www.npr.org/2026/11/07/nx-s1-6032606/israeli-president-invites-netanyahus-opposition-leader-to-broker-new-government",
+     "time": "2026-11-07T17:12:09-05:00",
+     "source": "NPR",
+     "via": null,
+     "country": "US",
+     "kind": "public, left-leaning"
+    },
+    {
+     "title": "Israeli president taps Netanyahu rival to form government as coalition battle looms",
+     "summary": "Gadi Eisenkot secured 67 Knesset endorsements over Benjamin Netanyahu, but deep coalition divisions over Arab parties and conscription cloud his path.",
+     "link": "https://www.foxnews.com/world/israeli-president-picks-netanyahu-rival-form-government-coalition-battle-looms",
+     "time": "2026-11-07T17:17:37-05:00",
+     "source": "Fox News World",
+     "via": null,
+     "country": "US",
+     "kind": "right-leaning"
+    },
+    {
+     "title": "Israel’s president taps opposition candidate Eisenkot to form a government, in setback for Netanyahu",
+     "summary": "Eisenkot, who ran as the main challenger to Prime Minister Benjamin Netanyahu, is now a step closer to ousting Israel's longest-serving premier.",
+     "link": "https://www.cnbc.com/2026/11/07/israel-eisenkot-netanyahu.html",
+     "time": "2026-11-07T22:36:37+00:00",
+     "source": "CNBC World",
+     "via": null,
+     "country": "US",
+     "kind": "business"
+    },
+    {
+     "title": "Israeli president instructs Netanyahu rival to form government",
+     "summary": "Former military chief Gadi Eisenkot has secured the backing of 67 lawmakers, but faces a difficult task assembling a ruling coalition Read Full Article at RT.com",
+     "link": "https://rt-english.com/news/648551-netanyahu-eisenkot-israel-government/?utm_source=rss&utm_medium=rss&utm_campaign=RSS",
+     "time": "2026-11-07T23:24:02+00:00",
+     "source": "RT",
+     "via": null,
+     "country": "Russia",
+     "kind": "state"
+    },
+    {
+     "title": "Israeli President Herzog Tasks Eisenkot with Forming Government in Setback for Netanyahu",
+     "summary": "Israeli President Isaac Herzog announced Saturday that he will give former military chief Gadi Eisenkot the first opportunity to form Israel's next government, handing Prime Minister Benjamin Netanyahu a significant political setback nearly two weeks after the country's parliamentary elections. The post Israeli President Herzog Tasks Eisenkot with Forming Government in Setback for Netanyahu appear",
+     "link": "https://www.breitbart.com/politics/2026/11/07/israeli-president-herzog-tasks-eisenkot-with-forming-government-in-setback-for-netanyahu/",
+     "time": "2026-11-07T23:34:30+00:00",
+     "source": "Breitbart",
+     "via": null,
+     "country": "US",
+     "kind": "right"
+    },
+    {
+     "title": "Eisenkot, Netanyahu Rival and Opposition Leader, Tapped to Try to Form Government",
+     "summary": "Gadi Eisenkot, a former military chief, hopes to succeed Benjamin Netanyahu as prime minister by cobbling together a coalition after an inconclusive election.",
+     "link": "https://www.nytimes.com/2026/11/07/world/middleeast/israel-eisenkot-government.html",
+     "time": "2026-11-08T09:41:56+00:00",
+     "source": "NYT World",
+     "via": null,
+     "country": "US",
+     "kind": "left-leaning"
+    },
+    {
+     "title": "Israel’s president picks Yashar leader Gadi Eisenkot to form government",
+     "summary": "Knesset has been deadlocked since the election last month when Benjamin Netanyahu’s coalition lost its majority Israel’s president has ⁠chosen Gadi Eisenkot, the prime minister Benjamin Netanyahu’s ⁠strongest rival, to ⁠try to ​form a new government, after a deadlocked election that left neither man ⁠with a clear path to power. Isaac Herzog’s office said he had informed Eisenkot, the leader of the",
+     "link": "https://www.theguardian.com/world/2026/nov/07/israel-president-gadi-eisenkot-form-government",
+     "time": "2026-11-08T14:26:14+00:00",
+     "source": "The Guardian",
+     "via": null,
+     "country": "UK",
+     "kind": "left-leaning"
+    },
+    {
+     "title": "Israel: Eisenkot officially tasked with forming a government",
+     "summary": "Israeli President Isaac Herzog tasked Gadi Eisenkot with the right of trying to form a government. The opposition leader's way to replacing Benjamin Netanyahu as prime minister is full of political challenges.",
+     "link": "https://www.dw.com/en/israel-eisenkot-officially-tasked-with-forming-a-government/a-79891422?maca=en-rss-en-all-1573-rdf",
+     "time": "2026-11-08T15:18:00+00:00",
+     "source": "DW",
+     "via": null,
+     "country": "Germany",
+     "kind": "public"
+    },
+    {
+     "title": "Gadi Eisenkot receives mandate to form government",
+     "summary": "Israel's opposition leader Gadi Eisenkot has officially been tasked with forming the country's next government, following a formal announcement by President Isaac Herzog. He now has up to six weeks to negotiate with potential coalition partners and secure a parliamentary majority. While an alliance with Arab Israeli parties appears to be the easiest option mathematically, it remains politically se",
+     "link": "https://www.france24.com/en/gadi-eisenkot-receives-mandate-to-form-government",
+     "time": "2026-11-08T16:58:11+00:00",
+     "source": "France 24",
+     "via": null,
+     "country": "France",
+     "kind": "public"
+    },
+    {
+     "title": "How Israel’s Opposition Could Unseat Netanyahu (or Not)",
+     "summary": "Gadi Eisenkot, the leading rival of Prime Minister Benjamin Netanyahu, now has a chance to form Israel’s governing coalition. Here are three routes he could try.",
+     "link": "https://www.nytimes.com/2026/11/06/world/middleeast/israel-election-government-herzog.html",
+     "time": "2026-11-08T17:31:14+00:00",
+     "source": "NYT World",
+     "via": null,
+     "country": "US",
+     "kind": "left-leaning"
+    },
+    {
+     "title": "Gadi Eisenkot reaches out to Netanyahu allies as he strives to form government",
+     "summary": "Former military chief says prime minister brought Israel to historic crisis and it is approaching ‘point of no return’ Israel’s former military chief Gadi Eisenkot started the tough task of forming a government on Sunday, reaching out to Benjamin Netanyahu’s allies as he said the veteran prime minister had brought the country to a historic crisis. Eisenkot, 66, the leader of the Yashar party, who ",
+     "link": "https://www.theguardian.com/world/2026/nov/08/gadi-eisenkot-netanyahu-allies-form-israel-government",
+     "time": "2026-11-08T17:53:59+00:00",
+     "source": "The Guardian",
+     "via": null,
+     "country": "UK",
+     "kind": "left-leaning"
+    },
+    {
+     "title": "Eisenkot open to Netanyahu joining Israel’s next government",
+     "summary": "Eisenkot open to Netanyahu joining Israel’s next government Al Jazeera Gadi Eisenkot has a chance to form a new government in Israel The Economist Israel’s president taps Netanyahu’s political rival to form a new government NPR Netanyahu rival Eisenkot seeks 'wide' government but path to power uncertain Reuters Gadi Eisenkot, Benjamin Netanyahu similar in policy and view, Donald Trump says The Jer",
+     "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxQSWJndTBjVU90M3NvOURyOEE4V2NBeW5qbi1ONnF1S2ZpWjE1dE9QTEtnc2lfZmxCX0phZC1aWkw4WXhpNV95d0otelVhTkIxcEtQYTFleTVCaWkxWVNFWXZpU0p0cTdUZ0hMSGIzUHlIVGh6cjI2cnVncEMxM0xTTW5NY05ISndQNjYwR2VlOVJxWVlJWUsyaUxvQVl6WUVMSFU2aktoRzQ1QdIBrwFBVV95cUxQem95MVBFMy1naHV2QVZDMWJmZ25pZ0FVMTljSzFSaTlxN2F2RWJZcWFBMnozWXdLLTZIdzVHV05FaDN5T1B3djdRNElIQTVOYWFYanpPcmZzYVpuZkQzVlpZNV9MNi1EcFZTQ1VEQzMzVm9VRUdaNlZPbkRVbElGZTlVczJHdFMxNkNSekdnNENCQWJoNzVKdFlxQ0Rhank3X21jTVhSX245WTJYZjJz?oc=5",
+     "time": "2026-11-08T18:14:45+00:00",
+     "source": "Al Jazeera",
+     "via": "Google News World",
+     "country": "Qatar",
+     "kind": "state-funded"
+    },
+    {
+     "title": "Israeli president awards mandate to form government to opposition party leader",
+     "summary": "Gadi Eisenkot, for his part, stated that he \"hopes to complete the process of forming a government as soon as possible",
+     "link": "https://tass.com/world/2214527",
+     "time": "2026-11-08T22:36:28+03:00",
+     "source": "TASS",
+     "via": null,
+     "country": "Russia",
+     "kind": "state"
+    },
+    {
+     "title": "Israeli opposition leader Eisenkot begins the hard work of forging a coalition government",
+     "summary": "Israel's ex-military chief Gadi Eisenkot was tapped by President Isaac Herzog to try to form a government Sunday evening. But his lack of a clear majority in parliament will make trying to forge a coalition alongside the country's divided minor parties an uphill struggle.",
+     "link": "https://www.france24.com/en/middle-east/20261108-israeli-opposition-leader-eisenkot-begins-the-hard-work-of-forging-a-coalition-government",
+     "time": "2026-11-08T21:10:13+00:00",
+     "source": "France 24",
+     "via": null,
+     "country": "France",
+     "kind": "public"
+    },
+    {
+     "title": "Who Is Gadi Eisenkot, Israel’s Opposition Leader?",
+     "summary": "Mr. Eisenkot, a career general and the leading rival of Prime Minister Benjamin Netanyahu of Israel, will now have up to six weeks to form a coalition.",
+     "link": "https://www.nytimes.com/2026/11/08/world/middleeast/israel-eisenkot-netanyahu-what-to-know.html",
+     "time": "2026-11-08T21:48:22+00:00",
+     "source": "NYT World",
+     "via": null,
+     "country": "US",
+     "kind": "left-leaning"
+    },
+    {
+     "title": "Eisenkot Faces Tough Odds in Quest to Form Israeli Coalition",
+     "summary": "Former Israeli general Gadi Eisenkot faces a daunting political test as he tries to cobble together a coalition from a divided opposition while luring allies away from Benjamin Netanyahu, a master political tactician who remains a formidable force.",
+     "link": "https://www.bloomberg.com/news/articles/2026-11-08/eisenkot-faces-tough-odds-in-quest-to-form-israeli-coalition",
+     "time": "2026-11-08T22:01:00+00:00",
+     "source": "Bloomberg Politics",
+     "via": null,
+     "country": "US",
+     "kind": "business"
+    },
+    {
+     "title": "Israel’s president gives Netanyahu rival Eisenkot first shot at forming government",
+     "summary": "Israeli President Isaac Herzog formally gave opposition politician Gadi Eisenkot the first chance to form the next government Sunday evening. Complex coalition negotiations still lie ahead, but it marked a significant step in the former military chief’s effort to oust Israel’s longest-serving prime minister, Benjamin Netanyahu, after elections held in a deeply divided country. Israel remains scarr",
+     "link": "https://www.scmp.com/news/world/middle-east/article/3373722/israels-president-herzog-gives-gadi-eisenkot-first-chance-form-next-government",
+     "time": "2026-11-08T22:47:54+00:00",
+     "source": "SCMP",
+     "via": null,
+     "country": "Hong Kong",
+     "kind": "commercial"
+    },
+    {
+     "title": "Eisenkot Faces Tough Test Trying to Form Israel Coalition",
+     "summary": "Israeli President Isaac Herzog tasked Eisenkot with forming the next government after he secured the endorsement of 67 members of the Knesset. The former Israeli general now needs to cobble together a coalition from a divided opposition while luring allies away from Benjamin Netanyahu. Bloomberg's Dan Williams reports from Jerusalem. (Source: Bloomberg)",
+     "link": "https://www.bloomberg.com/news/videos/2026-11-09/eisenkot-faces-tough-test-forming-israel-coalition-video",
+     "time": "2026-11-09T06:33:43+00:00",
+     "source": "Bloomberg Politics",
+     "via": null,
+     "country": "US",
+     "kind": "business"
+    },
+    {
+     "title": "Israel's opposition leader Gadi Eisenkot has six weeks to form a government",
+     "summary": "Israeli President Isaac Herzog formally gave opposition politician Gadi Eisenkot the first chance to form the next government Sunday evening, leaving Eisenkot six weeks to try to put together a coalition to oust Prime Minister Benjamin Netanyahu. FRANCE 24's correspondent in Jerusalem Noga Tarnopolsky has more.",
+     "link": "https://www.france24.com/en/video/20261109-israel-s-opposition-leader-gadi-eisenkot-has-six-weeks-to-form-a-government",
+     "time": "2026-11-09T10:36:05+00:00",
+     "source": "France 24",
+     "via": null,
+     "country": "France",
+     "kind": "public"
+    }
+   ],
+   "id": "s1"
+  },
+  {
+   "score": 57.68,
+   "outlets": 11,
+   "countries": [
+    "France",
+    "Germany",
+    "India",
+    "Israel",
+    "Japan",
+    "Turkey",
+    "UK",
+    "US"
+   ],
+   "first": "2026-11-08T21:51:52+00:00",
+   "last": "2026-11-09T14:05:20+05:30",
+   "keywords": [
+    "nvidia",
+    "ceo",
+    "huang",
+    "affair",
+    "chinese",
+    "spy"
+   ],
+   "articles": [
+    {
+     "title": "Nvidia investigates reports of CEO’s relationship with alleged Chinese spy",
+     "summary": "Nvidia’s board of directors announced it would be opening an investigation into its CEO, Jensen Huang, following reports alleging he had an intimate relationship with a woman U.S. intelligence officials believe was spying for China. “The NVIDIA Board is initiating an independent investigation in light of recent reporting that founder and CEO Jensen Huang has...",
+     "link": "https://thehill.com/policy/technology/6206971-nvidia-investigates-jensen-huang/",
+     "time": "2026-11-08T21:51:52+00:00",
+     "source": "The Hill",
+     "via": null,
+     "country": "US",
+     "kind": "centre"
+    },
+    {
+     "title": "Nvidia CEO Jensen Huang faces bipartisan congressional scrutiny over reported China spy link",
+     "summary": "Lawmakers want to question Nvidia CEO Jensen Huang following reports about his relationship with an alleged Chinese intelligence asset.",
+     "link": "https://www.cnbc.com/2026/11/08/jensen-huang-nvidia-china-spy-congress.html",
+     "time": "2026-11-08T22:49:46+00:00",
+     "source": "CNBC Politics",
+     "via": null,
+     "country": "US",
+     "kind": "business"
+    },
+    {
+     "title": "Nvidia CEO Huang admits affair amid rumors of China spy ties",
+     "summary": "Following reports of Nvidia's chief Jensen Huang becoming involved with a Chinese spy, Huang offered an apology for cheating on his wife. Meanwhile, the US tech company pledged to investigate the alleged espionage.",
+     "link": "https://www.dw.com/en/nvidia-ceo-huang-admits-affair-amid-rumors-of-china-spy-ties/a-79894747?maca=en-rss-en-all-1573-rdf",
+     "time": "2026-11-08T23:07:00+00:00",
+     "source": "DW",
+     "via": null,
+     "country": "Germany",
+     "kind": "public"
+    },
+    {
+     "title": "Trump Backs Nvidia CEO After Affair With Suspected China Spy",
+     "summary": "President Donald Trump called Jensen Huang a “fine person” and said he should stay on as leader of Nvidia Corp. after the executive had an affair with a woman US intelligence officials reportedly suspect was a Chinese spy.",
+     "link": "https://www.bloomberg.com/news/articles/2026-11-08/trump-defends-nvidia-s-huang-after-he-admits-affair-with-spy",
+     "time": "2026-11-08T23:36:05+00:00",
+     "source": "Bloomberg Politics",
+     "via": null,
+     "country": "US",
+     "kind": "business"
+    },
+    {
+     "title": "Nvidia opens investigation after report CEO Jensen Huang was target of foreign intelligence",
+     "summary": "CEO reportedly ‌had close relationship ‌with a Chinese businesswoman who passed information to ‌Beijing Nvidia said ⁠on Sunday it “is initiating an independent investigation in light of recent reporting that founder and CEO Jensen Huang has been the target of a foreign intelligence effort”. The New York Times reported in ​October that Donald Trump had been briefed last year on intelligence that Hu",
+     "link": "https://www.theguardian.com/us-news/2026/nov/08/nvidia-jensen-huang-investigation",
+     "time": "2026-11-09T00:25:28+00:00",
+     "source": "The Guardian",
+     "via": null,
+     "country": "UK",
+     "kind": "left-leaning"
+    },
+    {
+     "title": "FirstFT: Nvidia CEO admits to affair after allegations of relationship with Chinese spy",
+     "summary": "Also in today’s newsletter: China’s AI opening and aviation green fees warning",
+     "link": "https://www.ft.com/content/494e9731-d195-40e0-9ad4-cf7811037c05?syn-25a6b1a6=1",
+     "time": "2026-11-09T05:31:35+00:00",
+     "source": "Financial Times",
+     "via": null,
+     "country": "UK",
+     "kind": "business"
+    },
+    {
+     "title": "Nvidia probing if CEO was target in intel operation after affair with Chinese asset",
+     "summary": "Huang admits to having affair with an ex-executive of a Singaporean firm suspected of helping Beijing obtain AI chips US has barred from shipment to China",
+     "link": "https://www.timesofisrael.com/nvidia-probing-if-ceo-was-target-in-intel-operation-after-affair-with-chinese-asset/",
+     "time": "2026-11-09T05:44:55+00:00",
+     "source": "Times of Israel",
+     "via": null,
+     "country": "Israel",
+     "kind": "centre"
+    },
+    {
+     "title": "China Calls Accusations It Spied on Nvidia CEO Baseless ‘Smears’",
+     "summary": "Beijing dismissed allegations that it spied on Nvidia Corp. Chief Executive Officer Jensen Huang, an episode that is spiraling a little over a week before a meeting between Chinese leader Xi Jinping and US President Donald Trump.",
+     "link": "https://www.bloomberg.com/news/articles/2026-11-09/china-newspaper-dismisses-jensen-huang-spy-claim-warns-on-ties",
+     "time": "2026-11-09T05:51:19+00:00",
+     "source": "Bloomberg Politics",
+     "via": null,
+     "country": "US",
+     "kind": "business"
+    },
+    {
+     "title": "Nvidia to probe reports that Chinese intelligence targeted CEO Jensen Huang",
+     "summary": "Nvidia’s board said Sunday it would investigate reports that CEO Jensen Huang was targeted by a foreign intelligence operation. The New York Times reported Huang had an affair with an executive US intelligence believed was gathering information for Beijing. Huang will remain CEO during the inquiry and has pledged cooperation.",
+     "link": "https://www.france24.com/en/nvidia-to-probe-reports-that-chinese-intelligence-targeted-ceo-jensen-huang",
+     "time": "2026-11-09T06:18:12+00:00",
+     "source": "France 24",
+     "via": null,
+     "country": "France",
+     "kind": "public"
+    },
+    {
+     "title": "Nvidia CEO’s affair engulfs AI giant in Chinese spying probe",
+     "summary": "In a memo to employees, Jensen Huang left no doubt that the chip colossus was embroiled in a crisis like none before in its three-decade history.",
+     "link": "https://www.japantimes.co.jp/business/2026/11/09/tech/nvidia-board-spying-ceo-affair/",
+     "time": "2026-11-09T15:35:00+09:00",
+     "source": "Japan Times",
+     "via": null,
+     "country": "Japan",
+     "kind": "commercial"
+    },
+    {
+     "title": "Trump calls Nvidia CEO Jensen Huang 'honorable guy' amid alleged Chinese spy affair",
+     "summary": "'I think he's an honorable guy. I think he probably has an excuse for it. You have to hear it. He's done an amazing job for our country,' says US president",
+     "link": "https://www.aa.com.tr/en/americas/trump-calls-nvidia-ceo-jensen-huang-honorable-guy-amid-alleged-chinese-spy-affair/4116495",
+     "time": "2026-11-09T10:24:50+03:00",
+     "source": "Anadolu",
+     "via": null,
+     "country": "Turkey",
+     "kind": "state"
+    },
+    {
+     "title": "Nvidia Shares Fall As Huang's Affair Triggers China Spying Probe",
+     "summary": "Bloomberg Daybreak Europe is your essential morning viewing to stay ahead. Live from Berlin, we set the agenda for your day, catching you up with overnight markets news from the US and Asia. And we'll tell you what matters for investors in Europe, giving you insight before trading begins. Nvidia Chief Executive Officer Jensen Huang admitted he had an affair with a woman identified in a series of r",
+     "link": "https://www.bloomberg.com/news/videos/2026-11-09/daybreak-europe-11-09-2026-video",
+     "time": "2026-11-09T08:12:31+00:00",
+     "source": "Bloomberg Politics",
+     "via": null,
+     "country": "US",
+     "kind": "business"
+    },
+    {
+     "title": "'A baseless smearing': China denies spying charge targeting Nvidia CEO Jensen Huang",
+     "summary": "China has rejected allegations of espionage involving Nvidia CEO Jensen Huang, labeling them as a smear campaign. Foreign ministry spokesperson Guo Jiakun stated that these claims are unfounded and baseless. Nvidia's board has initiated an independent investigation into reports of a foreign intelligence operation. The investigation involves Alice Huang, a former executive accused of being linked t",
+     "link": "https://timesofindia.indiatimes.com/world/china/a-baseless-smear-campaign-china-denies-spying-charge-targeting-nvidia-ceo-jensen-huang/articleshow/135674983.cms",
+     "time": "2026-11-09T14:05:20+05:30",
+     "source": "Times of India",
+     "via": null,
+     "country": "India",
+     "kind": "commercial"
+    }
+   ],
+   "id": "s2"
+  },
+  {
+   "score": 52.66,
+   "outlets": 10,
+   "countries": [
+    "Hong Kong",
+    "Qatar",
+    "Russia",
+    "UK",
+    "US"
+   ],
+   "first": "2026-11-07T22:37:46+00:00",
+   "last": "2026-11-09T08:49:17+00:00",
+   "keywords": [
+    "secretary",
+    "pre",
+    "trump",
+    "white",
+    "dana",
+    "kidding"
+   ],
+   "articles": [
+    {
+     "title": "Trump asks UFC boss to become White House press secretary",
+     "summary": "UFC boss Dana White says he will meet Donald Trump in Washington on Monday after being offered the vacant White House press secretary post Read Full Article at RT.com",
+     "link": "https://rt-english.com/news/648550-trump-dana-white-house-press-secretary/?utm_source=rss&utm_medium=rss&utm_campaign=RSS",
+     "time": "2026-11-07T22:37:46+00:00",
+     "source": "RT",
+     "via": null,
+     "country": "Russia",
+     "kind": "state"
+    },
+    {
+     "title": "Trump offers UFC chief Dana White press secretary job",
+     "summary": "President Donald Trump offered the job of press secretary to UFC president and CEO Dana White on Saturday.",
+     "link": "https://www.cnbc.com/2026/11/07/trump-ufc-dana-white-press-secretary-offer.html",
+     "time": "2026-11-07T23:13:38+00:00",
+     "source": "CNBC World",
+     "via": null,
+     "country": "US",
+     "kind": "business"
+    },
+    {
+     "title": "Trump offers UFC chief Dana White press secretary job",
+     "summary": "President Donald Trump offered the job of press secretary to UFC president and CEO Dana White on Saturday.",
+     "link": "https://www.cnbc.com/2026/11/07/trump-ufc-dana-white-press-secretary-offer.html",
+     "time": "2026-11-07T23:13:38+00:00",
+     "source": "CNBC Politics",
+     "via": null,
+     "country": "US",
+     "kind": "business"
+    },
+    {
+     "title": "Trump Asks Dana White of U.F.C. to Be His Press Secretary",
+     "summary": "On social media, the president offered the now-vacant job of White House press secretary to Dana White, the organization’s C.E.O., and told him to bring along fighters as aides.",
+     "link": "https://www.nytimes.com/2026/11/07/us/politics/trump-dana-white-ufc-press-secretary.html",
+     "time": "2026-11-08T00:20:00+00:00",
+     "source": "NYT Politics",
+     "via": null,
+     "country": "US",
+     "kind": "left-leaning"
+    },
+    {
+     "title": "Trump says he was ‘only kidding’ about making Dana White press secretary",
+     "summary": "Trump says he was joking when he offered Dana White the press secretary job, but confirmed the UFC boss is visiting the White House on Monday.",
+     "link": "https://www.foxnews.com/politics/trump-says-only-kidding-making-dana-white-white-house-press-secretary",
+     "time": "2026-11-08T19:06:40-05:00",
+     "source": "Fox News Politics",
+     "via": null,
+     "country": "US",
+     "kind": "right-leaning"
+    },
+    {
+     "title": "Trump says ‘only kidding’ about naming UFC’s Dana White as press secretary",
+     "summary": "US President Donald Trump on Sunday said he was “only kidding” when he suggested UFC CEO Dana White could become his next White House press secretary, ‌after a social media post a day earlier stirred speculation about recruiting his feisty ally and signalled a combative approach to dealing with Democrats as they prepare to take control of Congress. Trump said White, a prominent supporter, “loves t",
+     "link": "https://www.scmp.com/news/world/united-states-canada/article/3373723/trump-says-only-kidding-about-naming-ufcs-dana-white-press-secretary",
+     "time": "2026-11-09T00:38:23+00:00",
+     "source": "SCMP",
+     "via": null,
+     "country": "Hong Kong",
+     "kind": "commercial"
+    },
+    {
+     "title": "Trump Was ‘Only Kidding’ in Asking Dana White to Be His Press Secretary",
+     "summary": "The president said on Sunday that the U.F.C. chief executive “loves the idea” of being the White House spokesman but that his public offer of the job was “just a little fun.”",
+     "link": "https://www.nytimes.com/2026/11/08/us/politics/trump-joke-dana-white-press-secretary.html",
+     "time": "2026-11-09T00:43:21+00:00",
+     "source": "NYT Politics",
+     "via": null,
+     "country": "US",
+     "kind": "left-leaning"
+    },
+    {
+     "title": "Trump says he was ‘only kidding’ about making UFC’s Dana White next press secretary",
+     "summary": "President says it was ‘just a little fun’ to picture White, UFC boss and Trump’s friend, in briefing room with fighters Donald Trump said on Sunday that he “was only kidding” when he announced a day earlier that he had offered the job of White House press secretary to Dana White, the chief executive of the Ultimate Fighting Championship ( UFC ). Speaking to reporters on his way back the White Hous",
+     "link": "https://www.theguardian.com/us-news/2026/nov/08/trump-dana-white-press-secretary",
+     "time": "2026-11-09T01:10:55+00:00",
+     "source": "The Guardian",
+     "via": null,
+     "country": "UK",
+     "kind": "left-leaning"
+    },
+    {
+     "title": "Trump says he was 'kidding' about Dana White for press secretary",
+     "summary": "President Trump said on Sunday that he offered UFC CEO Dana White the White House press secretary role as a joke. “I will tell you, I was only kidding,” Trump told reporters in West Palm Beach, Florida. “But Dana loves the idea, and there's only one Dana, and he's great.” The president then appeared to...",
+     "link": "https://thehill.com/homenews/6207197-trump-dana-white-press-secretary-joke/",
+     "time": "2026-11-09T02:20:19+00:00",
+     "source": "The Hill",
+     "via": null,
+     "country": "US",
+     "kind": "centre"
+    },
+    {
+     "title": "A joke or test? Why Trump floated UFC’s Dana White as his press secretary",
+     "summary": "White is a close friend of Trump and has endorsed him for president, but has never held a government position.",
+     "link": "https://www.aljazeera.com/news/2026/11/9/a-joke-or-test-why-trump-floated-ufcs-dana-white-as-his-press-secretary?traffic_source=rss",
+     "time": "2026-11-09T05:02:16+00:00",
+     "source": "Al Jazeera",
+     "via": null,
+     "country": "Qatar",
+     "kind": "state-funded"
+    },
+    {
+     "title": "Trump ‘only kidding’ about Dana White press secretary role",
+     "summary": "Donald Trump says he was ‘only kidding’ about appointing UFC CEO Dana White as the White House press secretary.",
+     "link": "https://www.aljazeera.com/video/newsfeed/2026/11/9/trump-only-kidding-about-dana-white-press-secretary-role?traffic_source=rss",
+     "time": "2026-11-09T08:18:00+00:00",
+     "source": "Al Jazeera",
+     "via": null,
+     "country": "Qatar",
+     "kind": "state-funded"
+    },
+    {
+     "title": "Trump says he was 'kidding' about Dana White press secretary offer",
+     "summary": "The president told the Ultimate Fighting Championship boss to \"please take the job\" in a Truth Social post on Saturday.",
+     "link": "https://www.bbc.co.uk/news/articles/ck0j0j87959eo?at_medium=RSS&at_campaign=rss",
+     "time": "2026-11-09T08:49:17+00:00",
+     "source": "BBC",
+     "via": null,
+     "country": "UK",
+     "kind": "public"
+    }
+   ],
+   "id": "s3"
+  },
+  {
+   "score": 37.33,
+   "outlets": 7,
+   "countries": [
+    "Israel",
+    "Qatar",
+    "Russia",
+    "UK/Middle East",
+    "US"
+   ],
+   "first": "2026-11-09T02:54:01+03:00",
+   "last": "2026-11-09T12:17:46+03:00",
+   "keywords": [
+    "rubio",
+    "iran",
+    "breakthrough",
+    "talk",
+    "demand",
+    "iranian"
+   ],
+   "articles": [
+    {
+     "title": "US, Iran not close to any breakthrough, Rubio says",
+     "summary": "Meanwhile, Marco Rubio stressed that US President Donald Trump and his administration prefer to solve any conflicts, including with Iran, diplomatically",
+     "link": "https://tass.com/world/2214551",
+     "time": "2026-11-09T02:54:01+03:00",
+     "source": "TASS",
+     "via": null,
+     "country": "Russia",
+     "kind": "state"
+    },
+    {
+     "title": "Rubio says no 'breakthrough' in US-Iran talks",
+     "summary": "Rubio says no 'breakthrough' in US-Iran talks US Secretary of State Marco Rubio suggested that there has been no progress regarding truce talks with Iran, accusing the country of making \"unacceptable\" demands. \"I don’t have any progress to report to you,\" Rubio told reporters at the Homestead Air Reserve Base in Florida. \"You have a number of countries that continue to engage them with different i",
+     "link": "https://www.middleeasteye.net/live-blog/live-blog-update/rubio-says-no-breakthrough-us-iran-talks",
+     "time": "2026-11-09T00:49:03+00:00",
+     "source": "Middle East Eye",
+     "via": null,
+     "country": "UK/Middle East",
+     "kind": "independent"
+    },
+    {
+     "title": "'Iranian demands are outrageous,' Rubio says as talks fail to make progress",
+     "summary": "Ahead of a G7 meeting in France, Rubio said Iran talks have made no progress, calling Tehran's demands \"unacceptable\" and warning that the US could respond to threats against its forces.",
+     "link": "https://www.jpost.com/middle-east/iran-news/article-914276",
+     "time": "2026-11-09T01:00:19+00:00",
+     "source": "Jerusalem Post",
+     "via": null,
+     "country": "Israel",
+     "kind": "right-leaning"
+    },
+    {
+     "title": "Trump’s war against Iran not 'necessarily popular' but needed to stop a nuclear threat, Rubio says",
+     "summary": "Trump’s war against Iran not 'necessarily popular' but needed to stop a nuclear threat, Rubio says AP News Live - Rubio casts doubt on Iran diplomacy, says Tehran's demands unrealistic Iran International Rubio Sees No Iran Breakthrough as Trump Downplays Strikes Bloomberg.com Rubio: Talks Not Productive, Iranian Demands Simply Unacceptable - Bloomberg Forex Factory Rubio says war on Iran unpopular",
+     "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOMERvcmZhZjQ1LXNKMjVUZG42cmxpMUJ5ci1xOEdYVzZ6QjdiRVdiNVpnSGVmdnRZQ3ZKNFNNV3ZnMENHeFY4TnZsLUZmNVozMlRyb25BcEN0YUI0NnFkcjNLMzVaSVpEMHZIMEtLMklNXzZkRDNRNVBKeVR3R2NTamdja09VeG1TZXNFYndua1p1Wk5Hb3RzVkFXeGV1VDd1SURKSURB?oc=5",
+     "time": "2026-11-09T01:38:00+00:00",
+     "source": "AP News",
+     "via": "Google News World",
+     "country": "US",
+     "kind": "wire"
+    },
+    {
+     "title": "Rubio says war on Iran unpopular but ‘necessary’ to stop nuclear threat",
+     "summary": "US secretary of state says Iran's negotiation demands are 'outrageous and ridiculous, and really not realistic'.",
+     "link": "https://www.aljazeera.com/news/2026/11/9/rubio-says-war-on-iran-unpopular-but-necessary-to-stop-nuclear-threat?traffic_source=rss",
+     "time": "2026-11-09T04:02:18+00:00",
+     "source": "Al Jazeera",
+     "via": null,
+     "country": "Qatar",
+     "kind": "state-funded"
+    },
+    {
+     "title": "Rubio Plays Down Chances of Breakthrough in Iran Talks",
+     "summary": "US Secretary of State Marco Rubio said Iran's demands to date are unacceptable and in some cases “outrageous and ridiculous” as he downplayed the prospects for a breakthrough in talks on ending the conflict. Onur Ant has the details. (Source: Bloomberg)",
+     "link": "https://www.bloomberg.com/news/videos/2026-11-09/rubio-plays-down-chances-of-breakthrough-in-iran-talks-video",
+     "time": "2026-11-09T06:51:34+00:00",
+     "source": "Bloomberg Politics",
+     "via": null,
+     "country": "US",
+     "kind": "business"
+    },
+    {
+     "title": "Rubio says Iranians making ‘outrageous and ridiculous’ demands in negotiations",
+     "summary": "Secretary of state asserts US right to defend itself as strike reportedly hits navigational systems on Qeshm island; Trump says new task force to disrupt land routes into Iran",
+     "link": "https://www.timesofisrael.com/rubio-says-iranians-making-outrageous-and-ridiculous-demands-in-negotiations/",
+     "time": "2026-11-09T06:59:07+00:00",
+     "source": "Times of Israel",
+     "via": null,
+     "country": "Israel",
+     "kind": "centre"
+    },
+    {
+     "title": "Iran calls demands lawful after Rubio rejects them as unacceptable",
+     "summary": "According to Iranian Foreign Ministry Spokesman Esmaeil Baghaei, Tehran demands that Washington lift its unlawful sanctions, end the naval blockade and stop the war before any talks begin",
+     "link": "https://tass.com/world/2214705",
+     "time": "2026-11-09T12:17:46+03:00",
+     "source": "TASS",
+     "via": null,
+     "country": "Russia",
+     "kind": "state"
+    }
+   ],
+   "id": "s4"
+  },
+  {
+   "score": 35.93,
+   "outlets": 8,
+   "countries": [
+    "France",
+    "Germany",
+    "Hong Kong",
+    "Qatar",
+    "Turkey",
+    "UK",
+    "US"
+   ],
+   "first": "2026-11-08T09:00:35+00:00",
+   "last": "2026-11-09T04:52:34+00:00",
+   "keywords": [
+    "argentina",
+    "pope",
+    "milei",
+    "leo",
+    "must",
+    "tell"
+   ],
+   "articles": [
+    {
+     "title": "Pope’s visit to Argentina sets up showdown with ‘hyper-capitalist’ Milei",
+     "summary": "President has opposing views on many issues, and once called Leo’s predecessor the ‘representative of the Evil One’ Trees are being planted in the garden. The brightly coloured buildings are getting another coat of paint. The choir rehearses. Hundreds of other residents, several of them using wheelchairs, practise their positions outside the sanctuary. Excitement is in the air, because on Monday 9",
+     "link": "https://www.theguardian.com/world/2026/nov/08/popes-visit-to-argentina-sets-up-showdown-with-hyper-capitalist-milei",
+     "time": "2026-11-08T09:00:35+00:00",
+     "source": "The Guardian",
+     "via": null,
+     "country": "UK",
+     "kind": "left-leaning"
+    },
+    {
+     "title": "How Milei Defused Argentina's Hyperinflation Bomb",
+     "summary": "Argentina's president restored the solvency of a bankrupt Treasury and a broken central bank.",
+     "link": "https://reason.com/2026/11/08/how-milei-defused-argentinas-hyperinflation-bomb/",
+     "time": "2026-11-08T11:00:50+00:00",
+     "source": "Reason",
+     "via": null,
+     "country": "US",
+     "kind": "libertarian"
+    },
+    {
+     "title": "Pope Leo tells Argentina’s Milei that leaders must know limits of power",
+     "summary": "Pope Leo on Sunday urged Argentina to safeguard its democracy in a closely watched speech to President Javier Milei, a close ally of US President Donald Trump, during the second stop of a 12-day South American tour by the Catholic leader. Leo told Milei, who has said he will seek re-election next year, that leaders must seek to better the lives of all their citizens and know the limits of their po",
+     "link": "https://www.scmp.com/news/world/americas/article/3373717/pope-leo-leaves-uruguay-and-heads-most-fraught-stop-his-tour-mileis-argentina",
+     "time": "2026-11-08T17:53:30+00:00",
+     "source": "SCMP",
+     "via": null,
+     "country": "Hong Kong",
+     "kind": "commercial"
+    },
+    {
+     "title": "Pope Leo criticises Milei’s austerity in Argentina, says growth must benefit all",
+     "summary": "Pope Leo XIV arrived in Argentina on Sunday from Uruguay, where his Latin America tour began, facing calls to help bridge divisions after three years of austerity under President Javier Milei. The visit to Buenos Aires is the first by a pontiff to the late Pope Francis’s homeland in nearly four decades.",
+     "link": "https://www.france24.com/en/americas/20261108-pope-leo-argentina-visit-milei",
+     "time": "2026-11-08T22:23:19+00:00",
+     "source": "France 24",
+     "via": null,
+     "country": "France",
+     "kind": "public"
+    },
+    {
+     "title": "In Argentina, Pope Leo Tells President Milei Economy Must Serve the Needy",
+     "summary": "The pontiff’s trip comes amid tensions between the country’s libertarian leader and its Catholic Church, which is deeply committed to social justice.",
+     "link": "https://www.nytimes.com/2026/11/08/world/americas/pope-leo-argentina-milei.html",
+     "time": "2026-11-08T23:36:32+00:00",
+     "source": "NYT World",
+     "via": null,
+     "country": "US",
+     "kind": "left-leaning"
+    },
+    {
+     "title": "Pope Leo urges Argentina's Milei to put people before the economy",
+     "summary": "Pope Leo XIV has urged Argentina to protect democracy and ensure economic growth benefits the poor, delivering a message to President Javier Milei over austerity, social welfare and political divisions.",
+     "link": "https://www.dw.com/en/pope-leo-urges-argentina-s-milei-to-put-people-before-the-economy/a-79894779?maca=en-rss-en-all-1573-rdf",
+     "time": "2026-11-09T01:35:00+00:00",
+     "source": "DW",
+     "via": null,
+     "country": "Germany",
+     "kind": "public"
+    },
+    {
+     "title": "Pope Leo delivers stinging rebuke of Milei’s austerity measures during Argentina visit",
+     "summary": "Pontiff tells Argentina’s president the economy must benefit all on second stop of 12-day Latin America tour Pope Leo XIV has delivered a stinging critique of Argentine president Javier Milei’s harsh austerity measures, insisting growth must benefit all in a speech met with rapturous applause in Buenos Aires. “The economy must be at the service of the people, rather than people being at the servic",
+     "link": "https://www.theguardian.com/world/2026/nov/09/pope-leo-argentina-visit-speech-javier-milei-austerity",
+     "time": "2026-11-09T02:11:25+00:00",
+     "source": "The Guardian",
+     "via": null,
+     "country": "UK",
+     "kind": "left-leaning"
+    },
+    {
+     "title": "Pope Leo XIV calls for national unity and institutional integrity in first address in Argentina",
+     "summary": "Pontiff urges political leaders to reject corruption, heal polarization and place the economy at the service of people",
+     "link": "https://www.aa.com.tr/en/americas/pope-leo-xiv-calls-for-national-unity-and-institutional-integrity-in-first-address-in-argentina/4116406",
+     "time": "2026-11-09T06:07:16+03:00",
+     "source": "Anadolu",
+     "via": null,
+     "country": "Turkey",
+     "kind": "state"
+    },
+    {
+     "title": "Pope tells Argentina’s Milei leaders should know limits of power",
+     "summary": "Pope Leo XIV urged Argentina to protect democracy during an address alongside President Javier Milei.",
+     "link": "https://www.aljazeera.com/video/newsfeed/2026/11/9/pope-tells-argentinas-milei-leaders-should-know-limits-of-power?traffic_source=rss",
+     "time": "2026-11-09T04:52:34+00:00",
+     "source": "Al Jazeera",
+     "via": null,
+     "country": "Qatar",
+     "kind": "state-funded"
+    }
+   ],
+   "id": "s5"
+  },
+  {
+   "score": 32.07,
+   "outlets": 8,
+   "countries": [
+    "Russia",
+    "Turkey",
+    "UK",
+    "US"
+   ],
+   "first": "2026-11-07T16:42:00+00:00",
+   "last": "2026-11-09T05:22:00+00:00",
+   "keywords": [
+    "aramco",
+    "saudi",
+    "houthi",
+    "riyadh",
+    "tower",
+    "strike"
+   ],
+   "articles": [
+    {
+     "title": "Airstrikes kill more than 2 dozen people near Yemen’s capital, Houthis say",
+     "summary": "Airstrikes kill more than 2 dozen people near Yemen’s capital, Houthis say AP News Houthi-run health ministry says airstrikes kill 33 near Yemen capital Reuters Houthis say at least 33 killed in Saudi air strike BBC Yemeni gov’t forces, Houthis trade blame for deadly strikes on Taiz market Al Jazeera An airstrike has killed 22 people near Yemen's capital, Houthi official says ABC News - Breaking N",
+     "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNQ2phS1lmT1dSeWRnSGpVanhOVE5iNGVSbldWSTFDMjdLVFAxSW9FcWNTUkVYX1ppMXJ1aFRLYlF2NDY3STIwZGdTaE9lOEtOOEU3ZFZKd1RXbXhhWDVsZ1ZiRGRZU0pEdkx2LXZHUXBKeGVWOEFrT3RMaUx6UUZnZk1tSG13Tzh6VWlOT01tVQ?oc=5",
+     "time": "2026-11-07T16:42:00+00:00",
+     "source": "AP News",
+     "via": "Google News World",
+     "country": "US",
+     "kind": "wire"
+    },
+    {
+     "title": "Saudi Arabia says Aramco building suffers ‘minor damage’ after attempted attack in Riyadh",
+     "summary": "No casualties reported in incident, Energy Ministry says",
+     "link": "https://www.aa.com.tr/en/middle-east/saudi-arabia-says-aramco-building-suffers-minor-damage-after-attempted-attack-in-riyadh/4115868",
+     "time": "2026-11-08T13:50:43+03:00",
+     "source": "Anadolu",
+     "via": null,
+     "country": "Turkey",
+     "kind": "state"
+    },
+    {
+     "title": "Saudi Aramco building in Riyadh damaged in attack",
+     "summary": "The incident resulted in falling shrapnel that caused minor damage to the building, with no injuries or fatalities reported",
+     "link": "https://tass.com/world/2214437",
+     "time": "2026-11-08T13:58:10+03:00",
+     "source": "TASS",
+     "via": null,
+     "country": "Russia",
+     "kind": "state"
+    },
+    {
+     "title": "Houthis say they attacked Saudi Aramco facilities in Abqaiq",
+     "summary": "The strike was a direct hit, which caused a fire at the facilities, Houthi spokesman Yahya Saria said",
+     "link": "https://tass.com/world/2214485",
+     "time": "2026-11-08T17:20:14+03:00",
+     "source": "TASS",
+     "via": null,
+     "country": "Russia",
+     "kind": "state"
+    },
+    {
+     "title": "Saudi Aramco Tower Damaged as Yemen’s Houthis Attack Riyadh",
+     "summary": "The Saudi authorities said no one was hurt after “falling shrapnel” hit the building in Riyadh’s financial district — one of the highest-profile areas targeted by the Houthis.",
+     "link": "https://www.nytimes.com/2026/11/08/world/middleeast/saudi-aramco-tower-riyadh-hit.html",
+     "time": "2026-11-08T16:52:42+00:00",
+     "source": "NYT World",
+     "via": null,
+     "country": "US",
+     "kind": "left-leaning"
+    },
+    {
+     "title": "Aramco Tower Targeted in Rare Strike on Riyadh Finance Hub",
+     "summary": "A Houthi attack damaged one of the landmarks of the Saudi Arabian capital’s financial district, upsetting plans for a return to normal about a month after deadly strikes on Riyadh’s airport disrupted travel and canceled showpiece events.",
+     "link": "https://www.bloomberg.com/news/articles/2026-11-08/saudi-aramco-tower-targeted-in-rare-strike-on-riyadh-finance-hub",
+     "time": "2026-11-08T17:15:42+00:00",
+     "source": "Bloomberg Politics",
+     "via": null,
+     "country": "US",
+     "kind": "business"
+    },
+    {
+     "title": "Aramco Tower hit in heart of Saudi capital as Houthis launch fresh strikes",
+     "summary": "Footage authenticated by BBC Verify shows damage to the building in the capital's central financial district.",
+     "link": "https://www.bbc.co.uk/news/articles/c6ly3mjx958eo?at_medium=RSS&at_campaign=rss",
+     "time": "2026-11-08T21:37:36+00:00",
+     "source": "BBC",
+     "via": null,
+     "country": "UK",
+     "kind": "public"
+    },
+    {
+     "title": "Saudi Aramco tower damaged in Houthi strike (VIDEOS)",
+     "summary": "A skyscraper housing offices of Saudi Arabia’s state oil giant Aramco has been damaged in a missile and drone attack by Yemen’s Houthis Read Full Article at RT.com",
+     "link": "https://rt-english.com/news/648584-saudi-aramco-tower-damaged/?utm_source=rss&utm_medium=rss&utm_campaign=RSS",
+     "time": "2026-11-09T02:01:28+00:00",
+     "source": "RT",
+     "via": null,
+     "country": "Russia",
+     "kind": "state"
+    },
+    {
+     "title": "Saudi Aramco Tower Targeted in Rare Strike on Riyadh Finance Hub",
+     "summary": "Saudi Aramco Tower Targeted in Rare Strike on Riyadh Finance Hub Bloomberg.com Houthi attack damages Aramco building in Riyadh's financial district Reuters Iconic Saudi Tower Hit as Yemen’s Houthis Target Riyadh WSJ Aramco Tower hit in heart of Saudi capital as Houthis launch fresh strikes BBC Saudi Arabia intercepts missiles as Aramco building in Riyadh is damaged, and other Mideast news AP News",
+     "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOLUpUaXJBZU5CYXNqcDJjZkEtUlc5MWZRcVlsWmFWaWhDcHRJMTNLM05iV25SMEtHTGZyTTZHN3NlaGlGY1dwUFUxQmxXcFNxdmt5R3J1MVJGbmdjblFVMmR0UldtU2M3b0htSGE0YmNBSnNpd1JtVnJHTWlMMnRycHdYUFR1WGN5ck1rdjM0ZmtjNEstR1ZjZjh5X1d2M3g4RUY0bXVoR1VOOUNuWllTVm9qVzJuQQ?oc=5",
+     "time": "2026-11-09T05:22:00+00:00",
+     "source": "Bloomberg.com",
+     "via": "Google News World",
+     "country": "US",
+     "kind": "business"
+    }
+   ],
+   "id": "s6"
+  },
+  {
+   "score": 29.7,
+   "outlets": 7,
+   "countries": [
+    "France",
+    "Germany",
+    "Qatar",
+    "UK",
+    "US"
+   ],
+   "first": "2026-11-09T01:23:22+00:00",
+   "last": "2026-11-09T08:35:05+00:00",
+   "keywords": [
+    "trump",
+    "tough",
+    "too",
+    "deportation",
+    "policy",
+    "immigration"
+   ],
+   "articles": [
+    {
+     "title": "Trump says his immigration crackdown ‘might be too tough’ after midterm losses",
+     "summary": "President Trump on Sunday said his deportation policies might have been “too tough” and led to the GOP’s historic losses in this year’s elections. CBS News’s Ross Douthat asked the president on “60 Minutes” if his immigration policy lost his party the midterms. “I think it both helped and hurt,” Trump responded. “I think I...",
+     "link": "https://thehill.com/homenews/6207170-trump-immigration-policy-midterm-losses/",
+     "time": "2026-11-09T01:23:22+00:00",
+     "source": "The Hill",
+     "via": null,
+     "country": "US",
+     "kind": "centre"
+    },
+    {
+     "title": "Trump Says Immigration Crackdown May Have ‘Hurt’ Republicans in Midterms",
+     "summary": "The president was asked in a “60 Minutes” interview that aired on Sunday whether his deportation policies went too far. “I think it might be too tough,” he said.",
+     "link": "https://www.nytimes.com/2026/11/08/us/politics/trump-immigration-crackdown-republicans-midterms.html",
+     "time": "2026-11-09T03:16:26+00:00",
+     "source": "NYT Politics",
+     "via": null,
+     "country": "US",
+     "kind": "left-leaning"
+    },
+    {
+     "title": "Trump Dangles Concessions, Says Deportation Policy ‘Too Tough’",
+     "summary": "President Donald Trump suggested Sunday night that he could OK an amnesty for many migrants now working in jobs that would otherwise be held by Americans. The post Trump Dangles Concessions, Says Deportation Policy ‘Too Tough’ appeared first on Breitbart .",
+     "link": "https://www.breitbart.com/immigration/2026/11/08/trump-dangles-amnesty-illegal-aliens-jobs/",
+     "time": "2026-11-09T04:49:12+00:00",
+     "source": "Breitbart",
+     "via": null,
+     "country": "US",
+     "kind": "right"
+    },
+    {
+     "title": "US President Donald Trump says deportation policy was 'too tough' for voters",
+     "summary": "Trump said his deportation policy may be one of the reasons the Republicans lost so much ground in the midterm elections.",
+     "link": "https://www.dw.com/en/us-president-donald-trump-says-deportation-policy-was-too-tough-for-voters/a-79895321?maca=en-rss-en-all-1573-rdf",
+     "time": "2026-11-09T06:14:00+00:00",
+     "source": "DW",
+     "via": null,
+     "country": "Germany",
+     "kind": "public"
+    },
+    {
+     "title": "Trump says deportation crackdown was 'too tough' after midterm setback",
+     "summary": "US President Donald Trump said his administration's mass deportation campaign may have been \"too tough\" in a television interview aired Sunday, days after Republicans suffered heavy losses in midterm elections.",
+     "link": "https://www.france24.com/en/americas/20261109-trump-says-deportation-crackdown-was-too-tough-after-midterm-setback",
+     "time": "2026-11-09T08:02:00+00:00",
+     "source": "France 24",
+     "via": null,
+     "country": "France",
+     "kind": "public"
+    },
+    {
+     "title": "Trump admits deportation policy was ‘too tough’ despite promotion of Stephen Miller",
+     "summary": "President makes unusual acknowledgment that one of defining policies of his second administration had become a political liability Donald Trump has admitted that his deportation policy was “too tough” and has offered to strike an immigration deal with Democrats in a concession after the Republicans’ disastrous defeat in the midterm elections. In an interview on the CBS network’s 60 Minutes broadca",
+     "link": "https://www.theguardian.com/us-news/2026/nov/09/trump-tells-60-minutes-deportation-policy-too-tough-ice-immigration",
+     "time": "2026-11-09T08:32:32+00:00",
+     "source": "The Guardian",
+     "via": null,
+     "country": "UK",
+     "kind": "left-leaning"
+    },
+    {
+     "title": "Trump says his immigration policy ‘too tough’ for voters",
+     "summary": "Trump concedes some voters were unhappy with his administration's controversial deportation drive.",
+     "link": "https://www.aljazeera.com/news/2026/11/9/trump-says-his-immigration-policy-too-tough-for-voters?traffic_source=rss",
+     "time": "2026-11-09T08:35:05+00:00",
+     "source": "Al Jazeera",
+     "via": null,
+     "country": "Qatar",
+     "kind": "state-funded"
+    }
+   ],
+   "id": "s7"
+  },
+  {
+   "score": 26.32,
+   "outlets": 7,
+   "countries": [
+    "Hong Kong",
+    "Qatar",
+    "UK",
+    "US"
+   ],
+   "first": "2026-11-07T12:37:33-05:00",
+   "last": "2026-11-09T10:22:54+00:00",
+   "keywords": [
+    "gunman",
+    "shooting",
+    "police",
+    "poland",
+    "dies",
+    "fire"
+   ],
+   "articles": [
+    {
+     "title": "Gunman opens fire from moving car in European tourist hot spot, leaving 6 dead and at least 15 wounded",
+     "summary": "A gunman, reportedly wearing military-style fatigues, allegedly opened fire from a moving vehicle on Kraków, Poland's Main Square, killing five and injuring at least 15.",
+     "link": "https://www.foxnews.com/world/gunman-opens-fire-moving-car-european-tourist-hotspot-leaving-5-dead-12-wounded",
+     "time": "2026-11-07T12:37:33-05:00",
+     "source": "Fox News World",
+     "via": null,
+     "country": "US",
+     "kind": "right-leaning"
+    },
+    {
+     "title": "At Least 6 Dead in Poland After Gunman Opens Fire in Krakow, Police Say",
+     "summary": "The authorities said that the gunman, who began shooting from a car near a market square, was shot and taken to a hospital.",
+     "link": "https://www.nytimes.com/2026/11/07/world/europe/krakow-poland-shooting.html",
+     "time": "2026-11-07T23:36:18+00:00",
+     "source": "NYT World",
+     "via": null,
+     "country": "US",
+     "kind": "left-leaning"
+    },
+    {
+     "title": "Gunman in Polish Mass Shooting Dies as Terrorism Probe Proceeds",
+     "summary": "A gunman who killed six people in Krakow died on Monday morning in hospital as authorities searched for clues about the motive of his attack.",
+     "link": "https://www.bloomberg.com/news/articles/2026-11-09/krakow-mass-shooter-dies-in-the-hospital-polish-police-says",
+     "time": "2026-11-09T06:22:55+00:00",
+     "source": "Bloomberg Markets",
+     "via": null,
+     "country": "US",
+     "kind": "business"
+    },
+    {
+     "title": "Poland mass shooting assailant dies in hospital, police say",
+     "summary": "Suspect shot by police and arrested minutes ‌after gunfire opened on people in central Krakow.",
+     "link": "https://www.aljazeera.com/news/2026/11/9/poland-mass-shooting-assailant-dies-in-hospital-police-say?traffic_source=rss",
+     "time": "2026-11-09T07:03:24+00:00",
+     "source": "Al Jazeera",
+     "via": null,
+     "country": "Qatar",
+     "kind": "state-funded"
+    },
+    {
+     "title": "Gunman who killed 6 in Polish city square dies in hospital",
+     "summary": "The 24-year-old with far-right views who killed six people and wounded 15 others in a shooting in a Polish city square died in hospital on Monday, police said. The attacker, wearing military-style clothing and a bulletproof vest, drove into the Main Square in Krakow’s Old Town and opened fire. The location is a major tourist destination in Poland’s second-largest city, and several foreigners were ",
+     "link": "https://www.scmp.com/news/world/europe/article/3373776/gunman-who-killed-6-polish-city-square-dies-hospital",
+     "time": "2026-11-09T07:46:19+00:00",
+     "source": "SCMP",
+     "via": null,
+     "country": "Hong Kong",
+     "kind": "commercial"
+    },
+    {
+     "title": "Gunman kills six in Kraków shooting",
+     "summary": "Poland’s Prime Minister Donald Tusk calls on politicians not to exploit the incident",
+     "link": "https://www.ft.com/content/0fab9ede-4fa1-4f94-b23e-e32f07a6b7df?syn-25a6b1a6=1",
+     "time": "2026-11-09T09:02:07+00:00",
+     "source": "Financial Times",
+     "via": null,
+     "country": "UK",
+     "kind": "business"
+    },
+    {
+     "title": "Kraków shooting suspect who killed six has died, say police in Poland",
+     "summary": "Terrorism investigation continues after 24-year-old opened fire in market square, leaving 16 injured A gunman who killed six people, including a British man, and injured 16 in a rare mass shooting in a busy market square in Kraków has died in hospital, Polish police said. The suspect, a 24-year-old Polish national who has not yet been officially named, opened fire in the city’s main square on Satu",
+     "link": "https://www.theguardian.com/world/2026/nov/09/krakow-shooting-suspected-gunman-dead",
+     "time": "2026-11-09T10:22:54+00:00",
+     "source": "The Guardian",
+     "via": null,
+     "country": "UK",
+     "kind": "left-leaning"
+    }
+   ],
+   "id": "s8"
+  },
+  {
+   "score": 25.4,
+   "outlets": 6,
+   "countries": [
+    "Germany",
+    "Russia",
+    "US"
+   ],
+   "first": "2026-11-08T21:44:51+03:00",
+   "last": "2026-11-09T08:20:16+00:00",
+   "keywords": [
+    "unlikely",
+    "iran",
+    "trump",
+    "talk",
+    "strike",
+    "highly"
+   ],
+   "articles": [
+    {
+     "title": "New attacks on Iran ‘highly unlikely,’ Trump says",
+     "summary": "The decision will depend on \"whether or not they sign a very strong agreement, US President said",
+     "link": "https://tass.com/world/2214519",
+     "time": "2026-11-08T21:44:51+03:00",
+     "source": "TASS",
+     "via": null,
+     "country": "Russia",
+     "kind": "state"
+    },
+    {
+     "title": "Iran: Trump says strikes unlikely if peace talks keep moving",
+     "summary": "After weeks of rumors that the US and Israel were preparing new strikes on Iran, President Donald Trump said it was \"highly unlikely\" that he would order a new escalation as the Iranians \"want to make a deal so badly.\"",
+     "link": "https://www.dw.com/en/iran-trump-says-strikes-unlikely-if-peace-talks-keep-moving/a-79894190?maca=en-rss-en-all-1573-rdf",
+     "time": "2026-11-08T20:55:00+00:00",
+     "source": "DW",
+     "via": null,
+     "country": "Germany",
+     "kind": "public"
+    },
+    {
+     "title": "Trump says he's 'unlikely' to renew attacks on Iran if talks show progress",
+     "summary": "President Trump said Sunday he was “highly unlikely” to renew attacks against Iran if upcoming peace talks show progress regarding Tehran’s nuclear program and opening the Strait of Hormuz, according to a new CNN report. “It depends on whether or not they sign a very strong agreement,” Trump said during an interview with CNN’s Jim...",
+     "link": "https://thehill.com/homenews/administration/6206935-trump-unlikely-attack-iran/",
+     "time": "2026-11-08T21:02:25+00:00",
+     "source": "The Hill",
+     "via": null,
+     "country": "US",
+     "kind": "centre"
+    },
+    {
+     "title": "Trump says renewed Iran strikes ‘highly unlikely’ if talks progress but warns he could still strike",
+     "summary": "Trump tied avoiding renewed U.S. strikes to progress in talks over Iran’s nuclear program and the Strait of Hormuz.",
+     "link": "https://www.cnbc.com/2026/11/08/trump-iran-strikes-unlikely-talks-hormuz.html",
+     "time": "2026-11-08T21:53:02+00:00",
+     "source": "CNBC World",
+     "via": null,
+     "country": "US",
+     "kind": "business"
+    },
+    {
+     "title": "Trump says renewed Iran strikes ‘highly unlikely’ if talks progress but warns he could still strike",
+     "summary": "Trump tied avoiding renewed U.S. strikes to progress in talks over Iran’s nuclear program and the Strait of Hormuz.",
+     "link": "https://www.cnbc.com/2026/11/08/trump-iran-strikes-unlikely-talks-hormuz.html",
+     "time": "2026-11-08T21:53:02+00:00",
+     "source": "CNBC Politics",
+     "via": null,
+     "country": "US",
+     "kind": "business"
+    },
+    {
+     "title": "Trump Says Strikes Unlikely as Rubio Slams Iran’s Demands",
+     "summary": "US President Donald Trump struck a more conciliatory tone about Iran over the weekend, saying it’s “highly unlikely” he will order extensive strikes on the Islamic Republic.",
+     "link": "https://www.bloomberg.com/news/articles/2026-11-09/trump-says-strikes-unlikely-even-as-rubio-slams-iran-s-demands",
+     "time": "2026-11-09T08:20:16+00:00",
+     "source": "Bloomberg Politics",
+     "via": null,
+     "country": "US",
+     "kind": "business"
+    }
+   ],
+   "id": "s9"
+  },
+  {
+   "score": 24.16,
+   "outlets": 5,
+   "countries": [
+    "Hong Kong",
+    "Japan",
+    "Qatar",
+    "Russia",
+    "US"
+   ],
+   "first": "2026-11-09T05:07:34+00:00",
+   "last": "2026-11-09T09:30:18+00:00",
+   "keywords": [
+    "passport",
+    "hasina",
+    "seek",
+    "bangladesh",
+    "return",
+    "sign"
+   ],
+   "articles": [
+    {
+     "title": "Ex-Bangladesh leader Hasina applies for passport in signal she’s ready for homecoming",
+     "summary": "Ousted Bangladeshi Prime Minister Sheikh Hasina requested on Monday a new passport and identity card so she can return from self-imposed exile in India, according to a letter seen by Reuters, her first ‌such communication since fleeing in 2024. The request marks the clearest step by Hasina to act on her plan to return to Bangladesh in December, more than two years after a deadly uprising ended her",
+     "link": "https://www.scmp.com/news/asia/south-asia/article/3373754/ex-bangladesh-leader-hasina-applies-passport-signal-shes-ready-homecoming",
+     "time": "2026-11-09T05:07:34+00:00",
+     "source": "SCMP",
+     "via": null,
+     "country": "Hong Kong",
+     "kind": "commercial"
+    },
+    {
+     "title": "Hasina seeks new passport in clearest sign of Bangladesh return",
+     "summary": "The request marks the clearest step by ousted Bangladeshi Prime Minister Sheikh Hasina to act on her plan to return to Bangladesh in December.",
+     "link": "https://www.japantimes.co.jp/news/2026/11/09/asia-pacific/politics/hasina-passport-bangladesh-return/",
+     "time": "2026-11-09T15:04:00+09:00",
+     "source": "Japan Times",
+     "via": null,
+     "country": "Japan",
+     "kind": "commercial"
+    },
+    {
+     "title": "Ousted PM Sheikh Hasina seeks passport in sign of Bangladesh return plan",
+     "summary": "Hasina, who has been living in India for two years, has promised to return to Bangladesh in December.",
+     "link": "https://www.aljazeera.com/news/2026/11/9/ousted-pm-sheikh-hasina-seeks-passport-in-sign-of-bangladesh-return-plan?traffic_source=rss",
+     "time": "2026-11-09T07:12:09+00:00",
+     "source": "Al Jazeera",
+     "via": null,
+     "country": "Qatar",
+     "kind": "state-funded"
+    },
+    {
+     "title": "Bangladesh’s ousted PM seeks new passport to return – report",
+     "summary": "Bangladesh’s former Prime Minister Sheikh Hasina has sought a new passport and identity card to return from India, Reuters reported Read Full Article at RT.com",
+     "link": "https://rt-english.com/news/648596-bangladesh-hasina-india-passport/?utm_source=rss&utm_medium=rss&utm_campaign=RSS",
+     "time": "2026-11-09T08:24:09+00:00",
+     "source": "RT",
+     "via": null,
+     "country": "Russia",
+     "kind": "state"
+    },
+    {
+     "title": "Hasina Seeks Passport in Step Toward Return to Bangladesh",
+     "summary": "Sheikh Hasina, Bangladesh’s ousted former prime minister, has asked the government to issue her a new passport and national identity card, a move that could facilitate her return more than two years after she fled to India following a mass uprising.",
+     "link": "https://www.bloomberg.com/news/articles/2026-11-09/hasina-seeks-bangladesh-passport-in-step-toward-returning-home",
+     "time": "2026-11-09T09:30:18+00:00",
+     "source": "Bloomberg Politics",
+     "via": null,
+     "country": "US",
+     "kind": "business"
+    }
+   ],
+   "id": "s10"
+  },
+  {
+   "score": 22.76,
+   "outlets": 5,
+   "countries": [
+    "Russia",
+    "UK",
+    "US",
+    "Ukraine"
+   ],
+   "first": "2026-11-08T16:53:45+03:00",
+   "last": "2026-11-09T09:59:53+00:00",
+   "keywords": [
+    "abu",
+    "dhabi",
+    "talk",
+    "ukraine",
+    "europe",
+    "peace"
+   ],
+   "articles": [
+    {
+     "title": "Europe to be represented at Abu Dhabi talks on Ukraine — top French diplomat",
+     "summary": "During a meeting with US special presidential envoy Steve Witkoff earlier, Russian President Vladimir Putin said that Moscow is ready to resume trilateral talks on resolving the Ukrainian crisis",
+     "link": "https://tass.com/world/2214477",
+     "time": "2026-11-08T16:53:45+03:00",
+     "source": "TASS",
+     "via": null,
+     "country": "Russia",
+     "kind": "state"
+    },
+    {
+     "title": "Europe to participate in Abu Dhabi peace talks, French foreign minister says",
+     "summary": "\"The Europeans will be well represented, and France will be in Abu Dhabi to take part in these discussions. I cannot yet tell you who will represent France on this occasion, but it will certainly be there,\" French Foreign Minister Jean-Noel Barrot said.",
+     "link": "https://kyivindependent.com/europeans-will-participate-in-abu-dhabi-peace-talks-french-foreign-minister-says/",
+     "time": "2026-11-08T14:15:47+00:00",
+     "source": "Kyiv Independent",
+     "via": null,
+     "country": "Ukraine",
+     "kind": "independent"
+    },
+    {
+     "title": "Europe to join U.S.-brokered Ukraine talks in Abu Dhabi, defying Kremlin objections",
+     "summary": "France says European officials will attend this week's U.S.-mediated Russia-Ukraine talks in Abu Dhabi, the first three-way round of negotiations since February.",
+     "link": "https://www.npr.org/2026/11/08/nx-s1-6034014/europe-join-us-brokered-ukraine-talks-abu-dhabi-russia",
+     "time": "2026-11-08T14:25:30-05:00",
+     "source": "NPR",
+     "via": null,
+     "country": "US",
+     "kind": "public, left-leaning"
+    },
+    {
+     "title": "Ukraine names negotiators for upcoming talks in Abu Dhabi — news agency",
+     "summary": "According to the news agency, the Ukrainian delegation will also include head of Vladimir Zelensky’s office Kirill Budanov",
+     "link": "https://tass.com/world/2214543",
+     "time": "2026-11-09T01:18:36+03:00",
+     "source": "TASS",
+     "via": null,
+     "country": "Russia",
+     "kind": "state"
+    },
+    {
+     "title": "Rubio hopeful some progress on Ukraine can be made in Abu Dhabi",
+     "summary": "The US Secretary of State noted that Jared Kushner and Steve Witkoff are already on their way to the UAE capital",
+     "link": "https://tass.com/world/2214549",
+     "time": "2026-11-09T02:31:01+03:00",
+     "source": "TASS",
+     "via": null,
+     "country": "Russia",
+     "kind": "state"
+    },
+    {
+     "title": "Europeans join Abu Dhabi talks in bid to thwart Russian security demands",
+     "summary": "Also in this newsletter: EIB and investors to channel over €10bn to help grow tech companies into global champions",
+     "link": "https://www.ft.com/content/fd84ca93-e6e5-43a5-b348-e0aaa98b0122?syn-25a6b1a6=1",
+     "time": "2026-11-09T06:00:07+00:00",
+     "source": "Financial Times",
+     "via": null,
+     "country": "UK",
+     "kind": "business"
+    },
+    {
+     "title": "IN BRIEF: What is known about preparations for Russia-US-Ukraine talks in Abu Dhabi",
+     "summary": "The trilateral talks on Ukraine will focus on security guarantees, Dmitry Peskov said",
+     "link": "https://tass.com/politics/2214649",
+     "time": "2026-11-09T10:52:36+03:00",
+     "source": "TASS",
+     "via": null,
+     "country": "Russia",
+     "kind": "state"
+    },
+    {
+     "title": "Europe's attendance at Abu Dhabi peace talks, clarified",
+     "summary": "A senior EU official has confirmed to the Kyiv Independent that the EU, NATO, and the national security advisers of Germany, France, and the U.K. will take part in the talks.",
+     "link": "https://kyivindependent.com/europes-attendance-at-abu-dhabi-peace-talks-clarified/",
+     "time": "2026-11-09T09:00:34+00:00",
+     "source": "Kyiv Independent",
+     "via": null,
+     "country": "Ukraine",
+     "kind": "independent"
+    },
+    {
+     "title": "Ukraine Peace Talks Resume This Week in Abu Dhabi",
+     "summary": "U.S.-led talks to end the war between Russia and Ukraine will resume this week in Abu Dhabi. A cease-fire won’t be on the table.",
+     "link": "https://www.nytimes.com/2026/11/09/world/europe/ukraine-russia-peace-talks.html",
+     "time": "2026-11-09T09:59:53+00:00",
+     "source": "NYT World",
+     "via": null,
+     "country": "US",
+     "kind": "left-leaning"
+    }
+   ],
+   "id": "s11"
+  },
+  {
+   "score": 21.76,
+   "outlets": 5,
+   "countries": [
+    "Israel",
+    "Japan",
+    "UK",
+    "US"
+   ],
+   "first": "2026-11-07T19:17:22+00:00",
+   "last": "2026-11-09T10:02:40+00:00",
+   "keywords": [
+    "paraguay",
+    "president",
+    "bank",
+    "collapse",
+    "former",
+    "toppled"
+   ],
+   "articles": [
+    {
+     "title": "Paraguay's former president charged after bank collapse",
+     "summary": "Santiago Peña was ousted due to a banking crisis which left millions of people unable to access their money.",
+     "link": "https://www.bbc.co.uk/news/articles/c68jzzvjgdy9o?at_medium=RSS&at_campaign=rss",
+     "time": "2026-11-07T19:17:22+00:00",
+     "source": "BBC",
+     "via": null,
+     "country": "UK",
+     "kind": "public"
+    },
+    {
+     "title": "Prosecutors Charge Paraguay’s Former President With Corruption",
+     "summary": "Santiago Peña was impeached, removed from office, placed under house arrest and charged with using his office to enrich himself after a bank with close ties to his administration went under.",
+     "link": "https://www.nytimes.com/2026/11/06/world/americas/paraguay-president-removed-ueno.html",
+     "time": "2026-11-07T20:17:15+00:00",
+     "source": "NYT World",
+     "via": null,
+     "country": "US",
+     "kind": "left-leaning"
+    },
+    {
+     "title": "Paraguay’s ex-president taken into custody over alleged bank crisis role",
+     "summary": "Paraguay’s ex-president taken into custody over alleged bank crisis role The Times of Israel How a digital bank’s collapse toppled Paraguay’s president Reuters How a bank collapse left millions in limbo and toppled Paraguay's president NPR Ousted Paraguay president under house arrest after banking crisis leaves 60% of country unable to access accounts The Guardian Paraguay's President Santiago Peñ",
+     "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNNE9EVXV1Z3hpVDYxaXlnZ0FVNGFDNXFBNUU4cmlCY1JaUS1NdXM5LW5lejVnQUJNOUtQX2lDLVJCM095Q29fcng0RjdTMUxfQVltLTJvSFh0aTZTVE5qYWVRMW5LTllpWDRRdzV1eXlkUDk4NnRUVVBHSm9jR0gwMDBqVHM0MzRHcEdWcVZQZ3gzLXFFckdKR1l4UXBiMWRDRkgwZEFaVVZVMFYwcjVVak9TQdIBuAFBVV95cUxPbExhNnVIcTMzS1RqaEg3VjVYc05PZkVyUlVHWXNMOUh0emZOVnhGYXFRaFBOUm5XaTNUdjhwNWxGOVhNQ3lEbUlpX1lFcGRIZUZUeFI0NFA2Q19aVWpvYnRBazhTQW5QQ29ndEwtd3lIbVVmeFBIZHBIZk0teHEwZnh1R0tfMFRFU0lWX1ZLQUVuREMyZENMVkhCTjREczZsY29TLTRFd25CWk1iQS1aYkhhU0stVm14?oc=5",
+     "time": "2026-11-08T03:29:00+00:00",
+     "source": "The Times of Israel",
+     "via": "Google News World",
+     "country": "Israel",
+     "kind": "centre"
+    },
+    {
+     "title": "How a digital bank’s collapse toppled Paraguay’s president",
+     "summary": "Until March 2025, impeached Paraguayan President Santiago Pena had been a business partner of the group that owns Ueno Bank.",
+     "link": "https://www.japantimes.co.jp/news/2026/11/09/world/politics/bank-collapse-paraguay-president/",
+     "time": "2026-11-09T13:21:00+09:00",
+     "source": "Japan Times",
+     "via": null,
+     "country": "Japan",
+     "kind": "commercial"
+    },
+    {
+     "title": "How a bank collapse left millions in limbo and toppled Paraguay's president",
+     "summary": "A bank's collapse in Paraguay left millions locked out of their money, toppled the president and exposed a web of political and financial ties.",
+     "link": "https://www.npr.org/2026/11/09/nx-s1-6034066/paraguay-president-pena-ueno",
+     "time": "2026-11-09T01:20:44-05:00",
+     "source": "NPR",
+     "via": null,
+     "country": "US",
+     "kind": "public, left-leaning"
+    },
+    {
+     "title": "How a Bank Implosion in Paraguay Ensnared a President",
+     "summary": "Prosecutors accused President Santiago Peña of funneling nearly a billion dollars of government funds to the Ueno bank as its executives made reckless insider loans.",
+     "link": "https://www.nytimes.com/2026/11/09/world/americas/paraguay-bank-president-ueno.html",
+     "time": "2026-11-09T10:02:40+00:00",
+     "source": "NYT World",
+     "via": null,
+     "country": "US",
+     "kind": "left-leaning"
+    }
+   ],
+   "id": "s12"
+  },
+  {
+   "score": 12.63,
+   "outlets": 4,
+   "countries": [
+    "Germany",
+    "Japan",
+    "Turkey",
+    "US"
+   ],
+   "first": "2026-11-08T05:55:00+00:00",
+   "last": "2026-11-09T10:09:09+03:00",
+   "keywords": [
+    "cop",
+    "climate",
+    "antalya",
+    "off",
+    "kick",
+    "summit"
+   ],
+   "articles": [
+    {
+     "title": "As COP31 Antalya kicks off, can world move beyond big promises?",
+     "summary": "Droughts, floods and extreme heat are upping the pressure on delegates at the UN climate talks in Antalya, Turkey. Can countries move beyond pledges to concrete action?",
+     "link": "https://www.dw.com/en/as-cop31-antalya-kicks-off-can-world-move-beyond-big-promises/a-79661366?maca=en-rss-en-all-1573-rdf",
+     "time": "2026-11-08T05:55:00+00:00",
+     "source": "DW",
+     "via": null,
+     "country": "Germany",
+     "kind": "public"
+    },
+    {
+     "title": "COP31 climate summit to kick off in Türkiye's Antalya on Monday",
+     "summary": "Türkiye to host world leaders, ministers, scientists, entrepreneurs and civil society representatives for Nov. 9-20 summit",
+     "link": "https://www.aa.com.tr/en/turkiye/cop31-climate-summit-to-kick-off-in-turkiyes-antalya-on-monday/4115777",
+     "time": "2026-11-08T11:56:24+03:00",
+     "source": "Anadolu",
+     "via": null,
+     "country": "Turkey",
+     "kind": "state"
+    },
+    {
+     "title": "A Guide to COP31 Climate Talks in Antalya, Turkey",
+     "summary": "Negotiators and leaders are gathering for annual United Nations climate talks. They come as global temperatures are set to breach a key threshold.",
+     "link": "https://www.nytimes.com/2026/11/08/climate/what-is-cop31-climate.html",
+     "time": "2026-11-08T10:01:50+00:00",
+     "source": "NYT World",
+     "via": null,
+     "country": "US",
+     "kind": "left-leaning"
+    },
+    {
+     "title": "COP31 to open in Turkey, with climate goals under pressure from war and AI",
+     "summary": "A United Nations Environment Program report said the world is already set to overshoot 1.5 degrees Celsius of warming above preindustrial times.",
+     "link": "https://www.japantimes.co.jp/environment/2026/11/09/climate-change/cop31-turkey-climate-war-ai/",
+     "time": "2026-11-09T13:45:00+09:00",
+     "source": "Japan Times",
+     "via": null,
+     "country": "Japan",
+     "kind": "commercial"
+    },
+    {
+     "title": "COP31 climate summit opens in Türkiye amid calls for stronger action",
+     "summary": "Antalya talks to focus on emissions cuts, climate finance, transition away from fossil fuels as climate impacts intensify",
+     "link": "https://www.aa.com.tr/en/turkiye/cop31-climate-summit-opens-in-turkiye-amid-calls-for-stronger-action/4116474",
+     "time": "2026-11-09T10:09:09+03:00",
+     "source": "Anadolu",
+     "via": null,
+     "country": "Turkey",
+     "kind": "state"
+    }
+   ],
+   "id": "s13"
+  },
+  {
+   "score": 11.39,
+   "outlets": 3,
+   "countries": [
+    "Qatar",
+    "UK/Middle East",
+    "US"
+   ],
+   "first": "2026-11-09T03:22:15+00:00",
+   "last": "2026-11-09T09:27:35+00:00",
+   "keywords": [
+    "trump",
+    "meet",
+    "prime",
+    "minister",
+    "qatar",
+    "mediation"
+   ],
+   "articles": [
+    {
+     "title": "Trump to meet Qatari prime minister about mediation efforts with Iran",
+     "summary": "Trump to meet Qatari prime minister about mediation efforts with Iran Axios Qatar PM to meet Trump: What’s the latest on US-Iran negotiations? Al Jazeera Trump to meet Qatar's prime minister as Iran diplomacy faces hurdles Reuters Trump discusses Middle East de-escalation with Qatar’s emir, and other Mideast news AP News Middle East latest: 'We need both': No choice between deterrence and diplomac",
+     "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOOWlDY3R3QlVMOE8ydE15X3lId2x2aFNSMnhWd2w2UXI0MmxHVUk4M1lTV3JGSDc2aTZpcTZlTm9nOVlUOXRpOHlRSDBEc0VUQnZLS2xaeWlxREJGVWhuMHViblprZVNXYWRVVzVDYXd0UUVXZ3pXWTJINXFsTXNRTHZFa3c?oc=5",
+     "time": "2026-11-09T03:22:15+00:00",
+     "source": "Axios",
+     "via": "Google News World",
+     "country": "US",
+     "kind": "centre"
+    },
+    {
+     "title": "Trump set to meet Qatar’s prime minister at the White House",
+     "summary": "Trump set to meet Qatar’s prime minister at the White House US President Donald Trump is expected to meet Qatari Prime Minister Sheikh Mohammed bin Abdulrahman Al Thani behind closed doors at the White House on Monday. According to a US official speaking to Reuters, the prime minister is also scheduled to have talks with Vice President JD Vance.",
+     "link": "https://www.middleeasteye.net/live-blog/live-blog-update/trump-set-meet-qatars-prime-minister-white-house",
+     "time": "2026-11-09T06:48:52+00:00",
+     "source": "Middle East Eye",
+     "via": null,
+     "country": "UK/Middle East",
+     "kind": "independent"
+    },
+    {
+     "title": "Qatar PM to meet Trump: What’s the latest on US-Iran negotiations?",
+     "summary": "Iran has put forward a two-day proposal developed with Qatari mediators that Washington is examining.",
+     "link": "https://www.aljazeera.com/news/2026/11/9/qatar-pm-to-meet-trump-whats-the-latest-on-us-iran-negotiations?traffic_source=rss",
+     "time": "2026-11-09T09:27:35+00:00",
+     "source": "Al Jazeera",
+     "via": null,
+     "country": "Qatar",
+     "kind": "state-funded"
+    }
+   ],
+   "id": "s14"
+  },
+  {
+   "score": 11.12,
+   "outlets": 3,
+   "countries": [
+    "Qatar",
+    "Ukraine"
+   ],
+   "first": "2026-11-09T04:05:17+00:00",
+   "last": "2026-11-09T10:08:45+00:00",
+   "keywords": [
+    "russia",
+    "overnight",
+    "russian",
+    "ukraine",
+    "refinery",
+    "attack"
+   ],
+   "articles": [
+    {
+     "title": "Ukraine strikes Russia's second-largest oil refinery in overnight drone attack, Russian governor says",
+     "summary": "The attack caused large explosions at the Kirishi Petroleum Organic Synthesis plant, also known as the Kinef plant, around 800 kilometers (roughly 500 miles) north of Ukraine.",
+     "link": "https://kyivindependent.com/ukrainian-forces-reportedly-strike-russias-second-largest-oil-refinery-in-overnight-drone-attack/",
+     "time": "2026-11-09T04:05:17+00:00",
+     "source": "Kyiv Independent",
+     "via": null,
+     "country": "Ukraine",
+     "kind": "independent"
+    },
+    {
+     "title": "Ukrainian hits Russia's second-largest oil refinery in overnight drone attack, Russian governor says",
+     "summary": "Ukrainian hits Russia's second-largest oil refinery in overnight drone attack, Russian governor says The Kyiv Independent Renewed refinery attacks deplete Russian diesel supply as US deal in focus Reuters At least one person killed as Russia and Ukraine trade strikes overnight Al Jazeera Ukrainian Drone Attack Kills Woman, Sparks Fire at Leningrad Region Refinery The Moscow Times Kyiv Hits Sixth R",
+     "link": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQNmM0aWNYYUR4eFdtT0V5R2YyWEI4QXV1REh4dGRyaWJLV0FWaEt5akZmb18ybGxORHlVR0FxSjJCcVc0aVBTMzhZTGtPNWJkdUNSaDFONFhyZVRyYVdxaW1TVFpXUUF2aS1ZbmdFaU9pUi1TaVJaRHFkb0EwdDA0bXNyXzduNUtkMHpWUmRJa3l0d0RvczlPUDdKOWRyRTc5d2E4ZWNydG0xR1lPWHBjZE10SVZiaXkxUVhaWi1HYmlITE0?oc=5",
+     "time": "2026-11-09T04:05:17+00:00",
+     "source": "The Kyiv Independent",
+     "via": "Google News World",
+     "country": "Ukraine",
+     "kind": "independent"
+    },
+    {
+     "title": "At least one person killed as Russia and Ukraine trade strikes overnight",
+     "summary": "Russia's second-largest oil refinery was set on fire by drones, while Russian strikes targeted Ukrainian energy sites.",
+     "link": "https://www.aljazeera.com/news/2026/11/9/at-least-one-person-killed-as-russia-and-ukraine-trade-strikes-overnight?traffic_source=rss",
+     "time": "2026-11-09T10:08:45+00:00",
+     "source": "Al Jazeera",
+     "via": null,
+     "country": "Qatar",
+     "kind": "state-funded"
+    }
+   ],
+   "id": "s15"
+  },
+  {
+   "score": 10.57,
+   "outlets": 3,
+   "countries": [
+    "Russia",
+    "UK",
+    "UK/Middle East"
+   ],
+   "first": "2026-11-09T00:50:00+00:00",
+   "last": "2026-11-09T07:29:25+00:00",
+   "keywords": [
+    "putin",
+    "trump",
+    "meet",
+    "summit",
+    "china",
+    "think"
+   ],
+   "articles": [
+    {
+     "title": "Trump thinks he will meet Xi and Putin at China APEC summit",
+     "summary": "Trump thinks he will meet Xi and Putin at China APEC summit Reuters Iran war live: Diplomacy intensifies as Qatar PM to meet Trump and Vance Al Jazeera US President Donald Trump plans to meet Putin and Xi in China next week Euronews.com Why Trump, Xi, and Putin can’t carve up the world like the ‘big three’ leaders of 1945 The Conversation History repeats in Shenzhen? China hosts another lame-duck ",
+     "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNY0h5RWRYOHBsak5MVm5FQy1UV09NSk1odWFia1BUV1VJeVE5Z01CU0NqLVc1ckZ0V1FGSndBMUVMSlRyOVpnNktxVmNoZm13Y1FwTUw3QWxGYk5YR0VHX0k5VFlFZDJXWTJBYi03dWJ6c1MxLXZQdDVCWVBDOUJDOW5rLUdFYkZjaVZzRkNzTVd1YnpvV0tHV0p1YlNQbTRzVUE?oc=5",
+     "time": "2026-11-09T00:50:00+00:00",
+     "source": "Reuters",
+     "via": "Google News World",
+     "country": "UK",
+     "kind": "wire"
+    },
+    {
+     "title": "Trump says his potential meeting with Putin, Xi in China would be interesting",
+     "summary": "The US President said that denuclearization would be discussed among other things",
+     "link": "https://tass.com/world/2214557",
+     "time": "2026-11-09T04:00:01+03:00",
+     "source": "TASS",
+     "via": null,
+     "country": "Russia",
+     "kind": "state"
+    },
+    {
+     "title": "Merz says he would not flee opportunity to meet with Putin at G20 summit",
+     "summary": "The German Chancellor didn't rule out the possibility of holding talks with Russian President Vladimir Putin in December",
+     "link": "https://tass.com/world/2214573",
+     "time": "2026-11-09T06:10:01+03:00",
+     "source": "TASS",
+     "via": null,
+     "country": "Russia",
+     "kind": "state"
+    },
+    {
+     "title": "Trump says he thinks he will meet with Xi, Putin, set to discuss ending war on Iran",
+     "summary": "Trump says he thinks he will meet with Xi, Putin, set to discuss ending war on Iran US President Donald Trump said that he thinks he will meet with his Chinese and Russian counterparts at the Asia-Pacific ‌Economic Cooperation (APEC) summit in China’s Shenzhen next week. \"One of the meetings, I think, will be with President [Vladimir] Putin and President Xi [Jinping]. And that’ll be interesting,\" ",
+     "link": "https://www.middleeasteye.net/live-blog/live-blog-update/trump-says-he-thinks-he-will-meet-xi-putin-set-discuss-ending-war-iran",
+     "time": "2026-11-09T07:29:25+00:00",
+     "source": "Middle East Eye",
+     "via": null,
+     "country": "UK/Middle East",
+     "kind": "independent"
+    }
+   ],
+   "id": "s16"
+  },
+  {
+   "score": 10.3,
+   "outlets": 4,
+   "countries": [
+    "France",
+    "Turkey",
+    "UK",
+    "US"
+   ],
+   "first": "2026-11-07T12:49:36+00:00",
+   "last": "2026-11-08T16:59:42+00:00",
+   "keywords": [
+    "russian",
+    "ukraine",
+    "strike",
+    "power",
+    "hundred",
+    "thousand"
+   ],
+   "articles": [
+    {
+     "title": "Russian strikes wound nine and damage Ukraine's power network ahead of talks",
+     "summary": "The attacks come before Ukrainian and Russian delegations are due to take part in trilateral talks in Abu Dhabi next week.",
+     "link": "https://www.bbc.co.uk/news/articles/cm4g1nq8158po?at_medium=RSS&at_campaign=rss",
+     "time": "2026-11-07T12:49:36+00:00",
+     "source": "BBC",
+     "via": null,
+     "country": "UK",
+     "kind": "public"
+    },
+    {
+     "title": "Hundreds of thousands left without power in Ukraine after Russian strikes, authorities say",
+     "summary": "Hundreds of thousands left without power in Ukraine after Russian strikes, authorities say CBS News Russia pounds power facilities around Kyiv, damages major bridge Reuters Drone and missile attacks wound 9 in Ukraine as country prepares for talks with Russia and US AP News Russian strikes on Ukraine leave 850,000 without power as Zelenskyy reports drone attack on Komyshuvakha Euronews.com Russian",
+     "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE9JV3lDUVpZVXY0aUs3R2NtUDdKV1RTczJUaFRqdzkwZElYclVQMkRPeFdkcmdoRmhrSDFMU2xUTWZLdUItaC0yb0JWeVpjQm81cjdZMlBJdllHTHYycktHdUlFdEZTdHlHdklLdDZn?oc=5",
+     "time": "2026-11-08T11:20:29+00:00",
+     "source": "CBS News",
+     "via": "Google News World",
+     "country": "US",
+     "kind": "centre"
+    },
+    {
+     "title": "Zelenskyy says Russian strikes leave over 600,000 people without power in Ukraine's Dnipro region",
+     "summary": "Ukrainian president says situation also challenging in Kharkiv region as power outages affect several parts of Ukraine",
+     "link": "https://www.aa.com.tr/en/eurasia/zelenskyy-says-russian-strikes-leave-over-600-000-people-without-power-in-ukraines-dnipro-region/4115894",
+     "time": "2026-11-08T14:29:14+03:00",
+     "source": "Anadolu",
+     "via": null,
+     "country": "Turkey",
+     "kind": "state"
+    },
+    {
+     "title": "Ukraine: Russian strikes leave hundreds of thousands without power",
+     "summary": "Hundreds of thousands of Ukrainians were left without electricity on Sunday following Russian airstrikes targeting the country's energy infrastructure. Moscow has intensified its attacks as winter approaches, leaving residents in Kyiv and other parts of the country struggling with power cuts as temperatures continue to drop. Clemence Waller reports.",
+     "link": "https://www.france24.com/en/ukraine-russian-strikes-leave-hundreds-of-thousands-without-power",
+     "time": "2026-11-08T16:59:42+00:00",
+     "source": "France 24",
+     "via": null,
+     "country": "France",
+     "kind": "public"
+    }
+   ],
+   "id": "s17"
+  },
+  {
+   "score": 9.49,
+   "outlets": 4,
+   "countries": [
+    "Hong Kong",
+    "UK",
+    "US"
+   ],
+   "first": "2026-11-08T07:35:48+00:00",
+   "last": "2026-11-08T17:06:47+00:00",
+   "keywords": [
+    "men",
+    "iran",
+    "execute",
+    "january",
+    "protest",
+    "three"
+   ],
+   "articles": [
+    {
+     "title": "Iran executes three men arrested during January anti-government protests",
+     "summary": "Iran executed three men convicted over their involvement in January anti-government protests, state media reported.",
+     "link": "https://www.cnbc.com/2026/11/08/iran-executes-men-january-protests.html",
+     "time": "2026-11-08T07:35:48+00:00",
+     "source": "CNBC World",
+     "via": null,
+     "country": "US",
+     "kind": "business"
+    },
+    {
+     "title": "Iran executes 3 men accused of links to US and Israel, protesting against regime",
+     "summary": "Iran executes 3 men accused of links to US and Israel, protesting against regime New York Post Iran executes three men for 'armed unrest' after January protests BBC New Details Emerge On Trial Of Protesters That Ended With 10 Death Sentences In Iran Radio Free Europe/Radio Liberty Iranian citizens condemn executions, criticize US response Iran International Three Men Hanged in Iran over Armed Invo",
+     "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQMllEZl9QRUUxbjdXdXdZNDJJUkxZTHdxcnN2N0VWd2dENm9iUzlYTVFiek1TMHZ2aEhfQVJrRmxndDdfa0JpQzVTYi1zb0lyRTh5MXp3TnRLSzZ5aXBLb2cwOXVwVUd1NFlXRUdmWkZRV0kycUwtR3RtbEtuQWF5bmVJSi1XY1lUMDM1RGdvb0JxbWdTMVZPZ0piR2RUVHhkdWRwMXB2cE9PNDlwdXlpa29QRldiZDJlR1YyZjhn?oc=5",
+     "time": "2026-11-08T08:23:00+00:00",
+     "source": "New York Post",
+     "via": "Google News World",
+     "country": "US",
+     "kind": "right-leaning"
+    },
+    {
+     "title": "Iran executes three men for 'armed unrest' after January protests",
+     "summary": "It is claimed Hassan Dioband, Hamid Kazemi and Reza Zanganeh were part of anti-government protests earlier this year.",
+     "link": "https://www.bbc.co.uk/news/articles/ckly0ex633ydo?at_medium=RSS&at_campaign=rss",
+     "time": "2026-11-08T13:37:50+00:00",
+     "source": "BBC",
+     "via": null,
+     "country": "UK",
+     "kind": "public"
+    },
+    {
+     "title": "Iran executes 3 more men over January protests",
+     "summary": "Iranian authorities executed three men on Sunday on charges linked to January 2026 protests, the judiciary said, after what rights groups described as an unfair trial. Norway-based Iran Human Rights (IHR) said the hangings at dawn of Hassan Divband, Hamid Kazemi and Reza Zanganeh in the city of Karaj outside Tehran brought the number of men hanged over the January protests to at least 39 and warne",
+     "link": "https://www.scmp.com/news/world/middle-east/article/3373716/iran-executes-3-more-men-over-january-protests-judiciary-says",
+     "time": "2026-11-08T17:06:47+00:00",
+     "source": "SCMP",
+     "via": null,
+     "country": "Hong Kong",
+     "kind": "commercial"
+    }
+   ],
+   "id": "s18"
+  },
+  {
+   "score": 8.85,
+   "outlets": 3,
+   "countries": [
+    "Hong Kong",
+    "US"
+   ],
+   "first": "2026-11-08T16:35:44+00:00",
+   "last": "2026-11-09T07:01:00+00:00",
+   "keywords": [
+    "amsterdam",
+    "thousand",
+    "march",
+    "israel",
+    "tens",
+    "solidarity"
+   ],
+   "articles": [
+    {
+     "title": "Thousands march through Amsterdam in solidarity with Palestinians",
+     "summary": "Tens of thousands of people dressed in red thronged the streets of Amsterdam on Sunday to denounce ongoing violence against Palestinians in Gaza, carrying signs reading “Stop the Genocide”. Organisers said some 20,000 people attended the “red line” protest, demanding that the Dutch government take action against Israel. “Stop sending weapons to Israel,” one of the protesters, Steven Eisinger, a 33",
+     "link": "https://www.scmp.com/news/world/europe/article/3373715/tens-thousands-dutch-protesters-take-amsterdam-streets-support-palestinians",
+     "time": "2026-11-08T16:35:44+00:00",
+     "source": "SCMP",
+     "via": null,
+     "country": "Hong Kong",
+     "kind": "commercial"
+    },
+    {
+     "title": "Tens of Thousands Protest in Amsterdam Against Israel",
+     "summary": "Tens of thousands of people dressed in red thronged the streets of Amsterdam on Sunday to denounce ongoing violence against Palestinians in Gaza, carrying signs reading \"Stop the Genocide\". The post Tens of Thousands Protest in Amsterdam Against Israel appeared first on Breitbart .",
+     "link": "https://www.breitbart.com/europe/2026/11/08/tens-of-thousands-protest-in-amsterdam-against-israel/",
+     "time": "2026-11-08T17:07:47+00:00",
+     "source": "Breitbart",
+     "via": null,
+     "country": "US",
+     "kind": "right"
+    },
+    {
+     "title": "Tens of thousands march in Amsterdam, pressing the Dutch government on Gaza and Israel",
+     "summary": "Tens of thousands march in Amsterdam, pressing the Dutch government on Gaza and Israel AP News Hundreds of thousands join Amsterdam’s ‘Red Line’ protest against Israel Al Jazeera ‘Stop the genocide’: Tens of thousands rally in Amsterdam to support Palestinians The Times of Israel 'End the Genocide': 200,000 March for Gaza in Amsterdam Common Dreams Organisers say 200,000 join Amsterdam rally again",
+     "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNSEdTV09HNFh1dmJPWFZJWjJjSUNTYU1LV2tkTVFudE82cHFlSzdNdHJwM3hXY2pMSmgtMUlxYnBTR1JycW4yVlVHZXNtS255QzVQQ2hMcjQtdkJ4Ymg5Z0lfSzdXc3FmcDRVeUprbkF3bWVtVDJHTWp3Uml0d1A2Q3RQQ2p0T2N3LWg3VFY3Wm81ejF1MDducWlON25icFdhd3QwSWh2bXZVdw?oc=5",
+     "time": "2026-11-09T07:01:00+00:00",
+     "source": "AP News",
+     "via": "Google News World",
+     "country": "US",
+     "kind": "wire"
+    }
+   ],
+   "id": "s19"
+  },
+  {
+   "score": 8.39,
+   "outlets": 3,
+   "countries": [
+    "Russia",
+    "UK/Middle East",
+    "US"
+   ],
+   "first": "2026-11-08T14:30:30+00:00",
+   "last": "2026-11-09T05:34:32+00:00",
+   "keywords": [
+    "iran",
+    "island",
+    "qeshm",
+    "attack",
+    "report",
+    "heard"
+   ],
+   "articles": [
+    {
+     "title": "Iran suggests blasts are not U.S. attacks as both sides report ships hit",
+     "summary": "Iran officials have not confirmed any missile strikes on Iranian territory following blasts heard in several areas, including on Qeshm Island in the strait.",
+     "link": "https://www.cnbc.com/2026/11/08/saudi-aramco-riyadh-building-attack.html",
+     "time": "2026-11-08T14:30:30+00:00",
+     "source": "CNBC World",
+     "via": null,
+     "country": "US",
+     "kind": "business"
+    },
+    {
+     "title": "Four explosions heard on Iran’s Qeshm island — agency",
+     "summary": "According to the IRNA, the explosions were heard in several locations on the island",
+     "link": "https://tass.com/world/2214531",
+     "time": "2026-11-08T22:53:30+03:00",
+     "source": "TASS",
+     "via": null,
+     "country": "Russia",
+     "kind": "state"
+    },
+    {
+     "title": "Explosions heard on Iran's Qeshm Island, state media reports",
+     "summary": "Explosions heard on Iran's Qeshm Island, state media reports Iran's IRNA news reported on Sunday the US military fired ‘projectiles’ on Qeshm Island in the Strait of Hormuz on Sunday. This comes after the agency earlier reported four explosions on the island, with several locations struck.",
+     "link": "https://www.middleeasteye.net/live-blog/live-blog-update/explosions-heard-irans-qeshm-island-state-media-reports",
+     "time": "2026-11-08T21:42:15+00:00",
+     "source": "Middle East Eye",
+     "via": null,
+     "country": "UK/Middle East",
+     "kind": "independent"
+    },
+    {
+     "title": "US strikes Iran’s Qeshm Island, critical facilities unharmed — Fars",
+     "summary": "According to the agency, the targets were located outside residential areas",
+     "link": "https://tass.com/world/2214583",
+     "time": "2026-11-09T08:14:53+03:00",
+     "source": "TASS",
+     "via": null,
+     "country": "Russia",
+     "kind": "state"
+    },
+    {
+     "title": "Iranian official says no vital infrastructure damaged in US attack on Qeshm island",
+     "summary": "Iranian official says no vital infrastructure damaged in US attack on Qeshm island A provincial official indicated that no vital infrastructure or services were impacted by a US attack on Iran's Qeshm island overnight. The Iranian official added that the targeted sites were away from residential and commercial areas.",
+     "link": "https://www.middleeasteye.net/live-blog/live-blog-update/iranian-official-says-no-vital-infrastructure-damaged-us-attack-qeshm",
+     "time": "2026-11-09T05:34:32+00:00",
+     "source": "Middle East Eye",
+     "via": null,
+     "country": "UK/Middle East",
+     "kind": "independent"
+    }
+   ],
+   "id": "s20"
+  },
+  {
+   "score": 7.85,
+   "outlets": 4,
+   "countries": [
+    "Germany",
+    "UK",
+    "US"
+   ],
+   "first": "2026-11-08T05:01:24+00:00",
+   "last": "2026-11-08T17:51:03+00:00",
+   "keywords": [
+    "africa",
+    "south",
+    "worst-ever",
+    "election",
+    "anc",
+    "same"
+   ],
+   "articles": [
+    {
+     "title": "South Africa’s Politics May Never Be the Same Again",
+     "summary": "The African National Congress lost big in local elections, turning a once-dominant force credited with overturning apartheid into “any other political party.”",
+     "link": "https://www.nytimes.com/2026/11/08/world/africa/south-africa-election-african-national-congress.html",
+     "time": "2026-11-08T05:01:24+00:00",
+     "source": "NYT World",
+     "via": null,
+     "country": "US",
+     "kind": "left-leaning"
+    },
+    {
+     "title": "Party That Defeated Apartheid Hits Electoral Setback in South Africa",
+     "summary": "Party That Defeated Apartheid Hits Electoral Setback in South Africa WSJ 'Devastating message' as ANC records worst-ever result in South Africa election BBC South Africa’s ANC is humbled by its worst election results Politico ‘History won’t feed our children’ — the black voters turning away from the ANC The Times South Africa's ANC takes a beating in municipal vote, setting up tough coalition talk",
+     "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNMUtYd2NsUTR2OTBHcVdmZkd2OWFmYjFIUVRfTGhhcHcwLVc5b2o2bHFob1JxWGhZY2hVelE1c3REN3hULThUMGxpMGZjMXBhMVlmMXJHcmRnVUtBZ3BOZmxJYS0wQ1Y5cGoyaXloell6aWlvLXBGZzZ2U2JuaG50M2VEdU5MdnJjYU5SaWRJT1dCdm1tdS1uak9JWFFNSWFPUVByakJhLWY2T1RKU2ZN?oc=5",
+     "time": "2026-11-08T16:54:00+00:00",
+     "source": "WSJ",
+     "via": "Google News World",
+     "country": "US",
+     "kind": "business, right-leaning"
+    },
+    {
+     "title": "South Africa elections: ANC marks its worst-ever performance",
+     "summary": "The African National Congress, the party of late liberation icon Nelson Mandela, slumped to its worst-ever result in South Africa's municipal election. Voters blame the ANC for water and electricity shortages.",
+     "link": "https://www.dw.com/en/south-africa-elections-anc-marks-its-worst-ever-performance/a-79887482?maca=en-rss-en-all-1573-rdf",
+     "time": "2026-11-08T17:35:00+00:00",
+     "source": "DW",
+     "via": null,
+     "country": "Germany",
+     "kind": "public"
+    },
+    {
+     "title": "'Devastating message' as ANC records worst-ever result in South Africa election",
+     "summary": "President Cyril Ramaphosa says the verdict must be respected, while the party's secretary-general calls the outcome \"catastrophic\".",
+     "link": "https://www.bbc.co.uk/news/articles/cwrkygrxp11mo?at_medium=RSS&at_campaign=rss",
+     "time": "2026-11-08T17:51:03+00:00",
+     "source": "BBC",
+     "via": null,
+     "country": "UK",
+     "kind": "public"
+    }
+   ],
+   "id": "s21"
+  },
+  {
+   "score": 7.66,
+   "outlets": 3,
+   "countries": [
+    "France",
+    "Turkey",
+    "UK"
+   ],
+   "first": "2026-11-08T09:29:24+00:00",
+   "last": "2026-11-09T07:43:11+00:00",
+   "keywords": [
+    "krakow",
+    "shooting",
+    "deadly",
+    "unfolded",
+    "fly",
+    "flag"
+   ],
+   "articles": [
+    {
+     "title": "How the deadly shooting in Krakow unfolded",
+     "summary": "Video authenticated by BBC Verify shows the moment gunshots rang out in Krakow's main market square.",
+     "link": "https://www.bbc.co.uk/news/videos/cq74p2zpwyjmo?at_medium=RSS&at_campaign=rss",
+     "time": "2026-11-08T09:29:24+00:00",
+     "source": "BBC",
+     "via": null,
+     "country": "UK",
+     "kind": "public"
+    },
+    {
+     "title": "EU flags fly at half-mast after deadly Krakow shooting",
+     "summary": "European Commission president pays tribute to victims, first responders, stresses European unity, solidarity following 'horrific' attack that killed 6",
+     "link": "https://www.aa.com.tr/en/europe/eu-flags-fly-at-half-mast-after-deadly-krakow-shooting/4116095",
+     "time": "2026-11-08T17:27:21+03:00",
+     "source": "Anadolu",
+     "via": null,
+     "country": "Turkey",
+     "kind": "state"
+    },
+    {
+     "title": "Poland braces for tense week after deadly Krakow shooting deepens political divisions",
+     "summary": "Poland faces a week of political tensions after its deadliest shooting in decades left six people dead and dozens wounded in Krakow on Saturday. The attack has heightened concerns over rising far-right extremism ahead of a major nationalist march.",
+     "link": "https://www.france24.com/en/europe/20261109-poland-braces-for-tense-week-after-deadly-shooting-deepens-political-divisions",
+     "time": "2026-11-09T07:43:11+00:00",
+     "source": "France 24",
+     "via": null,
+     "country": "France",
+     "kind": "public"
+    }
+   ],
+   "id": "s22"
+  },
+  {
+   "score": 7.27,
+   "outlets": 3,
+   "countries": [
+    "Japan",
+    "Russia"
+   ],
+   "first": "2026-11-08T02:46:00+00:00",
+   "last": "2026-11-09T17:00:00+09:00",
+   "keywords": [
+    "data",
+    "center",
+    "take",
+    "aim",
+    "cook",
+    "shower"
+   ],
+   "articles": [
+    {
+     "title": "Can’t cook or shower: Indonesians take aim at data centers",
+     "summary": "Can’t cook or shower: Indonesians take aim at data centers The Japan Times Data Centers Face Growing Backlash in Southeast Asia Amid Water Shortages and Protests news.sbs.co.kr The Indonesian island where residents compete with AI data centres for fresh water South China Morning Post Batam residents protest water disruptions near data centers — The Japan Times UA.NEWS No water to cook or bathe: In",
+     "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNTVMtOU5VemJWV1FxaW13bGUtMUlhTHlBbHF3VWpLMk9YU3B6Y19ZdU1La3YtRzgxdURhMktoc3FETVN2WVRNb05rVUFfMjJXN2p4WWJYdGY1Y3M5VzJTUnZTS0ZVVmFlV3piRFFrdi10MGU0YUduOE55LTlKZVRhbXB1WGc2SExVdnk1S25PaEZCZ0tI?oc=5",
+     "time": "2026-11-08T02:46:00+00:00",
+     "source": "The Japan Times",
+     "via": "Google News World",
+     "country": "Japan",
+     "kind": "commercial"
+    },
+    {
+     "title": "EU-wide data center protests take aim at Brussels (VIDEOS)",
+     "summary": "Thousands protest AI data centers across Europe, demanding a halt to new projects as Brussels pushes to triple the EU’s capacity Read Full Article at RT.com",
+     "link": "https://rt-english.com/news/648572-eu-wide-ai-data-center-protests/?utm_source=rss&utm_medium=rss&utm_campaign=RSS",
+     "time": "2026-11-08T15:04:16+00:00",
+     "source": "RT",
+     "via": null,
+     "country": "Russia",
+     "kind": "state"
+    },
+    {
+     "title": "Voters reset the debate on data centers and billionaires",
+     "summary": "Building data centers in the U.S. just became more difficult, but perhaps as important, voters issued a challenge to the AI billionaires behind them.",
+     "link": "https://www.japantimes.co.jp/commentary/2026/11/09/japan/data-center-debate-reset/",
+     "time": "2026-11-09T17:00:00+09:00",
+     "source": "Japan Times",
+     "via": null,
+     "country": "Japan",
+     "kind": "commercial"
+    }
+   ],
+   "id": "s23"
+  },
+  {
+   "score": 7.03,
+   "outlets": 3,
+   "countries": [
+    "Germany",
+    "Qatar",
+    "UK"
+   ],
+   "first": "2026-11-07T16:25:55+00:00",
+   "last": "2026-11-09T05:18:39+00:00",
+   "keywords": [
+    "rain",
+    "gaza",
+    "tent",
+    "flooded",
+    "heavy",
+    "tens"
+   ],
+   "articles": [
+    {
+     "title": "Tens of thousands of tents flooded after heavy rains in Gaza",
+     "summary": "Tens of thousands of tents flooded after heavy rains in Gaza BBC ‘Tents don’t protect us’: Rains flood displaced Palestinians in Gaza Al Jazeera Five killed in Gaza after sand embankment collapses onto tents, first responders say BBC Heavy rain floods displaced families’ tents in Gaza – in pictures The Guardian UNRWA Situation Report #238 on the Humanitarian Crisis in the Gaza Strip and the Occupi",
+     "link": "https://news.google.com/rss/articles/CBMiW0FVX3lxTFBkSG0wLXgza0xFMDhzaERSdDBZUC1zUWtZUjZoNmNMVlBBbWY2eWJ0YXhVQUFocFhyWmNjQVVIdEl0SW1ySnVzSkJpUEJLYThObS1sX2thdkJ2S1U?oc=5",
+     "time": "2026-11-07T16:25:55+00:00",
+     "source": "BBC",
+     "via": "Google News World",
+     "country": "UK",
+     "kind": "public"
+    },
+    {
+     "title": "Gaza: Rains add misery to humanitarian catastrophe",
+     "summary": "With most homes damaged or destroyed by the war, Gazans are facing worsening humanitarian conditions due to heavy rain.",
+     "link": "https://www.dw.com/en/gaza-rains-add-misery-to-humanitarian-catastrophe/a-79889580?maca=en-rss-en-all-1573-rdf",
+     "time": "2026-11-08T10:58:00+00:00",
+     "source": "DW",
+     "via": null,
+     "country": "Germany",
+     "kind": "public"
+    },
+    {
+     "title": "‘Tents don’t protect us’: Rains flood displaced Palestinians in Gaza",
+     "summary": "Hundreds of thousands of Palestinians are vulnerable to flooding as Israel continues to block entry of mobile homes.",
+     "link": "https://www.aljazeera.com/features/2026/11/9/tents-dont-protect-us-rains-flood-displaced-palestinians-in-gaza?traffic_source=rss",
+     "time": "2026-11-09T05:18:39+00:00",
+     "source": "Al Jazeera",
+     "via": null,
+     "country": "Qatar",
+     "kind": "state-funded"
+    }
+   ],
+   "id": "s24"
+  },
+  {
+   "score": 6.98,
+   "outlets": 2,
+   "countries": [
+    "Israel",
+    "UK/Middle East"
+   ],
+   "first": "2026-11-09T09:47:23+00:00",
+   "last": "2026-11-09T11:41:55+00:00",
+   "keywords": [
+    "two-day",
+    "defend",
+    "iran",
+    "proposal",
+    "peace",
+    "reject"
+   ],
+   "articles": [
+    {
+     "title": "Iran defends two-day proposal for peace talks after US rejects conditions",
+     "summary": "Iran defends two-day proposal for peace talks after US rejects conditions Iran defended a proposal on Monday to restart peace talks in as few as two days as the most reasonable offer on the table, after US Secretary of State Marco Rubio called some of Iran's conditions \"outrageous and ridiculous\". \"Is it unreasonable that Iran demands that US illegal sanctions and its naval blockade must be lifted",
+     "link": "https://www.middleeasteye.net/live-blog/live-blog-update/iran-defends-two-day-proposal-peace-talks-after-us-rejects-conditions",
+     "time": "2026-11-09T09:47:23+00:00",
+     "source": "Middle East Eye",
+     "via": null,
+     "country": "UK/Middle East",
+     "kind": "independent"
+    },
+    {
+     "title": "Iran defends two-day peace proposal as 'most reasonable,' slamming Rubio's remarks as unjustified",
+     "summary": "Baghaei dismissed a US military task force aimed at restricting Iran's land trade as a diversion following President Donald Trump's Republicans' losses in midterm elections.",
+     "link": "https://www.jpost.com/middle-east/iran-news/article-914314",
+     "time": "2026-11-09T11:41:55+00:00",
+     "source": "Jerusalem Post",
+     "via": null,
+     "country": "Israel",
+     "kind": "right-leaning"
+    }
+   ],
+   "id": "s25"
+  },
+  {
+   "score": 6.88,
+   "outlets": 3,
+   "countries": [
+    "Turkey",
+    "UK",
+    "US"
+   ],
+   "first": "2026-11-07T13:12:22+00:00",
+   "last": "2026-11-08T22:07:45+00:00",
+   "keywords": [
+    "zealand",
+    "election",
+    "coalition",
+    "ruling",
+    "happened",
+    "week"
+   ],
+   "articles": [
+    {
+     "title": "New Zealand election coalition talks will likely take weeks – as it happened",
+     "summary": "This blog is closed, you can read our report on the New Zealand election here Another update here with 8% of the vote counted . National on 31.2%, Labour 28.4%, the Greens 12.9%, Act 11.2%, NZ First 9.6%, Opportunity 5.7% and Te Pāti Māori 0.4%. On these numbers, we would have a right bloc coalition back in power. Long way to go . Continue reading...",
+     "link": "https://www.theguardian.com/world/live/2026/nov/07/nz-general-election-2026-live-updates-results-new-zealand-polls",
+     "time": "2026-11-07T13:12:22+00:00",
+     "source": "The Guardian",
+     "via": null,
+     "country": "UK",
+     "kind": "left-leaning"
+    },
+    {
+     "title": "Ruling coalition secures narrow majority in New Zealand general election",
+     "summary": "Outcome could still change when 700,000 special votes are counted",
+     "link": "https://www.aa.com.tr/en/asia-pacific/ruling-coalition-secures-narrow-majority-in-new-zealand-general-election/4115707",
+     "time": "2026-11-08T10:40:01+03:00",
+     "source": "Anadolu",
+     "via": null,
+     "country": "Turkey",
+     "kind": "state"
+    },
+    {
+     "title": "New Zealand Dollar Climbs as Ruling Party Gets Election Edge",
+     "summary": "New Zealand’s dollar rose after the incumbent National Party emerged from the weekend election with a path back to power, putting it in pole position to lead negotiations with minor parties.",
+     "link": "https://www.bloomberg.com/news/articles/2026-11-08/new-zealand-dollar-advances-as-ruling-party-gets-election-edge",
+     "time": "2026-11-08T22:07:45+00:00",
+     "source": "Bloomberg Markets",
+     "via": null,
+     "country": "US",
+     "kind": "business"
+    }
+   ],
+   "id": "s26"
+  },
+  {
+   "score": 6.75,
+   "outlets": 3,
+   "countries": [
+    "Hong Kong",
+    "India",
+    "UK"
+   ],
+   "first": "2026-11-09T03:18:00+00:00",
+   "last": "2026-11-09T10:48:34+05:30",
+   "keywords": [
+    "fire",
+    "kill",
+    "china",
+    "building",
+    "taiyuan",
+    "northern"
+   ],
+   "articles": [
+    {
+     "title": "Building fire kills 14 in China's northern city of Taiyuan",
+     "summary": "Building fire kills 14 in China's northern city of Taiyuan Reuters 14 dead, dozens injured in northern China high-rise building fire South China Morning Post 5 dead following fire in north China's Shanxi CGTN At least 14 dead after high-rise building fire in China Yahoo Five perish in Shanxi apartment building fire China Daily Global Edition",
+     "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQcTVrbGRoRzEzTE1mN0o3Ni05R3BCWGNXR29DcHpEbjFhaVdwQVBLMHEyeTZYVXptOGRpODByM0FSZkp5Rm8yWkhwSWpOaVJSdkRIS04tMER5NGg5NWxCd3FLb1JNb3I2M3RCYzdHYUxuZjBiZXNaZGt5N0Z1YlJobTZ3TFd6SzlNTG9Ydkt2Q2tmeHR0bkl6WkRVcw?oc=5",
+     "time": "2026-11-09T03:18:00+00:00",
+     "source": "Reuters",
+     "via": "Google News World",
+     "country": "UK",
+     "kind": "wire"
+    },
+    {
+     "title": "14 dead, dozens injured in northern China high-rise building fire",
+     "summary": "Fourteen people died and dozens more were hospitalised after a fire broke out in a high-rise building in northern China on Sunday. The fire erupted at around 5pm in the Haosheng International Apartment building in Taiyuan, the capital city of Shanxi province, according to the Yingze district government. It was put out by around 7pm and rescue efforts ended at around 8.30pm, the authorities said. T",
+     "link": "https://www.scmp.com/news/china/politics/article/3373750/fire-northern-china-high-rise-building-kills-14-injures-dozens-more",
+     "time": "2026-11-09T04:44:16+00:00",
+     "source": "SCMP",
+     "via": null,
+     "country": "Hong Kong",
+     "kind": "commercial"
+    },
+    {
+     "title": "High-Rise Fire Kills 14: Blaze rips through Taiyuan tower; authorities probe cause amid safety drive",
+     "summary": "On Sunday afternoon, a devastating fire erupted in a downtown high-rise building in Taiyuan, China. Firefighters responded swiftly, bringing the flames under control about two hours later, by 7 pm local time. The rescue efforts lasted until 8:30 pm, leading to the evacuation and hospitalization of 38 individuals. The unfortunate event initially reported five deaths, which later rose to 14 confirme",
+     "link": "https://timesofindia.indiatimes.com/world/china/china-high-rise-building-fire-kills-14-in-shanxi-province/articleshow/135671017.cms",
+     "time": "2026-11-09T10:48:34+05:30",
+     "source": "Times of India",
+     "via": null,
+     "country": "India",
+     "kind": "commercial"
+    }
+   ],
+   "id": "s27"
+  },
+  {
+   "score": 6.66,
+   "outlets": 3,
+   "countries": [
+    "Russia (exile)",
+    "Turkey",
+    "Ukraine"
+   ],
+   "first": "2026-11-08T08:50:00+00:00",
+   "last": "2026-11-09T01:09:58+00:00",
+   "keywords": [
+    "nuclear",
+    "plant",
+    "power",
+    "zaporizhzhia",
+    "generator",
+    "losing"
+   ],
+   "articles": [
+    {
+     "title": "Zaporizhzhia Nuclear Plant Relying on Generators Again After Losing Internal Power Supply",
+     "summary": "Zaporizhzhia Nuclear Plant Relying on Generators Again After Losing Internal Power Supply The Moscow Times Power restored to Zaporizhzhia nuclear plant, IAEA says Reuters Ukrainian nuclear plant switches to generators after losing final power line The Hill Zaporizhzhia Nuclear Plant Loses External Power Supply, Russian-Installed Management Says The Moscow Times Zaporizhzhia Nuclear Power Plant res",
+     "link": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQaUJ4RmVDc3lPXy1ndzZzVWZ1VWpNZTZBUVBnd2dKeXJpeTJwbzhMQ2QyU29maXV6YzRLZnIyUFRFNlExVmNGWklKOHI3NnFCQk5DU0ZmdllLV2FVeC1DSkdwUlJMOXNaaGZwbnFZWllaQjEzR1NEdHZkcGhJZi0yblJYMEthRkpFUEg5OXNiTTdSYW9tYlhKRnVqRGhsU3JZeUc0Qks2cjU1V2NEc1VuZFVLN2szb1U4S2pTWlpYeTJVcS1Xb2NDTC1EVmJDOHlwMnQtMA?oc=5",
+     "time": "2026-11-08T08:50:00+00:00",
+     "source": "The Moscow Times",
+     "via": "Google News World",
+     "country": "Russia (exile)",
+     "kind": "independent"
+    },
+    {
+     "title": "Ukraine's Zaporizhzhya nuclear plant loses all external power for 27th time: UN nuclear watchdog",
+     "summary": "Plant relies on emergency diesel generators as IAEA warns of 'precarious' safety situation, calls for restoration of power supply",
+     "link": "https://www.aa.com.tr/en/world/ukraines-zaporizhzhya-nuclear-plant-loses-all-external-power-for-27th-time-un-nuclear-watchdog/4115903",
+     "time": "2026-11-08T14:34:45+03:00",
+     "source": "Anadolu",
+     "via": null,
+     "country": "Turkey",
+     "kind": "state"
+    },
+    {
+     "title": "Power to Zaporizhzhia nuclear power plant cut, restored, IAEA says",
+     "summary": "The plant lost connection to its sole 330-kilovolt (kV) external power line, forcing it to rely on emergency diesel generators for cooling and safety functions, the IAEA announced around noon local time. 10 hours later, the IAEA confirmed power had been restored.",
+     "link": "https://kyivindependent.com/power-to-zaporizhzhia-nuclear-power-plant-cut-restored-iaea-says/",
+     "time": "2026-11-09T01:09:58+00:00",
+     "source": "Kyiv Independent",
+     "via": null,
+     "country": "Ukraine",
+     "kind": "independent"
+    }
+   ],
+   "id": "s28"
+  },
+  {
+   "score": 6.57,
+   "outlets": 3,
+   "countries": [
+    "UK",
+    "US"
+   ],
+   "first": "2026-11-09T02:50:22+00:00",
+   "last": "2026-11-09T05:09:46+00:00",
+   "keywords": [
+    "china",
+    "inflation",
+    "four-year",
+    "high",
+    "producer",
+    "measure"
+   ],
+   "articles": [
+    {
+     "title": "China wholesale inflation hits highest in more than four years as consumer measure slows",
+     "summary": "The PPI for October came in at 5.7%, compared to the 5.3% expected by economists polled by Reuters.",
+     "link": "https://www.cnbc.com/2026/11/09/china-wholesale-inflation-rises-consumer.html",
+     "time": "2026-11-09T02:50:22+00:00",
+     "source": "CNBC World",
+     "via": null,
+     "country": "US",
+     "kind": "business"
+    },
+    {
+     "title": "China Producer Inflation Accelerates to Over Four-Year High",
+     "summary": "China Producer Inflation Accelerates to Over Four-Year High WSJ China wholesale inflation hits highest in more than four years as consumer measure slows CNBC China’s producer prices hit four-year high Financial Times Chinese Producer Inflation Hits 5.7% for Post-Covid Era High Bloomberg.com China's factory-gate inflation at fastest in nearly 4-1/2 years in October, while CPI rise moderates Reuters",
+     "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPcm1tR2Voci0zUnpsNlVhbzdXQ19DNDB3anhvdU9HZGRtYjE0akY0b0VHZi0xUndnYTkxOExkOHUyTmxHNnJMZzFldjRDRXFxNDE1S2ZZX014aWhxdFFqR1ExbGFEV0FDNHBuMElPOVNwZjYwY20ydlJna2hoN3N5OTJEbGRJbmxwOXZFZWdzMjd6UklTZTRabVBiNkE?oc=5",
+     "time": "2026-11-09T03:59:00+00:00",
+     "source": "WSJ",
+     "via": "Google News Business",
+     "country": "US",
+     "kind": "business, right-leaning"
+    },
+    {
+     "title": "China’s producer prices hit four-year high",
+     "summary": "Weak domestic demand weighs on the world’s second-largest economy even as energy crisis drives up costs",
+     "link": "https://www.ft.com/content/085c4610-143a-47ad-b546-0587695294b5?syn-25a6b1a6=1",
+     "time": "2026-11-09T05:09:46+00:00",
+     "source": "Financial Times",
+     "via": null,
+     "country": "UK",
+     "kind": "business"
+    }
+   ],
+   "id": "s29"
+  },
+  {
+   "score": 6.34,
+   "outlets": 2,
+   "countries": [
+    "India",
+    "Russia"
+   ],
+   "first": "2026-11-08T21:20:45+03:00",
+   "last": "2026-11-09T12:36:31+05:30",
+   "keywords": [
+    "iran",
+    "strait",
+    "table",
+    "top",
+    "hormuz",
+    "opening"
+   ],
+   "articles": [
+    {
+     "title": "Iran’s proposals on opening Strait of Hormuz still on table — top diplomat",
+     "summary": "If Washington meets Tehran’s demands, it will see the result, Iranian Foreign Minister Abbas Araghchi said",
+     "link": "https://tass.com/world/2214517",
+     "time": "2026-11-08T21:20:45+03:00",
+     "source": "TASS",
+     "via": null,
+     "country": "Russia",
+     "kind": "state"
+    },
+    {
+     "title": "'Outrageous, ridiculous demands': US slams Iran as Tehran warns to 'rain down hell'",
+     "summary": "US secretary of state Marco Rubio emphasized the stagnation in diplomatic talks with Iran, expressing concerns over Tehran's demands, which he finds unrealistic and unacceptable. Iranian Foreign Minister Seyed Abbas Araghchi urged Washington to consider Tehran's proposals to avert potential military action. Amid heightened tensions, the path to constructive dialogue remains fraught with obstacles,",
+     "link": "https://timesofindia.indiatimes.com/world/us/us-iran-talks-stalled-over-outrageousunrealistic-tehran-demands-says-marco-rubio/articleshow/135674240.cms",
+     "time": "2026-11-09T12:36:31+05:30",
+     "source": "Times of India",
+     "via": null,
+     "country": "India",
+     "kind": "commercial"
+    }
+   ],
+   "id": "s30"
+  },
+  {
+   "score": 6.25,
+   "outlets": 4,
+   "countries": [
+    "US"
+   ],
+   "first": "2026-11-07T13:34:14-05:00",
+   "last": "2026-11-08T20:48:09+00:00",
+   "keywords": [
+    "probe",
+    "threat",
+    "trump",
+    "democrat",
+    "doj",
+    "order"
+   ],
+   "articles": [
+    {
+     "title": "Trump orders DOJ probe into Democrats over alleged threats against administration officials",
+     "summary": "President Donald Trump accused Democrats of threatening administration officials and Republican donors and ordered the DOJ to investigate alleged \"criminal\" conduct.",
+     "link": "https://www.foxnews.com/politics/trump-orders-doj-probe-democrats-over-alleged-threats-against-admin-officials",
+     "time": "2026-11-07T13:34:14-05:00",
+     "source": "Fox News Politics",
+     "via": null,
+     "country": "US",
+     "kind": "right-leaning"
+    },
+    {
+     "title": "Democrats amp up Trump investigation threats, Blanche counters he may probe lawmakers",
+     "summary": "Democrats have vowed to investigate both President Donald Trump's White House and businesses that have worked with the administration.",
+     "link": "https://www.cnbc.com/2026/11/08/democrats-trump-oversight-blanche-doj-investigations.html",
+     "time": "2026-11-08T18:57:56+00:00",
+     "source": "CNBC World",
+     "via": null,
+     "country": "US",
+     "kind": "business"
+    },
+    {
+     "title": "Democrats amp up Trump investigation threats, Blanche counters he may probe lawmakers",
+     "summary": "Democrats have vowed to investigate both President Donald Trump's White House and businesses that have worked with the administration.",
+     "link": "https://www.cnbc.com/2026/11/08/democrats-trump-oversight-blanche-doj-investigations.html",
+     "time": "2026-11-08T18:57:56+00:00",
+     "source": "CNBC Politics",
+     "via": null,
+     "country": "US",
+     "kind": "business"
+    },
+    {
+     "title": "Trump Orders DOJ Probe of Democrat Leaders' Threats to Republicans: 'Extortion at the Highest Level'",
+     "summary": "President Donald Trump said Saturday he has ordered the U.S. Department of Justice to investigate threatening letters Democrat leaders allegedly sent to administration officials and other Republicans. The post Trump Orders DOJ Probe of Democrat Leaders’ Threats to Republicans: ‘Extortion at the Highest Level’ appeared first on Breitbart .",
+     "link": "https://www.breitbart.com/politics/2026/11/08/trump-orders-doj-probe-of-democrat-leaders-threats-to-republicans-extortion-at-the-highest-level/",
+     "time": "2026-11-08T20:48:09+00:00",
+     "source": "Breitbart",
+     "via": null,
+     "country": "US",
+     "kind": "right"
+    }
+   ],
+   "id": "s31"
+  },
+  {
+   "score": 6.06,
+   "outlets": 2,
+   "countries": [
+    "Turkey",
+    "US"
+   ],
+   "first": "2026-11-09T03:14:13+00:00",
+   "last": "2026-11-09T12:24:03+03:00",
+   "keywords": [
+    "gaza",
+    "peace",
+    "plan",
+    "post-election",
+    "trump",
+    "scoop"
+   ],
+   "articles": [
+    {
+     "title": "Scoop: Trump asked Netanyahu to move on Gaza peace plan in post-election call",
+     "summary": "Scoop: Trump asked Netanyahu to move on Gaza peace plan in post-election call Axios Trump reportedly pressing Netanyahu to advance Gaza plan in wake of election The Times of Israel Aramco skyscraper damaged in Houthi attack on Riyadh: Trump asks Netanyahu to move on Gaza peace plan in post-election call The News Pakistan Axios: Trump Urges Netanyahu to Implement Gaza Peace Plan... Jordan News Trum",
+     "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE92VE5LN1lvY2ZtM09UVm5TOVZnbU9taE1hVkE5TjQyenJQOVZzaFJ6RWV5S0NwLUlwajRBbTQ3SHh2T0w0VXZtQl9mYTZEd1YxTU52bm9TZTAxYXMwdDVkVWdFbHI4UV9qZVJuQW9MY3N6VjcxQ2ZxWk5RMVBGSVE?oc=5",
+     "time": "2026-11-09T03:14:13+00:00",
+     "source": "Axios",
+     "via": "Google News World",
+     "country": "US",
+     "kind": "centre"
+    },
+    {
+     "title": "‘Most courageous leaders choose peace,’ WHO chief says on Gaza",
+     "summary": "Tedros calls for political solutions in Gaza and stronger action to protect health systems from climate change at COP31 in Türkiye",
+     "link": "https://www.aa.com.tr/en/world/-most-courageous-leaders-choose-peace-who-chief-says-on-gaza/4116720",
+     "time": "2026-11-09T12:24:03+03:00",
+     "source": "Anadolu",
+     "via": null,
+     "country": "Turkey",
+     "kind": "state"
+    }
+   ],
+   "id": "s32"
+  },
+  {
+   "score": 5.89,
+   "outlets": 2,
+   "countries": [
+    "France",
+    "Israel"
+   ],
+   "first": "2026-11-09T07:08:31+00:00",
+   "last": "2026-11-09T09:53:53+00:00",
+   "keywords": [
+    "troop",
+    "deploy",
+    "foreign",
+    "gaza",
+    "turkish",
+    "oppose"
+   ],
+   "articles": [
+    {
+     "title": "US prepares to deploy 250 foreign troops in Gaza as Israel opposes Turkish involvement",
+     "summary": "Foreign military officers, accompanied by US troops, have been spotted near Gaza as preparations advance for a multinational force, with Israel authorizing an initial deployment of 250 soldiers.",
+     "link": "https://www.jpost.com/israel-news/article-914289",
+     "time": "2026-11-09T07:08:31+00:00",
+     "source": "Jerusalem Post",
+     "via": null,
+     "country": "Israel",
+     "kind": "right-leaning"
+    },
+    {
+     "title": "European troops in Poland: 'Coalition of the Willing' holds military exercises",
+     "summary": "Some 2,800 troops from 10 different European countries are taking part in a multinational military exercise in Poland. The aim is to prepare European forces for a possible deployment to Ukraine after hostilities end.",
+     "link": "https://www.france24.com/en/video/20261109-european-troops-in-poland-coalition-of-the-willing-holds-military-exercises",
+     "time": "2026-11-09T09:53:53+00:00",
+     "source": "France 24",
+     "via": null,
+     "country": "France",
+     "kind": "public"
+    }
+   ],
+   "id": "s33"
+  },
+  {
+   "score": 5.7,
+   "outlets": 2,
+   "countries": [
+    "France",
+    "US"
+   ],
+   "first": "2026-11-08T19:22:53+00:00",
+   "last": "2026-11-09T10:19:49+00:00",
+   "keywords": [
+    "hegseth",
+    "push",
+    "impeaching",
+    "accountability",
+    "back",
+    "jeffrie"
+   ],
+   "articles": [
+    {
+     "title": "Jeffries Backs Impeaching Hegseth as Democrats Push for Accountability",
+     "summary": "Democrats have begun laying the groundwork for an aggressive oversight agenda aimed at the Trump administration. But a political reckoning could come before the new Congress begins.",
+     "link": "https://www.nytimes.com/2026/11/08/us/politics/pete-hegseth-impeachment-hakeem-jeffries.html",
+     "time": "2026-11-08T19:22:53+00:00",
+     "source": "NYT Politics",
+     "via": null,
+     "country": "US",
+     "kind": "left-leaning"
+    },
+    {
+     "title": "Dems set to go after Hegseth, Musk following midterms rout",
+     "summary": "House Democratic leader Hakeem Jeffries has indicated he and his fellow Democrats would back an impeachment of Defense Secretary Pete Hegseth, citing his role in the unpopular Iran war launched by Donald Trump in February. Tech megabillionaire Elon Musk will also likely be the target of a congressional probe when Democrats take control of Congress in January following their comprehensive victory i",
+     "link": "https://www.france24.com/en/video/20261109-dems-set-to-go-after-hegseth-musk-following-midterms-rout",
+     "time": "2026-11-09T10:19:49+00:00",
+     "source": "France 24",
+     "via": null,
+     "country": "France",
+     "kind": "public"
+    }
+   ],
+   "id": "s34"
+  },
+  {
+   "score": 5.69,
+   "outlets": 3,
+   "countries": [
+    "US"
+   ],
+   "first": "2026-11-07T07:30:07-05:00",
+   "last": "2026-11-09T02:02:52+00:00",
+   "keywords": [
+    "house",
+    "miller",
+    "chief",
+    "staff",
+    "white",
+    "stephen"
+   ],
+   "articles": [
+    {
+     "title": "House GOP critics erupt at Stephen Miller as Trump elevates him after midterm massacre",
+     "summary": "House Republicans expressed shock and anger after Trump promoted Stephen Miller to chief of staff following the GOP's historic midterm losses.",
+     "link": "https://www.foxnews.com/politics/house-gop-erupts-stephen-miller-trump-elevates-him-after-midterm-massacre-megalomaniac",
+     "time": "2026-11-07T07:30:07-05:00",
+     "source": "Fox News Politics",
+     "via": null,
+     "country": "US",
+     "kind": "right-leaning"
+    },
+    {
+     "title": "Deputy White House Chief of Staff Richard Walters exits job ahead of Stephen Miller takeover",
+     "summary": "Stephen Miller praised Richard Walters as an “invaluable member\" who will continue helping the administration from outside the White House.",
+     "link": "https://www.foxnews.com/politics/deputy-white-house-chief-staff-richard-walters-exits-job-ahead-stephen-miller-takeover",
+     "time": "2026-11-08T15:43:44-05:00",
+     "source": "Fox News Politics",
+     "via": null,
+     "country": "US",
+     "kind": "right-leaning"
+    },
+    {
+     "title": "White House deputy chief of staff departs under Miller shake-up",
+     "summary": "White House deputy chief of staff Richard Walters is departing from his role in the wake of President Trump's longtime adviser Stephen Miller being announced as the new chief of staff. “Richard has been an invaluable member of the White House and has helped deliver some of the Administration’s biggest victories,” Miller said in a...",
+     "link": "https://thehill.com/homenews/administration/6206974-white-house-deputy-chief-of-staff-departs-stephen-miller/",
+     "time": "2026-11-08T21:53:07+00:00",
+     "source": "The Hill",
+     "via": null,
+     "country": "US",
+     "kind": "centre"
+    },
+    {
+     "title": "Katie Miller pauses podcast after husband named White House chief of staff",
+     "summary": "After Stephen Miller was selected as White House chief of staff, his wife, conservative influencer Katie Miller, said she is stepping back from her podcast on Sunday. “I make every decision based on what’s best for my children and our family. With @StephenM taking on this new role for President Trump, I’ve decided to stop...",
+     "link": "https://thehill.com/blogs/in-the-know/6207095-katie-miller-pauses-podcast-after-husband-named-white-house-chief-of-staff/",
+     "time": "2026-11-08T23:34:54+00:00",
+     "source": "The Hill",
+     "via": null,
+     "country": "US",
+     "kind": "centre"
+    },
+    {
+     "title": "Stephen Miller’s wife pauses podcast after his promotion to White House chief of staff",
+     "summary": "Katie Miller, the wife of new White House chief of staff Stephen Miller, announced she’s halting her podcast after her husband’s promotion to focus on her family. “I make every decision based on what’s best for my children and our family,” Katie Miller wrote on X. “With @StephenM taking on this new role for President […]",
+     "link": "https://www.washingtonexaminer.com/news/entertainment/4796896/stephen-miller-wife-pauses-podcast-promotion-chief-of-staff/",
+     "time": "2026-11-09T02:02:52+00:00",
+     "source": "Washington Examiner",
+     "via": null,
+     "country": "US",
+     "kind": "right"
+    }
+   ],
+   "id": "s35"
+  },
+  {
+   "score": 5.49,
+   "outlets": 2,
+   "countries": [
+    "Russia",
+    "Ukraine"
+   ],
+   "first": "2026-11-09T02:56:20+00:00",
+   "last": "2026-11-09T09:23:13+00:00",
+   "keywords": [
+    "little",
+    "bit",
+    "different",
+    "ukraine",
+    "trump",
+    "shape"
+   ],
+   "articles": [
+    {
+     "title": "Ukraine will likely 'end up with a little bit different shape' after war, Trump tells 60 Minutes",
+     "summary": "\"​​There's a very important meeting taking place,\" Trump said. \"I believe that that war is going to end and it's going to end soon. And the only reason it's going to end is because of me.\"",
+     "link": "https://kyivindependent.com/ukraine-will-likely-end-up-with-a-little-bit-different-shape-after-war-trump-tells-60-minutes/",
+     "time": "2026-11-09T02:56:20+00:00",
+     "source": "Kyiv Independent",
+     "via": null,
+     "country": "Ukraine",
+     "kind": "independent"
+    },
+    {
+     "title": "Trump predicts ‘a little bit different shape’ for Ukraine",
+     "summary": "US President Donald Trump has suggested that Ukraine will have to give up territorial claims to achieve peace with Russia Read Full Article at RT.com",
+     "link": "https://rt-english.com/news/648595-trump-us-ukraine-territory/?utm_source=rss&utm_medium=rss&utm_campaign=RSS",
+     "time": "2026-11-09T09:23:13+00:00",
+     "source": "RT",
+     "via": null,
+     "country": "Russia",
+     "kind": "state"
+    }
+   ],
+   "id": "s36"
+  },
+  {
+   "score": 5.39,
+   "outlets": 2,
+   "countries": [
+    "France",
+    "Germany"
+   ],
+   "first": "2026-11-09T02:05:00+00:00",
+   "last": "2026-11-09T04:18:00+00:00",
+   "keywords": [
+    "europe",
+    "talk",
+    "ukraine",
+    "peace",
+    "pre",
+    "iran"
+   ],
+   "articles": [
+    {
+     "title": "Europe to press US on Ukraine peace and Iran at Paris G7 talks",
+     "summary": "G7 foreign ministers will revisit Russia’s war in Ukraine and the prospect of further US strikes on Iran when they meet in Paris on Monday. Washington has kept the option of new strikes open since Republicans lost the midterm elections. US Secretary of State Marco Rubio is due to attend both days, unlike the March meeting where he only came for one.",
+     "link": "https://www.france24.com/en/france/20261109-europa-us-ukraine-peace-iran-paris-g7-ministers",
+     "time": "2026-11-09T02:05:00+00:00",
+     "source": "France 24",
+     "via": null,
+     "country": "France",
+     "kind": "public"
+    },
+    {
+     "title": "G7 ministers meet as Europe seeks greater say in Ukraine peace talks",
+     "summary": "With Washington preparing negotiations with Moscow and Kyiv, European leaders fear Ukraine could face pressure to accept a bad deal. Iran tensions and the threat of renewed US strikes are also on the agenda.",
+     "link": "https://www.dw.com/en/g7-ministers-meet-as-europe-seeks-greater-say-in-ukraine-peace-talks/a-79894960?maca=en-rss-en-all-1573-rdf",
+     "time": "2026-11-09T04:18:00+00:00",
+     "source": "DW",
+     "via": null,
+     "country": "Germany",
+     "kind": "public"
+    }
+   ],
+   "id": "s37"
+  },
+  {
+   "score": 5.29,
+   "outlets": 2,
+   "countries": [
+    "EU",
+    "US"
+   ],
+   "first": "2026-11-08T17:04:07+00:00",
+   "last": "2026-11-09T07:04:12+00:00",
+   "keywords": [
+    "war",
+    "russian",
+    "death",
+    "hack",
+    "rosstat",
+    "data"
+   ],
+   "articles": [
+    {
+     "title": "Rosstat hack: data obtained suggests over 390,000 Russian deaths in Ukraine war",
+     "summary": "Rosstat hack: data obtained suggests over 390,000 Russian deaths in Ukraine war Euronews.com See more headlines & perspectives on Google News",
+     "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNcXVsdWRhRmVQZnBUMFVob0dxNFJ1TUgybVN3WmJmeWlCeE5uTmw5TmU5T1pTWS1OczJrM2FGUFFNUFhvbEs3OXc2R1JmczBHVWYxZjZWQU1obDNfZDJqcHZ3Z2lnX3otMTVZQ1JnY2ZMV0ExRmVTVnVGQUJZeGxJNjA3VXh6cy1XU2c4Tm9JTkwtdmZaVm41dTBkUFJ6TWN6X1g5ZWl3bXduODlLc2tNSXhVUQ?oc=5",
+     "time": "2026-11-08T17:04:07+00:00",
+     "source": "Euronews.com",
+     "via": "Google News World",
+     "country": "EU",
+     "kind": "centre"
+    },
+    {
+     "title": "Hacked Records Put Russian War Deaths at 400,000",
+     "summary": "Russia has recorded the deaths of about 400,000 of its people fighting in Ukraine since the full-scale invasion almost five years ago, according to confidential data held by the country’s statistics agency, Rosstat. The data was obtained by the Belarusian pro-opposition group Cyber Partisans and the Ukrainian hacker operation Silent Crow. It was subsequently shared with Bloomberg News and a small ",
+     "link": "https://www.bloomberg.com/news/videos/2026-11-09/hacked-records-put-russian-war-deaths-at-400-000-video",
+     "time": "2026-11-09T07:04:12+00:00",
+     "source": "Bloomberg Politics",
+     "via": null,
+     "country": "US",
+     "kind": "business"
+    }
+   ],
+   "id": "s38"
+  },
+  {
+   "score": 5.28,
+   "outlets": 2,
+   "countries": [
+    "US"
+   ],
+   "first": "2026-11-08T22:00:00+00:00",
+   "last": "2026-11-09T05:00:25-05:00",
+   "keywords": [
+    "congre",
+    "shutdown",
+    "deadline",
+    "return",
+    "leadership",
+    "fight"
+   ],
+   "articles": [
+    {
+     "title": "This week on the Hill: Congress returns to leadership fights, shutdown deadline after GOP losses",
+     "summary": "Congress returns to Capitol Hill after the astonishing midterm elections that dealt Republicans major losses and left Democrats riding high. Now, Republicans face their next major test: a fight over who will lead the party in the House as it prepares its descent into the minority. House Republicans are scheduled to hold their leadership elections...",
+     "link": "https://thehill.com/homenews/house/6205706-gop-leadership-elections-new-congress/",
+     "time": "2026-11-08T22:00:00+00:00",
+     "source": "The Hill",
+     "via": null,
+     "country": "US",
+     "kind": "centre"
+    },
+    {
+     "title": "Congress returns to brutal lame-duck stretch with shutdown deadline, leadership races: 'Closet is full of s—'",
+     "summary": "Lawmakers return to Capitol Hill facing a government shutdown deadline, the farm bill, and a debt ceiling fight before Democrats take power in January.",
+     "link": "https://www.foxnews.com/politics/congress-returns-brutal-lame-duck-stretch-shutdown-deadline-leadership-races-closet-full-s",
+     "time": "2026-11-09T05:00:25-05:00",
+     "source": "Fox News Politics",
+     "via": null,
+     "country": "US",
+     "kind": "right-leaning"
+    }
+   ],
+   "id": "s39"
+  },
+  {
+   "score": 5.19,
+   "outlets": 2,
+   "countries": [
+    "Russia",
+    "Ukraine"
+   ],
+   "first": "2026-11-08T14:10:49+00:00",
+   "last": "2026-11-09T10:01:19+03:00",
+   "keywords": [
+    "russian",
+    "drone",
+    "hit",
+    "post",
+    "hour",
+    "ukrainian"
+   ],
+   "articles": [
+    {
+     "title": "Ukrainian Forces Hit 4 Russian Drone Posts in 24 Hours",
+     "summary": "Ukrainian Forces Hit 4 Russian Drone Posts in 24 Hours Kyiv Post Russian Offensive Campaign Assessment, November 2, 2026 Institute for the Study of War Ukrainian Officials: F-16 ‘Super Effective’ at Downing Russia Drones But Challenges Remain Air & Space Forces Magazine Serhii Sternenko: There are far bigger threats ahead of us than jet-powered Shahed drones Українська правда Ukraine Strikes Four ",
+     "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE9neGxfbzR3V2FtRU9sTE1mUGxLVEdLUVJaSFNGcnlBa0FkOEs5Y2RPWlVuVHU1NFhyakhoYWU0VDJhOW9adzFxVkZnMA?oc=5",
+     "time": "2026-11-08T14:10:49+00:00",
+     "source": "Kyiv Post",
+     "via": "Google News World",
+     "country": "Ukraine",
+     "kind": "independent"
+    },
+    {
+     "title": "Russian air defenses down 430 drones overnight",
+     "summary": "On duty air defense forces intercepted Ukrainian UAVs over 15 Russian regions",
+     "link": "https://tass.com/politics/2214587",
+     "time": "2026-11-09T08:55:07+03:00",
+     "source": "TASS",
+     "via": null,
+     "country": "Russia",
+     "kind": "state"
+    },
+    {
+     "title": "IN BRIEF: Russian strikes hit drone assembly plant, energy infrastructure",
+     "summary": "According to the Russian Defense Ministry, Russian forces struck two power substations in the cities of Krivoy Rog and Cherkassy",
+     "link": "https://tass.com/politics/2214623",
+     "time": "2026-11-09T10:01:19+03:00",
+     "source": "TASS",
+     "via": null,
+     "country": "Russia",
+     "kind": "state"
+    }
+   ],
+   "id": "s40"
+  }
+ ]
+}

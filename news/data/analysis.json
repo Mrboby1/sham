@@ -1,0 +1,174 @@
+{
+ "generated": "2026-11-09T11:30:00+02:00",
+ "by": "lead.sham (Claude), from news/data/stories.json of 2026-11-09",
+ "note": "Built only from headlines and outlet summaries of the last 48 hours. Probabilities are estimates, not certainties, and nothing here is financial advice.",
+ "big_picture": "The main market driver is the US–Iran war: a US naval blockade, strikes around the Strait of Hormuz, and Qatar-mediated talks that are stuck on sequencing. Iran wants sanctions and the blockade lifted first; the US wants nuclear and Hormuz commitments first. Houthi strikes on Saudi Arabia and Ukrainian strikes on Russian refineries add to energy risk on both ends. A peace process is moving for Ukraine (Abu Dhabi, this week), and a Trump–Xi(–Putin) meeting at APEC in China is about a week away. In Washington, the Democrats' midterm win makes this a lame-duck Congress with a shutdown deadline.",
+ "stories": [
+  {
+   "key": "iran",
+   "title": "US–Iran war: talks stalled, strikes continue",
+   "story_ids": ["s4", "s9", "s14", "s16", "s20", "s25", "s30"],
+   "reality": "The war is ongoing but at low intensity, with a US naval blockade in place. Both sides say they want talks through Qatar, but they are far apart on what comes first. Trump's softer tone (\"new strikes highly unlikely if talks progress\") and Rubio's hard line (\"outrageous demands\") are two messages from one negotiating position, not a split.",
+   "agreed": [
+    "Rubio says there is no breakthrough and calls Iran's demands unacceptable, \"outrageous and ridiculous\".",
+    "Trump says renewed extensive strikes are \"highly unlikely\" if talks progress, but keeps the option.",
+    "Iran demands that the US lift sanctions, end the naval blockade and stop the war before or during talks, and it offered a plan to restart talks within two days, developed with Qatar.",
+    "Qatar's prime minister is meeting Trump at the White House about mediation.",
+    "Explosions hit Iran's Qeshm Island in the Strait of Hormuz; Iranian officials say no vital infrastructure was damaged.",
+    "Trump expects to meet Xi and Putin at the APEC summit in China, with ending the Iran war on the agenda."
+   ],
+   "disputed": [
+    {"claim": "The Qeshm Island blasts were a US strike", "for": ["IRNA (via Middle East Eye)", "Fars (via TASS)", "Times of Israel"], "against": ["Iranian officials, at first (CNBC)"], "note": "Iran first played the blasts down, then state media attributed them to the US. The most likely reading is a limited US strike on navigation or military targets."},
+    {"claim": "Talks are making progress", "for": ["Trump's tone (DW, The Hill, CNBC)", "Iran's two-day proposal (Middle East Eye)"], "against": ["Rubio (Bloomberg, Jerusalem Post, AP)"], "note": "No sign of agreement on sequencing yet."},
+    {"claim": "The new US task force on Iran's land trade routes is serious pressure", "for": ["US officials (Times of Israel)"], "against": ["Iran's foreign ministry, which calls it a diversion after Republican midterm losses (Jerusalem Post)"]}
+   ],
+   "framing": [
+    {"who": "TASS / RT (Russia, state)", "how": "Emphasise that the US prefers diplomacy and that Iran's demands are \"lawful\"."},
+    {"who": "Al Jazeera (Qatar, state-funded)", "how": "Leads with Rubio admitting the war is \"unpopular\"; Qatar's mediation is central."},
+    {"who": "Jerusalem Post / Times of Israel (Israel)", "how": "Lead with \"outrageous demands\" and US strikes."},
+    {"who": "CNBC / Bloomberg (US business)", "how": "Focus on the Strait of Hormuz and the conditions for strikes, i.e. oil risk."}
+   ],
+   "predictions": [
+    {"id": "2026-11-09-iran-1", "statement": "A US–Iran negotiating round (direct, or mediated by Qatar) is publicly confirmed as having taken place", "probability": 0.55, "by": "2026-11-30", "markets": [{"asset": "Brent crude", "if_true": "down"}, {"asset": "Gold", "if_true": "down"}], "watch": "The outcome of the Qatar PM's White House meeting, and whether Iran's two-day proposal is accepted."},
+    {"id": "2026-11-09-iran-2", "statement": "A US–Iran agreement is signed that ends the naval blockade", "probability": 0.15, "by": "2026-12-31", "markets": [{"asset": "Brent crude", "if_true": "down sharply"}, {"asset": "Tanker shipping stocks", "if_true": "down"}], "watch": "Movement on sequencing: partial sanctions relief in exchange for Hormuz access."},
+    {"id": "2026-11-09-iran-3", "statement": "At least one more US strike on Iranian territory or Iranian vessels is reported", "probability": 0.6, "by": "2026-11-23", "markets": [{"asset": "Brent crude", "if_true": "up"}, {"asset": "US defence stocks", "if_true": "up"}], "watch": "Ship incidents in the Strait of Hormuz; Iran's \"rain down hell\" threats becoming actions."}
+   ]
+  },
+  {
+   "key": "saudi",
+   "title": "Houthis strike Riyadh's financial district and claim a hit on Abqaiq",
+   "story_ids": ["s6"],
+   "reality": "A Houthi missile and drone attack caused minor damage to the Aramco tower in Riyadh (confirmed by Saudi Arabia and verified on video by BBC). The Houthi claim of a direct hit and fire at the Abqaiq oil facility is not confirmed by any independent source. Airstrikes near Sanaa killed about 33 people, according to the Houthis.",
+   "agreed": [
+    "The Aramco tower in Riyadh's financial district was damaged; Saudi Arabia reports no casualties and \"minor damage\" from falling shrapnel.",
+    "It is one of the highest-profile targets the Houthis have hit, a month after earlier deadly strikes."
+   ],
+   "disputed": [
+    {"claim": "The Houthis hit Saudi Aramco's Abqaiq facility, causing a fire", "for": ["Houthi spokesman (via TASS)"], "against": ["No confirmation from Saudi Arabia or independent outlets"], "note": "Abqaiq is the world's most important oil processing site. A real hit would be a major oil event, and the silence suggests the claim is exaggerated."}
+   ],
+   "framing": [
+    {"who": "TASS / RT (Russia, state)", "how": "Repeat the Houthi claims, with videos."},
+    {"who": "Anadolu (Turkey, state)", "how": "Lead with the Saudi \"minor damage\" line."},
+    {"who": "Bloomberg (US business)", "how": "Frames it as a blow to Riyadh's \"return to normal\" and to business confidence."}
+   ],
+   "predictions": [
+    {"id": "2026-11-09-saudi-1", "statement": "The Houthis claim another strike on Saudi energy or financial infrastructure", "probability": 0.7, "by": "2026-11-23", "markets": [{"asset": "Brent crude", "if_true": "up (small)"}, {"asset": "Saudi stocks (Tadawul)", "if_true": "down"}], "watch": "The pace of airstrikes on Yemen; any Saudi–Houthi channel through Oman."},
+    {"id": "2026-11-09-saudi-2", "statement": "Saudi Arabia or Aramco confirms a Houthi attack has cut oil output or exports", "probability": 0.12, "by": "2026-11-30", "markets": [{"asset": "Brent crude", "if_true": "up sharply"}], "watch": "Satellite images or shipping data from Abqaiq and Ras Tanura."}
+   ]
+  },
+  {
+   "key": "ukraine",
+   "title": "Ukraine: three-way talks in Abu Dhabi while both sides hit energy targets",
+   "story_ids": ["s11", "s15", "s17", "s28", "s36", "s37"],
+   "reality": "Talks will happen this week in Abu Dhabi with Russia, Ukraine and the US, and with European officials present despite Kremlin objections. A ceasefire is not on the table. Talks focus on security guarantees. Meanwhile Ukraine keeps hitting Russian refineries (Kirishi, the second largest), and Russia keeps hitting Ukraine's power grid. Trump is signalling that Ukraine will lose territory (\"a little bit different shape\").",
+   "agreed": [
+    "US–mediated three-way talks resume this week in Abu Dhabi, the first since February; Witkoff and Kushner are travelling.",
+    "European officials (EU, NATO, and German, French and UK security advisers) will take part.",
+    "Ukraine hit the Kirishi refinery, Russia's second largest; Russian strikes left over 600,000 people without power in the Dnipro region.",
+    "The Zaporizhzhia nuclear plant lost external power for the 27th time; it was restored, says the IAEA."
+   ],
+   "disputed": [
+    {"claim": "Europe's role at the talks", "for": ["France, the EU (Kyiv Independent, NPR, FT): Europe will block Russian security demands"], "against": ["The Kremlin, which objected to Europe being there (NPR)"]},
+    {"claim": "Ukraine will have to give up territory", "for": ["Trump (60 Minutes), stressed by RT"], "against": ["Kyiv and the Europeans, who seek a greater say to avoid a bad deal (DW)"]}
+   ],
+   "framing": [
+    {"who": "TASS (Russia, state)", "how": "Process-focused: the agenda is \"security guarantees\", Putin \"ready to resume\" talks."},
+    {"who": "RT (Russia, state)", "how": "Trump's comment presented as Ukraine having to give up territorial claims."},
+    {"who": "Kyiv Independent (Ukraine)", "how": "Emphasises Ukrainian refinery strikes and Europe at the table."},
+    {"who": "NYT (US)", "how": "Sets low expectations: \"a cease-fire won't be on the table\"."}
+   ],
+   "predictions": [
+    {"id": "2026-11-09-ukr-1", "statement": "The Abu Dhabi talks take place with Russian, Ukrainian and US delegations", "probability": 0.85, "by": "2026-11-16", "markets": [{"asset": "European defence stocks", "if_true": "down (small)"}, {"asset": "EUR/USD", "if_true": "up (small)"}]},
+    {"id": "2026-11-09-ukr-2", "statement": "Russia and Ukraine both announce a general ceasefire", "probability": 0.12, "by": "2026-12-31", "markets": [{"asset": "European gas (TTF)", "if_true": "down"}, {"asset": "European defence stocks", "if_true": "down"}, {"asset": "Diesel prices", "if_true": "down"}]},
+    {"id": "2026-11-09-ukr-3", "statement": "Another Ukrainian drone strike on a Russian refinery is reported", "probability": 0.85, "by": "2026-11-23", "markets": [{"asset": "Diesel / gasoil", "if_true": "up"}]}
+   ]
+  },
+  {
+   "key": "nvidia",
+   "title": "Nvidia CEO Jensen Huang and the alleged Chinese spy",
+   "story_ids": ["s2"],
+   "reality": "Huang admitted an affair with a former executive of a Singaporean firm that is suspected of helping China obtain US-banned AI chips. Whether she was an intelligence asset, or passed anything on, is not established. Nvidia's board opened an independent investigation, members of Congress from both parties want answers, Trump is backing Huang, and China denies spying. The share price fell. The timing, a week before the Trump–Xi meeting, makes this as much about US–China politics as about governance.",
+   "agreed": [
+    "Huang admitted the affair and apologised; Nvidia's board opened an independent investigation.",
+    "Lawmakers from both parties want to question Huang.",
+    "Trump called Huang \"an honorable guy\" who should stay on.",
+    "China's foreign ministry calls the spying allegations a \"baseless smear\".",
+    "Nvidia shares fell on the news."
+   ],
+   "disputed": [
+    {"claim": "The woman was a Chinese intelligence asset who passed information to Beijing", "for": ["Reporting based on US intelligence (NYT via The Guardian, Bloomberg)"], "against": ["China's foreign ministry (Times of India, Bloomberg)"]}
+   ],
+   "framing": [
+    {"who": "Bloomberg / CNBC (US business)", "how": "Market and governance angle: the shares, the board, Congress."},
+    {"who": "Anadolu (Turkey, state) / Times of India", "how": "Lead with Trump's defence and China's denial."},
+    {"who": "Japan Times", "how": "\"A crisis like none before\" for the company."}
+   ],
+   "predictions": [
+    {"id": "2026-11-09-nvda-1", "statement": "Jensen Huang is still Nvidia's CEO", "probability": 0.85, "by": "2026-12-31", "markets": [{"asset": "NVDA", "if_true": "neutral; if false, down sharply"}]},
+    {"id": "2026-11-09-nvda-2", "statement": "The Trump–Xi meeting at the APEC summit in China takes place", "probability": 0.85, "by": "2026-11-30", "markets": [{"asset": "Chinese stocks (Hang Seng)", "if_true": "up"}, {"asset": "Chip stocks", "if_true": "up"}]},
+    {"id": "2026-11-09-nvda-3", "statement": "A congressional hearing with Huang testifying is formally scheduled", "probability": 0.3, "by": "2026-12-31", "markets": [{"asset": "NVDA", "if_true": "down (small)"}]}
+   ]
+  },
+  {
+   "key": "israel",
+   "title": "Israel: Eisenkot gets six weeks to replace Netanyahu",
+   "story_ids": ["s1"],
+   "reality": "After an inconclusive election in which Netanyahu's coalition lost its majority, President Herzog gave Gadi Eisenkot the mandate, with 67 of 120 Knesset endorsements. Endorsing him and joining one government are different things: the Arab parties and military conscription divide his potential partners. He is reaching out to Netanyahu's allies and is even open to Netanyahu joining. Netanyahu stays caretaker prime minister meanwhile.",
+   "agreed": [
+    "Herzog tasked Eisenkot with forming a government; he has up to six weeks.",
+    "He was endorsed by 67 Knesset members.",
+    "Coalition building is hard; the divisions are over Arab parties and conscription."
+   ],
+   "disputed": [
+    {"claim": "Eisenkot is likely to succeed", "for": ["CNBC, NPR (\"a step closer\")"], "against": ["Bloomberg (\"tough odds\"), Fox News (\"deep divisions\"), NYT (\"formidable obstacles\")"]}
+   ],
+   "framing": [
+    {"who": "Breitbart / Fox News (US, right)", "how": "\"Setback for Netanyahu\", with emphasis on the reliance on Arab parties."},
+    {"who": "The Guardian / NYT (left-leaning)", "how": "Eisenkot's warning of a \"historic crisis\"; routes to unseat Netanyahu."},
+    {"who": "Al Jazeera (Qatar)", "how": "Leads with Eisenkot being open to Netanyahu joining his government."}
+   ],
+   "predictions": [
+    {"id": "2026-11-09-isr-1", "statement": "An Eisenkot-led government is sworn in", "probability": 0.45, "by": "2027-01-31", "markets": [{"asset": "Israeli shekel (ILS)", "if_true": "up"}, {"asset": "TA-35", "if_true": "up"}]},
+    {"id": "2026-11-09-isr-2", "statement": "Netanyahu is still (caretaker) prime minister", "probability": 0.75, "by": "2026-12-31", "markets": [{"asset": "Israeli shekel (ILS)", "if_true": "neutral"}]}
+   ]
+  },
+  {
+   "key": "china",
+   "title": "China: factory prices at a four-year high while consumer prices cool",
+   "story_ids": ["s29"],
+   "reality": "October's producer price inflation was 5.7%, above the expected 5.3%, the highest in over four years. It is driven by the energy crisis (the Iran war), not by strong demand, since consumer inflation slowed. That is cost-push inflation in a weak economy, which makes stimulus harder for Beijing.",
+   "agreed": [
+    "Producer price inflation was 5.7% (expected 5.3%), a four-year high.",
+    "Consumer inflation slowed; domestic demand is weak.",
+    "Energy costs are the driver."
+   ],
+   "disputed": [],
+   "framing": [
+    {"who": "FT / WSJ / CNBC (business)", "how": "Agree: weak demand plus energy shock."}
+   ],
+   "predictions": [
+    {"id": "2026-11-09-chn-1", "statement": "China's central bank leaves its 1-year loan prime rate unchanged at the November fixing", "probability": 0.75, "by": "2026-11-30", "markets": [{"asset": "Chinese yuan (CNY)", "if_true": "neutral"}]}
+   ]
+  },
+  {
+   "key": "uscongress",
+   "title": "US lame-duck Congress after the Democrats' midterm win",
+   "story_ids": ["s39", "s34", "s7", "s31"],
+   "reality": "Republicans lost heavily in the midterms. Until Democrats take power in January, the outgoing Congress faces a government shutdown deadline, the farm bill and a debt ceiling fight, along with Republican leadership races. Democrats are preparing aggressive oversight (Jeffries backs impeaching Defense Secretary Hegseth).",
+   "agreed": [
+    "The midterms were a heavy defeat for Republicans; Democrats take power in January.",
+    "Lame-duck agenda: a shutdown deadline, the farm bill, the debt ceiling and leadership races."
+   ],
+   "disputed": [
+    {"claim": "Who is threatening whom", "for": ["Trump ordered a DOJ probe of Democratic leaders' \"threats\" (Fox News)"], "against": ["Democrats frame their plans as accountability (NYT)"]}
+   ],
+   "framing": [
+    {"who": "Fox News (US, right)", "how": "\"Brutal lame duck\", Republican infighting, DOJ probe of Democrats."},
+    {"who": "NYT (US, left-leaning)", "how": "The Democrats' oversight agenda and the Hegseth impeachment."}
+   ],
+   "predictions": [
+    {"id": "2026-11-09-us-1", "statement": "US government funding lapses (a shutdown starts) during the lame-duck session", "probability": 0.3, "by": "2026-12-31", "markets": [{"asset": "US Treasuries", "if_true": "up (safe haven)"}, {"asset": "USD", "if_true": "down (small)"}], "watch": "Whether the outgoing Republican majority prefers a short stopgap that pushes fights into January."}
+   ]
+  }
+ ]
+}
