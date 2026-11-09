@@ -36,6 +36,8 @@ Live app: https://mrboby1.github.io/sham/piano/
     is to predict what comes next as accurately as possible.
     *(first version live 2026-11-09: https://mrboby1.github.io/sham/news/. Code in sham/news; lead.sham
     updates it every morning, see news/DAILY.md)*
+14. **Michael Burry's Palantir short**: how relevant is it today, is it too late to join, is it a
+    wrong bet? *(answered in Telegram 2026-11-09)*
 
 ## Done
 
