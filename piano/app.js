@@ -805,7 +805,7 @@
       const y = t.black ? H * 0.36 : H * 0.56;
       const next = f.fingers[0] === i;
       parts.push(`<line x1="${x}" y1="${palmTop + palmH - 2}" x2="${x}" y2="${y}" stroke="${FINGER_COLORS[i]}" stroke-width="${Math.max(3, r * 0.55)}" stroke-linecap="round"/>`);
-      parts.push(`<circle cx="${x}" cy="${y}" r="${next ? r + 2 : r}" fill="${FINGER_COLORS[i]}" stroke="${next ? "#000" : "#fff"}" stroke-width="${next ? 3 : 1.5}"/>`);
+      parts.push(`<circle cx="${x}" cy="${y}" r="${next ? r + 2 : r}" fill="${FINGER_COLORS[i]}" stroke="#fff" stroke-width="${next ? 2.5 : 1.5}"/>`);
       parts.push(`<text x="${x}" y="${y}" dy="0.35em" font-size="${Math.round(r * 1.15)}">${i}</text>`);
     }
     g.innerHTML = parts.join("");

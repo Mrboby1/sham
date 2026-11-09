@@ -23,6 +23,8 @@ Live app: https://mrboby1.github.io/sham/piano/
    speed % control and play/pause, and wait when the next note reaches the keys. *(done 2026-11-08)*
 10. **Remove the black bar over the keys**: the hand's palm bar hid the tops of the keys. Take it out,
     keep everything else. *(done 2026-11-09)*
+11. **Clear "play this key now"**: the key to play now is filled with its finger's colour, with no
+    black frame, so it is obvious which exact key it is. *(done 2026-11-09)*
 
 ## Done
 
