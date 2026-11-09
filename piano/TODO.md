@@ -32,6 +32,10 @@ Live app: https://mrboby1.github.io/sham/piano/
 13. **News "closest to reality" website** (separate project, not the piano app): read news on the same
     story from many sources with different points of view, extract what they agree on (the most likely
     version of reality), and from that write a thesis of what may come next.
+    Focus (Sham, 2026-11-09): political events that move money. The news is only the means; the goal
+    is to predict what comes next as accurately as possible.
+    *(first version live 2026-11-09: https://mrboby1.github.io/sham/news/. Code in sham/news; lead.sham
+    updates it every morning, see news/DAILY.md)*
 
 ## Done
 
