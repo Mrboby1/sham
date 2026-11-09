@@ -46,6 +46,9 @@ Live app: https://mrboby1.github.io/sham/piano/
 18. **Add Bach's Toccata and Fugue in D minor** (BWV 565) to the songs. *(done 2026-11-09)*
 19. **Add the chords of "Moody Wind" by Anthony Lazaro**: a chord-by-chord song (Songs → Anthony Lazaro):
     the whole chord lights up, right hand + left-hand root, and it moves on when the chord is heard. *(done 2026-11-09)*
+20. **"Moody Wind" as notes (the melody), not chords** (Sham, 2026-11-09). No sheet music or MIDI of the
+    melody exists online (only chord charts). Needs an audio of the melody from Sham (a voice note of it
+    played or sung, or the song file) to transcribe, or Sham records it with "Record my own".
 
 ## Done
 
