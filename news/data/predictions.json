@@ -1,7 +1,7 @@
 {
  "updated": "2026-11-09",
  "stats": {
-  "total": 15,
+  "total": 26,
   "resolved": 0,
   "right": 0,
   "brier": null,
@@ -83,6 +83,71 @@
    "outcome": null
   },
   {
+   "id": "2026-11-09-call-airlines",
+   "type": "call",
+   "statement": "Airlines (Lufthansa) closes lower than 8.65 on 2026-11-30",
+   "probability": 0.55,
+   "by": "2026-11-30",
+   "made": "2026-11-09",
+   "outcome": null,
+   "ticker": "LHA.DE",
+   "from_price": 8.65,
+   "direction": "down",
+   "story": "Airlines (Lufthansa)"
+  },
+  {
+   "id": "2026-11-09-call-brent",
+   "type": "call",
+   "statement": "Brent crude oil closes higher than 95.22 on 2026-11-30",
+   "probability": 0.55,
+   "by": "2026-11-30",
+   "made": "2026-11-09",
+   "outcome": null,
+   "ticker": "BZ=F",
+   "from_price": 95.22,
+   "direction": "up",
+   "story": "Brent crude oil"
+  },
+  {
+   "id": "2026-11-09-call-chips",
+   "type": "call",
+   "statement": "Chip stocks (SOX) closes higher than 9390.25 on 2026-11-30",
+   "probability": 0.55,
+   "by": "2026-11-30",
+   "made": "2026-11-09",
+   "outcome": null,
+   "ticker": "^SOX",
+   "from_price": 9390.25,
+   "direction": "up",
+   "story": "Chip stocks (SOX)"
+  },
+  {
+   "id": "2026-11-09-call-eu_defence",
+   "type": "call",
+   "statement": "European defence stocks (EUAD) closes lower than 38.65 on 2026-11-30",
+   "probability": 0.55,
+   "by": "2026-11-30",
+   "made": "2026-11-09",
+   "outcome": null,
+   "ticker": "EUAD",
+   "from_price": 38.65,
+   "direction": "down",
+   "story": "European defence stocks (EUAD)"
+  },
+  {
+   "id": "2026-11-09-call-gold",
+   "type": "call",
+   "statement": "Gold closes higher than 4111.3 on 2026-11-30",
+   "probability": 0.55,
+   "by": "2026-11-30",
+   "made": "2026-11-09",
+   "outcome": null,
+   "ticker": "GC=F",
+   "from_price": 4111.3,
+   "direction": "up",
+   "story": "Gold"
+  },
+  {
    "id": "2026-11-09-chn-1",
    "statement": "China's central bank leaves its 1-year loan prime rate unchanged at the November fixing",
    "probability": 0.75,
@@ -153,6 +218,19 @@
    "outcome": null
   },
   {
+   "id": "2026-11-09-call-pltr",
+   "type": "call",
+   "statement": "Palantir closes lower than 160.38 on 2026-12-31",
+   "probability": 0.55,
+   "by": "2026-12-31",
+   "made": "2026-11-09",
+   "outcome": null,
+   "ticker": "PLTR",
+   "from_price": 160.38,
+   "direction": "down",
+   "story": "Palantir"
+  },
+  {
    "id": "2026-11-09-iran-2",
    "statement": "A US–Iran agreement is signed that ends the naval blockade",
    "probability": 0.15,
@@ -218,6 +296,65 @@
    "outcome": null
   },
   {
+   "id": "2026-11-09-t-ccl",
+   "type": "trade",
+   "statement": "Carnival (CCL): from 29–31 reaches 25.5 before 32.5",
+   "probability": 0.35,
+   "by": "2026-12-31",
+   "made": "2026-11-09",
+   "outcome": null,
+   "ticker": "CCL",
+   "entry": [
+    29,
+    31
+   ],
+   "target": 25.5,
+   "stop": 32.5,
+   "story": "Carnival"
+  },
+  {
+   "id": "2026-11-09-t-ldo",
+   "type": "trade",
+   "statement": "Leonardo (LDO.MI): from 49–51.5 reaches 45 before 53.5",
+   "probability": 0.35,
+   "by": "2026-12-31",
+   "made": "2026-11-09",
+   "outcome": null,
+   "ticker": "LDO.MI",
+   "entry": [
+    49,
+    51.5
+   ],
+   "target": 45,
+   "stop": 53.5,
+   "story": "Leonardo",
+   "entered": {
+    "date": "2026-11-09",
+    "price": 49.45000076293945
+   }
+  },
+  {
+   "id": "2026-11-09-t-lha",
+   "type": "trade",
+   "statement": "Lufthansa (LHA.DE): from 8.5–8.9 reaches 7.6 before 9.4",
+   "probability": 0.4,
+   "by": "2026-12-31",
+   "made": "2026-11-09",
+   "outcome": null,
+   "ticker": "LHA.DE",
+   "entry": [
+    8.5,
+    8.9
+   ],
+   "target": 7.6,
+   "stop": 9.4,
+   "story": "Lufthansa",
+   "entered": {
+    "date": "2026-11-09",
+    "price": 8.619999885559082
+   }
+  },
+  {
    "id": "2026-11-09-ukr-2",
    "statement": "Russia and Ukraine both announce a general ceasefire",
    "probability": 0.12,
@@ -259,6 +396,40 @@
    "story": "US lame-duck Congress after the Democrats' midterm win",
    "made": "2026-11-09",
    "outcome": null
+  },
+  {
+   "id": "2026-11-09-t-nvda",
+   "type": "trade",
+   "statement": "Nvidia (NVDA): from 200–210 reaches 175 before 222",
+   "probability": 0.45,
+   "by": "2027-01-15",
+   "made": "2026-11-09",
+   "outcome": null,
+   "ticker": "NVDA",
+   "entry": [
+    200,
+    210
+   ],
+   "target": 175,
+   "stop": 222,
+   "story": "Nvidia"
+  },
+  {
+   "id": "2026-11-09-t-pltr",
+   "type": "trade",
+   "statement": "Palantir (PLTR): from 170–180 reaches 140 before 195",
+   "probability": 0.4,
+   "by": "2027-01-15",
+   "made": "2026-11-09",
+   "outcome": null,
+   "ticker": "PLTR",
+   "entry": [
+    170,
+    180
+   ],
+   "target": 140,
+   "stop": 195,
+   "story": "Palantir"
   },
   {
    "id": "2026-11-09-isr-1",

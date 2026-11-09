@@ -77,6 +77,31 @@ summary { cursor: pointer; font-size: 14px; font-weight: 500; color: var(--muted
 .more { color: var(--muted); font-size: 14px; }
 footer { margin-top: 44px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
 footer p { margin: 6px 0; }
+.calls { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px; }
+.call { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
+.call .top { display: flex; align-items: center; gap: 10px; }
+.call .arrow { font: 700 26px/1 var(--sans); width: 30px; text-align: center; }
+.call .arrow.up { color: var(--agree); } .call .arrow.down { color: var(--accent); }
+.call .name { font-weight: 600; line-height: 1.25; }
+.call .odds { margin-left: auto; text-align: right; font: 700 20px/1 var(--serif); }
+.call .odds small { display: block; font: 400 11px/1.2 var(--sans); color: var(--muted); }
+.call .px { font-size: 13px; color: var(--muted); margin-top: 6px; font-variant-numeric: tabular-nums; }
+.call .why { font-size: 14px; margin-top: 6px; }
+.ideas { display: grid; gap: 10px; }
+.idea { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+.idea .head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+.idea .head h4 { margin: 0; font: 700 18px/1.2 var(--serif); }
+.idea .head .tk { color: var(--muted); font-size: 13px; }
+.idea .head .status { margin-left: auto; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: var(--chip); }
+.status.active { color: var(--accent); } .status.won { color: var(--agree); } .status.lost { color: var(--accent); }
+.levels { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; margin: 10px 0 6px; }
+.levels div { background: var(--chip); border-radius: 8px; padding: 6px 8px; font-variant-numeric: tabular-nums; }
+.levels small { display: block; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .05em; }
+.levels b { font-size: 15px; }
+.idea p { margin: 6px 0; font-size: 14px; }
+.idea p b { font-weight: 600; }
+.mnote { font-size: 13px; color: var(--muted); margin: 8px 0 0; }
+@media (max-width: 560px) { .levels { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .err { background: var(--panel); border: 1px solid var(--accent); padding: 12px; border-radius: 10px; }
 @media (max-width: 560px) {
   .brand h1 { font-size: 32px; }
@@ -111,8 +136,8 @@ footer p { margin: 6px 0; }
   const fmtTime = (iso) => { const d = new Date(iso); return isNaN(d) ? "" : d.toLocaleString(undefined, { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }); };
   const get = (f) => fetch("data/" + f + "?v=" + Date.now()).then((r) => { if (!r.ok) throw new Error(f + ": " + r.status); return r.json(); });
 
-  Promise.all([get("analysis.json"), get("stories.json"), get("predictions.json").catch(() => null)])
-    .then(([an, st, log]) => render(an, st, log))
+  Promise.all([get("analysis.json"), get("stories.json"), get("predictions.json").catch(() => null), get("markets.json").catch(() => null)])
+    .then(([an, st, log, mk]) => render(an, st, log, mk))
     .catch((e) => { $("main").replaceChildren(el("div", "err", "Couldn't load today's data (" + e.message + ").")); $("meta").textContent = ""; });
 
   function chipsFor(markets) {
@@ -146,7 +171,66 @@ footer p { margin: 6px 0; }
     return f;
   }
 
-  function render(an, st, log) {
+  const num = (v) => (v == null ? "—" : Number(v).toLocaleString(undefined, { maximumFractionDigits: v < 20 ? 2 : v < 1000 ? 2 : 0 }));
+  function priceNow(mk, ticker) {
+    if (!mk) return null;
+    for (const a of Object.values(mk.assets || {})) if (a.ticker === ticker) return a;
+    for (const [t, a] of Object.entries(mk.stocks || {})) if (t === ticker) return a;
+    return null;
+  }
+
+  function marketSections(main, an, log, mk) {
+    const logged = new Map(((log && log.predictions) || []).map((p) => [p.id, p]));
+    if (an.market_calls && an.market_calls.length) {
+      main.append(el("h2", "", "Market calls"));
+      const box = el("div", "calls");
+      for (const c of an.market_calls) {
+        const d = el("div", "call");
+        const top = el("div", "top");
+        top.append(el("div", "arrow " + c.direction, c.direction === "up" ? "▲" : "▼"));
+        top.append(el("div", "name", c.asset));
+        const odds = el("div", "odds", pct(c.probability)); odds.append(el("small", "", "by " + fmtDate(c.by)));
+        top.append(odds);
+        d.append(top);
+        const now = priceNow(mk, c.ticker);
+        d.append(el("div", "px", "From " + num(c.from_price) + (now ? " · now " + num(now.price) + " (" + (now.chg_1d >= 0 ? "+" : "") + now.chg_1d + "% today)" : "")));
+        d.append(el("div", "why", c.why));
+        box.append(d);
+      }
+      main.append(box);
+    }
+    if (an.trade_ideas && an.trade_ideas.length) {
+      main.append(el("h2", "", "Trade ideas: who gets hurt"));
+      const box = el("div", "ideas");
+      for (const t of an.trade_ideas) {
+        const lp = logged.get(t.id) || {};
+        const d = el("div", "idea");
+        const head = el("div", "head");
+        head.append(el("h4", "", t.name), el("span", "tk", t.ticker + " · " + t.action));
+        let st = "waiting for entry", cls = "";
+        if (lp.outcome === true) { st = "✓ target hit"; cls = "won"; }
+        else if (lp.outcome === false) { st = "✗ stopped / missed"; cls = "lost"; }
+        else if (lp.outcome === "not triggered") st = "never entered";
+        else if (lp.entered) { st = "active since " + num(lp.entered.price); cls = "active"; }
+        head.append(el("span", "status " + cls, st));
+        d.append(head);
+        const now = priceNow(mk, t.ticker);
+        const lv = el("div", "levels");
+        const cell = (k, v) => { const c = el("div"); c.append(el("small", "", k), el("b", "", v)); return c; };
+        lv.append(cell("Now", now ? num(now.price) : num(t.ref_price)), cell("Entry", num(t.entry[0]) + "–" + num(t.entry[1])),
+                  cell("Target", num(t.target)), cell("Stop", num(t.stop)), cell("Odds", pct(t.probability)));
+        d.append(lv);
+        const w = el("p"); w.append(el("b", "", "Why it suffers: "), t.who_suffers); d.append(w);
+        const pl = el("p"); pl.append(el("b", "", "Plan: "), t.plan + " By " + fmtDate(t.by) + "."); d.append(pl);
+        const pu = el("p"); pu.append(el("b", "", "Put idea: "), t.put); d.append(pu);
+        box.append(d);
+      }
+      main.append(box);
+    }
+    if (an.markets_note) main.append(el("p", "mnote", an.markets_note));
+  }
+
+  function render(an, st, log, mk) {
     const outlets = new Set(), countries = new Set();
     for (const s of st.stories) for (const a of s.articles) { outlets.add(a.source); if (a.country && a.country !== "?" && a.country !== "many") countries.add(a.country); }
     const feedsOk = Object.values(st.feeds || {}).filter((v) => typeof v === "number").length;
@@ -158,11 +242,12 @@ footer p { margin: 6px 0; }
     const main = $("main");
     main.replaceChildren();
     main.append(el("p", "big", an.big_picture));
+    marketSections(main, an, log, mk);
 
     // forecasts board
-    main.append(el("h2", "", "Forecasts"));
+    main.append(el("h2", "", "Event forecasts"));
     const all = (log && log.predictions) || an.stories.flatMap((s) => s.predictions.map((p) => ({ ...p, story: s.title })));
-    const open = all.filter((p) => p.outcome == null).sort((a, b) => a.by.localeCompare(b.by) || b.probability - a.probability);
+    const open = all.filter((p) => p.outcome == null && !p.type).sort((a, b) => a.by.localeCompare(b.by) || b.probability - a.probability);
     const board = el("div", "board");
     open.forEach((p) => board.append(forecast(p, true)));
     main.append(board);
@@ -177,7 +262,7 @@ footer p { margin: 6px 0; }
       rec.append("No forecast has reached its date yet. The first ones resolve on " + (open.length ? fmtDate(open[0].by) : "—") + ". Every forecast stays on record, right or wrong.");
     }
     main.append(rec);
-    const past = all.filter((p) => p.outcome != null).sort((a, b) => b.by.localeCompare(a.by));
+    const past = all.filter((p) => p.outcome === true || p.outcome === false).sort((a, b) => b.by.localeCompare(a.by));
     if (past.length) { const pb = el("div", "board"); pb.style.marginTop = "8px"; past.forEach((p) => pb.append(forecast(p, true))); main.append(pb); }
 
     // stories
