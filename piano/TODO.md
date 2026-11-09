@@ -21,6 +21,8 @@ Live app: https://mrboby1.github.io/sham/piano/
    physical keyboard. This needs a projector and a full-screen mode that can be lined up with the real keys.
 9. **Smooth falling notes at tempo**: notes flow down continuously at the piece's speed, with a
    speed % control and play/pause, and wait when the next note reaches the keys. *(done 2026-11-08)*
+10. **Remove the black bar over the keys**: the hand's palm bar hid the tops of the keys. Take it out,
+    keep everything else. *(done 2026-11-09)*
 
 ## Done
 

@@ -799,7 +799,7 @@
     let g = handSvg.querySelector("g");
     if (!g) { g = document.createElementNS(SVGNS, "g"); handSvg.append(g); }
     const parts = [];
-    parts.push(`<rect class="hpalm" x="${Math.min(...xs) - r - 4}" y="${palmTop}" width="${Math.max(...xs) - Math.min(...xs) + 2 * r + 8}" height="${palmH}" rx="${palmH / 2}"/>`);
+    // no palm bar: it hid the tops of the keys (Sham, 2026-11-09). The fingers start where it was.
     for (let i = 1; i <= 5; i++) {
       const t = tips[i], x = t.x - x0;
       const y = t.black ? H * 0.36 : H * 0.56;
