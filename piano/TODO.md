@@ -44,6 +44,8 @@ Live app: https://mrboby1.github.io/sham/piano/
 17. **Opening a trading account** with the least paperwork. *(answered in Telegram 2026-11-09:
     an Israeli broker app for simple stock trading; Interactive Brokers for puts)*
 18. **Add Bach's Toccata and Fugue in D minor** (BWV 565) to the songs. *(done 2026-11-09)*
+19. **Add the chords of "Moody Wind" by Anthony Lazaro**: a chord-by-chord song (Songs → Anthony Lazaro):
+    the whole chord lights up, right hand + left-hand root, and it moves on when the chord is heard. *(done 2026-11-09)*
 
 ## Done
 

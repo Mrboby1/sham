@@ -25,3 +25,11 @@ Melodies taken from Creative Commons Attribution-ShareAlike scores are shared un
 | Canon in D | Pachelbel | PachelbelJ/CanonInD | Creative Commons Attribution 3.0 |
 | Lullaby | Brahms | BrahmsJ/LullabyBrahms-C | Public Domain |
 | The Entertainer | Joplin | JoplinS/entertainer | Public Domain |
+
+## Chord songs (chords.json, made by tools/make_chords.py)
+
+Only the chord progression is stored (no melody, no lyrics); the piano voicings and fingering are our own.
+
+| Song | By | Chord chart |
+|---|---|---|
+| Moody Wind | Anthony Lazaro | https://www.cifraclub.com/anthony-lazaro/moody-wind/ |

@@ -61,17 +61,22 @@
   function buildLibrary() {
     SONGS = [
       ...mySongs.map((x) => ({ title: x.title, composer: "", notes: x.notes, mine: true })),
-      ...fullPieces.map((x) => ({ title: x.title, composer: x.composer, notes: x.notes, beats: x.beats })),
+      ...fullPieces.map((x) => ({ title: x.title, composer: x.composer, notes: x.notes, beats: x.beats, chords: x.chords, bpm: x.bpm })),
       ...LIBRARY.filter((x) => !x.mine && !x.title.includes(" - ") && !fullPieces.some((f) => f.title === x.title))
         .map((x) => ({ title: x.title, composer: "", notes: x.full })),
     ];
     SONGS.forEach((x) => { x.key = (x.mine ? "mine:" : "") + x.title + (x.composer ? " - " + x.composer : ""); });
   }
   buildLibrary();
-  fetch("songs.json")
-    .then((r) => (r.ok ? r.json() : []))
-    .then((list) => { fullPieces = list; buildLibrary(); if (!$("songs").hidden) buildSongList($("songSearch").value); })
-    .catch(() => { /* offline: the traditional tunes and my songs still work */ });
+  // songs.json: classical pieces note by note; chords.json: songs played chord by chord
+  Promise.all(["songs.json", "chords.json"].map((f) => fetch(f).then((r) => (r.ok ? r.json() : [])).catch(() => [])))
+    .then(([pieces, chordSongs]) => {
+      fullPieces = [...pieces, ...chordSongs];
+      buildLibrary();
+      if (!$("songs").hidden) buildSongList($("songSearch").value);
+    });
+  // the keys of step i of a song: a whole chord in a chord song, else the one note
+  const stepKeys = (song, i) => (song.chords ? song.chords[i].keys : [song.notes[i]]);
   const pcEq = (a, b) => (((a - b) % 12) + 12) % 12 === 0;
 
   const octave = (m) => Math.floor(m / 12) - 1;
@@ -228,7 +233,7 @@
       if (p.pos + d < n.length && notes.some((m) => pcEq(m, n[p.pos + d]))) step = d;
     }
     if (step < 0) return;
-    for (let d = 0; d <= step; d++) state.history.push({ notes: [n[p.pos + d]], t: performance.now() });
+    for (let d = 0; d <= step; d++) state.history.push({ notes: stepKeys(p.song, p.pos + d).slice().sort((a, b) => a - b), t: performance.now() });
     while (state.history.length > 64) state.history.shift();
     p.pos += step + 1;
     state.follow = practiceView();
@@ -237,11 +242,25 @@
     if (p.pos < n.length) scrollToKey(n[p.pos]);
   }
   function practiceView() {
-    const p = state.practice, n = p.song.notes;
+    const p = state.practice, n = p.song.notes, c = p.song.chords;
+    if (c) {
+      // a chord song: every key of the chord to play now lights up at once
+      const now = c[Math.min(p.pos, c.length - 1)];
+      const done = p.pos >= n.length;
+      return {
+        title: p.song.title + (p.song.composer ? " - " + p.song.composer : ""),
+        at: p.pos, of: n.length, done, chord: true,
+        next: done ? [] : now.keys.slice(), fingers: done ? [] : now.fingers.slice(),
+        names: c.slice(p.pos, p.pos + 4).map((x) => x.name), section: done ? "" : now.section,
+        steps: c.slice(p.pos, p.pos + 4).map((x) => x.keys),
+        sure: true, lost: 0, practice: true,
+      };
+    }
     return {
       title: p.song.title + (p.song.composer ? " - " + p.song.composer : ""),
       at: p.pos, of: n.length, next: n.slice(p.pos, p.pos + 4), done: p.pos >= n.length,
       fingers: (p.song.fingers || []).slice(p.pos, p.pos + 4),
+      steps: n.slice(p.pos, p.pos + 4).map((m) => [m]),
       sure: true, lost: 0, practice: true,
     };
   }
@@ -304,8 +323,9 @@
     analyser.getFloatTimeDomainData(timeBuf);
     const sr = ctx.sampleRate;
     const r = rms(timeBuf.subarray(timeBuf.length - 1024));
-    // background level: drops fast, rises slowly
-    det.noise = r < det.noise ? r : det.noise + (r - det.noise) * 0.003;
+    // background level: drops fast, rises slowly, and while music plays (well above it) hardly at all:
+    // chords ringing under the pedal for minutes must not become "background" and go deaf
+    det.noise = r < det.noise ? r : det.noise + (r - det.noise) * (r < det.noise * 2 ? 0.003 : 0.00002);
     const gate = Math.max(profile ? profile.gate : 0.004, det.noise * 3);
     if (cal) { calibrate(r, now, sr); return; }
     const strike = r > gate * 2 && r > det.env * 1.6; // a fresh hammer strike, even on the same key
@@ -332,6 +352,7 @@
       const m = Math.round(fm);
       if (m < A0 || m > C8) return;
       if (profile && Math.abs(fm - m) > 0.35) return; // between two of this piano's keys: not a key press
+      if (CLEAR_KEYS.includes(m) && !reallyLow(p.freq, sr)) return; // a chord's "missing fundamental"
       det.freq = p.freq;
       det.cents = (fm - m) * 100;
       if (m === det.cand) det.candN++;
@@ -399,10 +420,43 @@
     }
     return [sum, low];
   }
+  // The pitch finder can hear a chord's notes as the harmonics of one very low note (D3 F4 A4 sound
+  // like the 5th, 12th and 15th harmonics of A#0) and that would clear the piece. A real low key
+  // fills its whole run of harmonics; a chord only a few of them.
+  function reallyLow(f0, sr) {
+    const x = timeBuf.subarray(timeBuf.length - HEAR_N);
+    const amps = [];
+    for (let h = 3; h <= 14; h++) {
+      const w = (2 * Math.PI * f0 * h) / sr, c = 2 * Math.cos(w);
+      let s1 = 0, s2 = 0;
+      for (let i = 0; i < HEAR_N; i++) { const s0 = x[i] * hann[i] + c * s1 - s2; s2 = s1; s1 = s0; }
+      amps.push(Math.sqrt(Math.max(0, s1 * s1 + s2 * s2 - c * s1 * s2)));
+    }
+    const top = Math.max(...amps);
+    return amps.filter((a) => a > 0.15 * top).length >= 8;
+  }
+  // How loud each of the 12 notes is right now: the loudest key of each, C4 to B6, measured at the
+  // key's own pitch over the last 170 ms (long enough to tell neighbouring keys apart from C4 up; the
+  // left hand's low notes show up there through their octaves).
+  const CH_N = 8192;
+  const hannCh = new Float32Array(CH_N).map((_, i) => 0.5 - 0.5 * Math.cos((2 * Math.PI * i) / (CH_N - 1)));
+  function chroma(sr) {
+    const x = timeBuf.subarray(timeBuf.length - CH_N);
+    const ch = new Array(12).fill(0);
+    for (let m = 60; m < 96; m++) {
+      const f = midiToFreq(m) * Math.pow(2, offsetAt(m) / 1200);
+      const w = (2 * Math.PI * f) / sr, c = 2 * Math.cos(w);
+      let s1 = 0, s2 = 0;
+      for (let i = 0; i < CH_N; i++) { const s0 = x[i] * hannCh[i] + c * s1 - s2; s2 = s1; s1 = s0; }
+      ch[m % 12] = Math.max(ch[m % 12], Math.sqrt(Math.max(0, s1 * s1 + s2 * s2 - c * s1 * s2)));
+    }
+    return ch;
+  }
   function practiceHear(now, sr, quiet) {
     const p = state.practice, n = p.song.notes;
     if (p.pos >= n.length || !analyser) return;
-    const watch = [...new Set(n.slice(p.pos, p.pos + 4))];
+    const chord = p.song.chords ? p.song.chords[p.pos] : null;
+    const watch = chord ? [...new Set(chord.keys)] : [...new Set(n.slice(p.pos, p.pos + 4))];
     const keysNow = new Set();
     for (const m of watch) keysNow.add(m - 1).add(m).add(m + 1);
     const level = new Map(), rise = new Map(), base = new Map(), lowUp = new Map();
@@ -426,6 +480,25 @@
     }
     for (const [m, q] of hear.pend) if (now - q.t > 450 || !watch.includes(m)) hear.pend.delete(m);
     if (quiet) return;
+    if (chord) {
+      // A chord: a fresh strike on any of its keys, still up 0.15 s later. Then how loud each of the 12
+      // notes is (C3-B6, any octave): the chord's own notes must all be there (a four-note chord may
+      // miss one: a seventh chord played without its 7th still counts), and no other note may be as
+      // loud, unless it is still ringing from the chord before. Chords never repeat back to back, so
+      // there is no skipping ahead.
+      const struck = [...hear.pend].some(([m, q]) => now - q.t >= 150 && level.get(m) >= 1.2 * q.base);
+      if (!struck) return;
+      const ch = chroma(sr), top = Math.max(...ch);
+      const pcs = [...new Set(chord.keys.map((m) => m % 12))];
+      const prev = new Set(p.pos > 0 ? p.song.chords[p.pos - 1].keys.map((m) => m % 12) : []);
+      const got = pcs.filter((pc) => ch[pc] >= 0.25 * top).length;
+      const wrong = ch.some((v, pc) => v >= 0.6 * top && !pcs.includes(pc) && !prev.has(pc));
+      if (wrong || got < (pcs.length <= 3 ? pcs.length : pcs.length - 1)) return;
+      hear.pend.clear();
+      for (const [m, h] of hear.hist) hear.hist.set(m, h.slice(-1));
+      playAlong([n[p.pos]]);
+      return;
+    }
     let sounding = null;
     for (let d = 0; d < 2; d++) {
       const want = n[p.pos + d];
@@ -529,12 +602,13 @@
     const song = SONGS.find((x) => x.key === key);
     if (!song) return;
     clearAll("");
-    if (!song.fingers) song.fingers = window.Fingering.fingerRH(song.notes);
+    if (!song.fingers) song.fingers = song.chords ? song.chords.map((c) => c.fingers[0]) : window.Fingering.fingerRH(song.notes);
     if (!song.durs) {
       // onsets in beats (one beat per note when the song has no rhythm) and how long each note lasts
       const b = song.beats && song.beats.length === song.notes.length ? song.beats : song.notes.map((_, i) => i);
       song.onsets = b;
-      song.durs = b.map((t, i) => (i + 1 < b.length ? Math.max(0.25, Math.min(4, b[i + 1] - t)) : 1));
+      const longest = song.chords ? 8 : 4;
+      song.durs = b.map((t, i) => (i + 1 < b.length ? Math.max(0.25, Math.min(longest, b[i + 1] - t)) : song.chords ? 4 : 1));
     }
     state.practice = { song, pos: 0 };
     roll.beat = song.onsets[0] - 2; // a short count-in before the first note
@@ -583,7 +657,7 @@
         const t = document.createElement("span");
         t.textContent = name;
         const n = document.createElement("small");
-        n.textContent = `${s.notes.length} notes`;
+        n.textContent = `${s.notes.length} ${s.chords ? "chords" : "notes"}`;
         b.append(t, n);
         b.addEventListener("click", () => practise(s.key));
         row.append(b);
@@ -674,13 +748,14 @@
 
   function renderKeys() {
     const calKey = cal && cal.step === "keys" ? CAL_KEYS[cal.idx] : null;
-    const next = calKey !== null ? [calKey] : state.follow ? state.follow.next.slice(0, 4) : [];
+    const next = calKey !== null ? [calKey] : state.follow ? state.follow.next.slice(0, state.follow.chord ? 8 : 4) : [];
+    const allNow = !!(calKey === null && state.follow && state.follow.chord);
     for (const [m, el] of keys) {
       const on = state.sounding.includes(m);
       const ni = next.indexOf(m);
       el.classList.toggle("on", on);
       el.classList.toggle("next", ni >= 0 && !on);
-      el.classList.toggle("first", ni === 0);
+      el.classList.toggle("first", ni === 0 || (allNow && ni >= 0));
       const useFinger = calKey === null && state.follow && state.follow.fingers && keyNums === "finger";
       if (useFinger && ni >= 0) el.style.setProperty("--fc", FINGER_COLORS[state.follow.fingers[ni]]);
       el.querySelector(".ord").textContent = ni < 0 ? "" : calKey !== null ? "♪" : useFinger ? state.follow.fingers[ni] : ni + 1;
@@ -716,7 +791,8 @@
     const [name, composer] = f.title.split(" - ");
     title.textContent = name;
     const small = document.createElement("small");
-    small.textContent = (composer ? composer + " · " : "") + (f.done ? "the end" : "note " + (f.at + 1) + " of " + f.of);
+    small.textContent = (composer ? composer + " · " : "") + (f.done ? "the end"
+      : f.chord ? `${f.section} · chord ${f.at + 1} of ${f.of}` : "note " + (f.at + 1) + " of " + f.of);
     title.append(small);
     box.append(title);
     const lock = document.createElement("div");
@@ -736,7 +812,19 @@
         ? "Off the melody. Pick it up from the teal keys. If you keep playing something else, it lets go."
         : "Locked on this piece. Play the lowest key (A0) to clear.";
     box.append(lock);
-    if (f.next.length) {
+    if (f.chord && f.next.length) {
+      // the chord to play now with its keys, then the next chord names
+      const chips = document.createElement("div");
+      chips.className = "chips";
+      chips.setAttribute("aria-label", "Play next");
+      f.names.forEach((nm, i) => {
+        const c = document.createElement("span");
+        c.className = "chip";
+        c.textContent = i ? nm : nm + ": " + f.next.slice().sort((a, b) => a - b).map(fullName).join(" ");
+        chips.append(c);
+      });
+      box.append(chips);
+    } else if (f.next.length) {
       const chips = document.createElement("div");
       chips.className = "chips";
       chips.setAttribute("aria-label", "Play next");
@@ -782,7 +870,7 @@
     const target = rollTarget();
     if (roll.running) {
       // at the end there is nothing to wait for: run out to the last note's end
-      roll.beat = Math.min(target, roll.beat + dt * (BPM / 60) * (speed / 100));
+      roll.beat = Math.min(target, roll.beat + dt * ((p.song.bpm || BPM) / 60) * (speed / 100));
     } else {
       const d = target - roll.beat;
       roll.beat = Math.abs(d) < 0.002 || reduceMotion() ? target : roll.beat + d * 0.22;
@@ -829,10 +917,13 @@
       if (bottom < 0) break;
       const top = bottom - durs[i] * ppb + 2;
       if (top > Hc) continue;
-      const el = keys.get(notes[i]);
+      const ks = stepKeys(p.song, i);
+      for (let j = 0; j < ks.length; j++) {
+      const el = keys.get(ks[j]);
       if (!el) continue;
+      const fi = p.song.chords ? p.song.chords[i].fingers[j] : fingers[i];
       const x = dx + el.offsetLeft + 1, w = el.offsetWidth - 2;
-      const color = FINGER_COLORS[fingers[i]] || muted;
+      const color = FINGER_COLORS[fi] || muted;
       g.globalAlpha = i < p.pos ? 0.25 : 1;
       g.fillStyle = color;
       const r = Math.min(5, w / 2, (bottom - top) / 2);
@@ -844,10 +935,24 @@
         g.fillStyle = "#fff";
         g.font = `700 ${Math.max(9, Math.min(13, w * 0.75))}px ${font}`;
         g.textAlign = "center";
-        g.fillText(String(fingers[i]), x + w / 2, bottom - 6);
+        g.fillText(String(fi), x + w / 2, bottom - 6);
         g.textAlign = "start";
       }
       g.globalAlpha = 1;
+      }
+      if (p.song.chords) {
+        // the chord's name, left of its right-hand bars
+        const lowRH = keys.get(ks[0]);
+        if (lowRH) {
+          g.globalAlpha = i < p.pos ? 0.25 : 1;
+          g.fillStyle = getComputedStyle(document.documentElement).getPropertyValue("--ink").trim();
+          g.font = `700 13px ${font}`;
+          g.textAlign = "right";
+          g.fillText(p.song.chords[i].name, dx + lowRH.offsetLeft - 4, Math.max(14, bottom - 6));
+          g.textAlign = "start";
+          g.globalAlpha = 1;
+        }
+      }
     }
     // the "now" line where the bars meet the keys
     g.fillStyle = muted;
@@ -889,7 +994,7 @@
     for (let i = 1; i <= 5; i++) {
       const t = tips[i], x = t.x - x0;
       const y = t.black ? H * 0.36 : H * 0.56;
-      const next = f.fingers[0] === i;
+      const next = f.chord ? f.fingers.some((fi, j) => fi === i && !isLeft(f.next[j])) : f.fingers[0] === i;
       parts.push(`<line x1="${x}" y1="${palmTop + palmH - 2}" x2="${x}" y2="${y}" stroke="${FINGER_COLORS[i]}" stroke-width="${Math.max(3, r * 0.55)}" stroke-linecap="round"/>`);
       parts.push(`<circle cx="${x}" cy="${y}" r="${next ? r + 2 : r}" fill="${FINGER_COLORS[i]}" stroke="#fff" stroke-width="${next ? 2.5 : 1.5}"/>`);
       parts.push(`<text x="${x}" y="${y}" dy="0.35em" font-size="${Math.round(r * 1.15)}">${i}</text>`);
@@ -912,6 +1017,13 @@
     if (!show) return;
     const finger = f.fingers[0];
     document.querySelectorAll("#hand .finger").forEach((el) => el.classList.toggle("on", Number(el.dataset.f) === finger));
+    if (f.chord) {
+      const rh = f.next.map((m, j) => [m, f.fingers[j]]).filter(([m]) => !isLeft(m));
+      const lh = f.next.filter(isLeft);
+      $("handText").textContent = `${f.names[0]}: right hand ${rh.map(([m]) => fullName(m)).join(" ")} (fingers ${rh.map((x) => x[1]).join(" ")})`
+        + (lh.length ? `, left hand ${lh.map(fullName).join(" ")}.` : ".");
+      return;
+    }
     $("handText").textContent = `Next: ${fullName(f.next[0])} with finger ${finger}, your ${FINGER_NAMES[finger]}.`;
   }
 
@@ -957,7 +1069,7 @@
     g.fillText("\u{1D122}", 14, bt + 4 * hs + 2);
 
     const colW = 30;
-    const next = state.follow ? state.follow.next.slice(0, 4) : [];
+    const next = state.follow ? (state.follow.steps || state.follow.next.map((m) => [m])).slice(0, 4) : [];
     const room = Math.max(1, Math.floor((right - left - (next.length ? next.length * colW + 14 : 0)) / colW));
     const events = state.history.slice(-room);
 
@@ -1025,9 +1137,18 @@
       g.beginPath(); g.moveTo(x0 - 8, trebleTop - 8); g.lineTo(x0 - 8, bt + 8 * hs + 8); g.stroke();
       g.setLineDash([]);
       const fingersNext = state.follow && state.follow.fingers ? state.follow.fingers : null;
-      next.forEach((m, i) => {
+      next.forEach((step, i) => {
         const x = x0 + 8 + i * colW;
-        head(x, m, teal, true, 1 - i * 0.22);
+        step.forEach((k) => head(x, k, teal, true, 1 - i * 0.22));
+        const m = step[0];
+        if (state.follow.chord) {
+          g.fillStyle = teal;
+          g.font = "700 11px " + getComputedStyle(document.body).fontFamily;
+          g.textAlign = "center";
+          g.fillText(state.follow.names[i] || "", x, trebleTop - 6);
+          g.textAlign = "start";
+          return;
+        }
         if (fingersNext) {
           g.fillStyle = FINGER_COLORS[fingersNext[i]] || teal;
           g.font = "700 12px " + getComputedStyle(document.body).fontFamily;
