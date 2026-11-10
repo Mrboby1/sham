@@ -102,6 +102,9 @@ button:focus-visible, .seg input:focus-visible + label { outline: 2px solid var(
 .seg label { border: 0; border-radius: 0; background: transparent; color: var(--muted); }
 .seg input:checked + label { background: var(--panel); color: var(--ink); box-shadow: inset 0 -2px 0 var(--teal); }
 .ghost { background: transparent; color: var(--muted); }
+.tabs { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.tabs a { font: 700 14px/1 var(--font-ui); color: var(--muted); text-decoration: none; padding: 10px 14px; min-height: 40px; display: inline-flex; align-items: center; }
+.tabs a[aria-current="page"] { color: var(--ink); background: var(--panel); box-shadow: inset 0 -2px 0 var(--teal); }
 
 .msg { margin: 0; color: var(--danger); font-size: 14px; }
 
@@ -272,6 +275,7 @@ input:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
   .top { flex-direction: row; align-items: center; gap: 14px; }
   .top header { flex: none; flex-direction: column; align-items: flex-start; gap: 2px; }
   .top h1 { font-size: 18px; }
+  .tabs a { min-height: 28px; padding: 5px 10px; font-size: 12px; }
   .controls { padding: 0; flex-wrap: nowrap; overflow-x: auto; min-width: 0; scrollbar-width: none; }
   .controls > * { flex: none; }
   button, .seg label { min-height: 34px; padding: 7px 10px; font-size: 13px; white-space: nowrap; }
@@ -334,6 +338,7 @@ body.playing .kbd-scroll { margin-top: 0; }
   <div class="top wrap">
   <header>
     <h1>Piano Notes</h1>
+    <nav class="tabs" aria-label="Sections"><a href="./" aria-current="page">Piano</a><a href="ear.html">Ear</a></nav>
     <div class="status" id="status"><i></i><span>Mic off</span></div>
     <div class="tuned" id="tuned" hidden></div>
   </header>

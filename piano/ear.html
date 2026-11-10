@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ear Training</title>
+<meta name="description" content="Recognise the sound: a deck of cards with notes to read, notes to play back and short melodies to repeat on the piano.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Piano Notes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#121519">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+/* Same lacquer look as the main page. Brass = what you played, teal = the answer, green/red = right/wrong. */
+:root {
+  --bg: #121519; --panel: #1a1e24; --line: #2a3039; --ink: #eceae4; --muted: #8f97a3;
+  --brass: #e2b04e; --brass-ink: #1d1606; --teal: #4fcac0; --ok: #5cc98a; --danger: #ff8a7a;
+  --ivory: #f7f4ec; --ivory-edge: #c9c5ba; --ebony: #1a1c20; --ebony-top: #3a3e46;
+  --card: #f4efe3; --card-ink: #1b1d22; --card-muted: #6a6457; --back: #2c3b55; --back-2: #24324a;
+  --font-display: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --font-ui: "Atkinson Hyperlegible", -apple-system, "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #edeff2; --panel: #ffffff; --line: #d6dae1; --ink: #16191e; --muted: #5d6573;
+    --brass: #b07d12; --brass-ink: #ffffff; --teal: #0d8a81; --ok: #1f8a4c; --danger: #b3261e;
+    --ivory-edge: #b9b5aa; --card: #ffffff; --back: #3b5b8c; --back-2: #2f4b76; color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #edeff2; --panel: #ffffff; --line: #d6dae1; --ink: #16191e; --muted: #5d6573;
+  --brass: #b07d12; --brass-ink: #ffffff; --teal: #0d8a81; --ok: #1f8a4c; --danger: #b3261e;
+  --ivory-edge: #b9b5aa; --card: #ffffff; --back: #3b5b8c; --back-2: #2f4b76; color-scheme: light;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body { margin: 0; overflow-x: hidden; background: var(--bg); color: var(--ink); font: 15px/1.4 var(--font-ui); -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; }
+.app {
+  min-height: 100%; display: flex; flex-direction: column; gap: 12px;
+  padding: max(10px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(12px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+}
+header { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+h1 { margin: 0; font: 700 22px/1.1 var(--font-display); }
+.tabs { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.tabs a { font: 700 14px/1 var(--font-ui); color: var(--muted); text-decoration: none; padding: 10px 14px; min-height: 40px; display: inline-flex; align-items: center; }
+.tabs a[aria-current="page"] { color: var(--ink); background: var(--panel); box-shadow: inset 0 -2px 0 var(--teal); }
+.status { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.status i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); display: inline-block; }
+.status.on i { background: var(--brass); box-shadow: 0 0 0 4px color-mix(in srgb, var(--brass) 25%, transparent); }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+button, .seg label, .chk label {
+  font: 700 14px/1 var(--font-ui); color: var(--ink); background: var(--panel); border: 1px solid var(--line);
+  border-radius: 10px; padding: 10px 12px; min-height: 40px; cursor: pointer; touch-action: manipulation;
+}
+button:focus-visible, .seg input:focus-visible + label, .chk input:focus-visible + label { outline: 2px solid var(--teal); outline-offset: 2px; }
+button:disabled { opacity: 0.45; cursor: default; }
+.primary { background: var(--brass); color: var(--brass-ink); border-color: transparent; padding-inline: 16px; }
+.ghost { background: transparent; color: var(--muted); }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.seg input, .chk input { position: absolute; opacity: 0; pointer-events: none; }
+.seg label { border: 0; border-radius: 0; background: transparent; color: var(--muted); }
+.seg input:checked + label { background: var(--panel); color: var(--ink); box-shadow: inset 0 -2px 0 var(--teal); }
+.chk { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+.chk label { color: var(--muted); background: transparent; }
+.chk input:checked + label { color: var(--teal); border-color: var(--teal); }
+.msg { margin: 0; color: var(--danger); font-size: 14px; }
+
+/* The deck: a stack of card backs, the turned card on top. */
+.table { display: flex; flex-direction: column; align-items: center; gap: 10px; flex: 1 0 auto; justify-content: center; }
+.score { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; letter-spacing: 0.04em; }
+.deck { position: relative; width: min(calc(100% - 14px), 330px); height: clamp(300px, 50vh, 430px); margin-right: 14px; perspective: 1200px; }
+.back, .card { position: absolute; inset: 0; border-radius: 18px; }
+.back {
+  background: repeating-linear-gradient(45deg, var(--back) 0 10px, var(--back-2) 10px 20px);
+  border: 6px solid var(--card); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+.back:nth-child(1) { transform: translate(10px, 10px) rotate(2.5deg); }
+.back:nth-child(2) { transform: translate(5px, 5px) rotate(1.2deg); }
+.back:nth-child(3) { transform: none; }
+.card {
+  background: var(--card); color: var(--card-ink); box-shadow: 0 10px 26px rgba(0, 0, 0, 0.4);
+  display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 16px 14px 14px; text-align: center;
+  transform-origin: 50% 50%; transition: transform 0.28s ease-in;
+}
+.card.turning { transform: rotateY(90deg); }
+.card.ok { box-shadow: 0 0 0 4px var(--ok), 0 10px 26px rgba(0, 0, 0, 0.4); }
+.card.shake { animation: shake 0.35s; }
+@keyframes shake { 25% { translate: -7px 0; } 50% { translate: 7px 0; } 75% { translate: -4px 0; } }
+.kind { font: 700 12px/1.2 var(--font-ui); letter-spacing: 0.1em; text-transform: uppercase; color: var(--card-muted); }
+.ask { margin: 0; font: 700 22px/1.2 var(--font-display); }
+.face { flex: 1; display: flex; align-items: center; justify-content: center; width: 100%; min-height: 0; }
+.face svg { width: 100%; max-width: 280px; height: auto; }
+.face .staffline { stroke: var(--card-ink); stroke-width: 1.2; }
+.face .clef { fill: var(--card-ink); font-family: "Bravura", "Apple Symbols", "Segoe UI Symbol", serif; }
+.face .head { fill: var(--card-ink); }
+.face .acc { fill: var(--card-ink); font: 700 26px var(--font-ui); }
+.ear { width: 96px; height: 96px; border-radius: 50%; border: 0; background: var(--back); color: #fff; font-size: 40px; display: grid; place-items: center; padding: 0; }
+.dots { display: flex; gap: 10px; justify-content: center; }
+.dots i { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--card-muted); display: inline-block; }
+.dots i.done { background: var(--ok); border-color: var(--ok); }
+.dots i.now { border-color: var(--back); box-shadow: 0 0 0 3px color-mix(in srgb, var(--back) 35%, transparent); }
+.say { min-height: 2.8em; margin: 0; font-size: 15px; font-weight: 700; color: var(--card-muted); }
+.say.ok { color: var(--ok); }
+.say.bad { color: #c0392b; }
+.cardbtns { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.cardbtns button { background: transparent; color: var(--card-ink); border-color: color-mix(in srgb, var(--card-ink) 25%, transparent); }
+.cardbtns button.go { background: var(--back); color: #fff; border-color: transparent; }
+.big { font: 700 44px/1 var(--font-display); }
+.intro { color: var(--card-muted); font-size: 15px; margin: 0; }
+.intro b { color: var(--card-ink); }
+
+/* Keyboard: C3 to C6, tap a key to answer by touch. */
+.kbd { position: relative; height: 130px; flex: none; }
+.key { position: absolute; top: 0; display: flex; justify-content: center; align-items: flex-end; user-select: none; -webkit-user-select: none; touch-action: manipulation; font-size: 10px; font-weight: 700; }
+.white { height: 100%; background: linear-gradient(var(--ivory) 80%, #ece8de); border: 1px solid var(--ivory-edge); border-top: 0; border-radius: 0 0 6px 6px; color: #6b6658; padding-bottom: 6px; z-index: 1; }
+.black { height: 62%; background: linear-gradient(var(--ebony-top), var(--ebony) 12%); border: 1px solid #000; border-top: 0; border-radius: 0 0 4px 4px; color: #c8c4b8; padding-bottom: 4px; z-index: 2; }
+.key .nm { visibility: hidden; }
+.white.c .nm { visibility: visible; }
+.key.heard { background: var(--brass); color: var(--brass-ink); }
+.key.answer { box-shadow: inset 0 0 0 4px var(--teal); }
+.key.answer .nm, .key.heard .nm { visibility: visible; }
+.foot { font-size: 12px; color: var(--muted); margin: 0; }
+
+@media (orientation: landscape) and (min-width: 560px) {
+  html, body { overflow: hidden; }
+  .app { height: 100%; min-height: 0; gap: 6px; padding-top: max(6px, env(safe-area-inset-top, 0px)); padding-bottom: max(6px, env(safe-area-inset-bottom, 0px)); }
+  h1 { font-size: 18px; }
+  .tabs a, button, .seg label, .chk label { min-height: 32px; padding: 6px 10px; font-size: 13px; }
+  .main { display: grid; grid-template-columns: minmax(220px, 300px) 1fr; gap: 16px; align-items: center; flex: 1; min-height: 0; }
+  .side { display: flex; flex-direction: column; gap: 8px; }
+  .table { gap: 4px; min-height: 0; }
+  .deck { width: min(calc(100% - 14px), 520px); height: calc(76vh - 108px); min-height: 160px; }
+  /* a wide card: the staff or the ear button on the left, the words and buttons on the right */
+  .card.has-face { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto 1fr auto auto; gap: 4px 14px; padding: 10px 14px; align-items: center; }
+  .card.has-face > .kind { grid-column: 2; grid-row: 1; }
+  .card.has-face > .ask { grid-column: 2; grid-row: 2; font-size: 19px; }
+  .card.has-face > .face { grid-column: 1; grid-row: 1 / span 5; height: 100%; }
+  .card.has-face > .dots { grid-column: 2; grid-row: 3; }
+  .card.has-face > .say { grid-column: 2; grid-row: 4; min-height: 0; font-size: 14px; }
+  .card.has-face > .cardbtns { grid-column: 2; grid-row: 5; }
+  .face svg { max-height: 100%; }
+  .ear { width: 76px; height: 76px; font-size: 32px; }
+  .kbd { height: 24vh; min-height: 70px; }
+  .foot { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .card { transition: none; } .card.shake { animation: none; } }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>Recognise the sound</h1>
+    <nav class="tabs" aria-label="Sections">
+      <a href="./">Piano</a>
+      <a href="ear.html" aria-current="page">Ear</a>
+    </nav>
+    <div class="status" id="status"><i></i><span>Mic off</span></div>
+  </header>
+
+  <div class="main">
+    <div class="side">
+      <div class="controls">
+        <div class="seg" role="radiogroup" aria-label="Level">
+          <input type="radio" name="level" id="lv-easy" value="easy" checked><label for="lv-easy">Easy</label>
+          <input type="radio" name="level" id="lv-medium" value="medium"><label for="lv-medium">Medium</label>
+          <input type="radio" name="level" id="lv-hard" value="hard"><label for="lv-hard">Hard</label>
+        </div>
+        <div class="seg" role="radiogroup" aria-label="Note names">
+          <input type="radio" name="names" id="nm-letter" value="letter" checked><label for="nm-letter">C D E</label>
+          <input type="radio" name="names" id="nm-solfege" value="solfege"><label for="nm-solfege">Do Re Mi</label>
+        </div>
+      </div>
+      <div class="chk" role="group" aria-label="Cards in the deck">
+        <input type="checkbox" id="g-read" value="read" checked><label for="g-read">𝅝 Read</label>
+        <input type="checkbox" id="g-echo" value="echo" checked><label for="g-echo">♪ Play back</label>
+        <input type="checkbox" id="g-melody" value="melody" checked><label for="g-melody">♫ Melody</label>
+      </div>
+      <p class="msg" id="msg" hidden></p>
+      <p class="foot">Each deck has 12 cards. Play your answer on the piano, or tap the keys below. On "Play back" and "Melody" cards any octave counts.</p>
+    </div>
+
+    <div class="table">
+      <div class="score" id="score" aria-live="polite">12 cards</div>
+      <div class="deck" id="deck">
+        <div class="back"></div><div class="back"></div><div class="back"></div>
+        <div class="card" id="card" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kbd" id="kbd" aria-label="Keyboard, C3 to C6: tap a key to answer"></div>
+</div>
+
+<script src="detect.js"></script>
+<script src="ear.js"></script>
+</body>
+</html>

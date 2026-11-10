@@ -58,6 +58,11 @@ Live app: https://mrboby1.github.io/sham/piano/
     key link once. Waiting for the notes: the sheet music is sold on pianostudio.co.il, ₪22.70.)*
 23. **Block the site for everyone but Sham** (Sham, 2026-11-10). *(dropped by Sham the same minute;
     the private songs above do the job for protected songs)*
+24. **"Recognise the sound": an ear-training tab** (Sham, 2026-11-10). A deck of cards, turned over one by
+    one; each card is one of three games: (1) play the note shown on the staff, (2) the app plays a note
+    and you play it back, (3) the app plays a short melody and you repeat it. A separate tab on the site.
+   *(done 2026-11-10, first version: the "Ear" tab, ear.html. 12 cards per deck, Easy/Medium/Hard, the
+   three games can be switched on and off, answers by mic or by tapping the keys)*
 
 ## Done
 
