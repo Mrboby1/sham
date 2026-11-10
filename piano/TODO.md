@@ -99,6 +99,9 @@ Live app: https://mrboby1.github.io/sham/piano/
 33. **Big market moves expected tomorrow (Nov 11)?** (Sham, 2026-11-10): any reason for a big jump somewhere.
     *(answered in Telegram 2026-11-10: nothing scheduled (Veterans Day, bonds closed, small earnings); the jump
     risks are headlines: a US-Iran ceasefire or news on the Nvidia/Huang investigation; JD Thursday, NVDA next week)*
+34. **NVDA calls two weeks out?** (Sham, 2026-11-10).
+    *(answered in Telegram 2026-11-10: earnings Nov 17 after the close fall inside the 2 weeks; calls are expensive
+    (panic + earnings) and lose that extra price after earnings; if at all, a Nov 27 call spread 170/190, about 1% of the account)*
 
 ## Done
 
