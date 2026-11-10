@@ -88,6 +88,8 @@ Live app: https://mrboby1.github.io/sham/piano/
     chords, scales, arpeggio, Hanon, chromatic) and 14 easy songs with rhythm, 3 of them for both hands; 9 exercises are for both hands.
     Play-along now follows both hands: notes played together are one step, and the hand picture turns
     into a left hand for the left hand's notes. Source: tools/make_lessons.js -> lessons.json)*
+31. **Michael Burry buying Alibaba (and JD.com?), Chinese tech; and shorting NVDA** (Sham, 2026-11-10):
+    check the facts, what to do right now, and the risk.
 
 ## Done
 
