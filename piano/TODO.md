@@ -54,6 +54,10 @@ Live app: https://mrboby1.github.io/sham/piano/
     A protected song: it can't go in the public library on the site, only into Sham's own songs.
     Plan: Sham plays it in "Record my own", or sends a voice note that I turn into notes and add to Sham's
     songs with a private link (needs a small "add this song" link feature; the same route serves #20).
+    *(Private songs built 2026-11-10: private.json is encrypted and only opens on a phone that used the
+    key link once. Waiting for the notes: the sheet music is sold on pianostudio.co.il, ₪22.70.)*
+23. **Block the site for everyone but Sham** (Sham, 2026-11-10). *(dropped by Sham the same minute;
+    the private songs above do the job for protected songs)*
 
 ## Done
 

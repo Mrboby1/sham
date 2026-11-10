@@ -68,10 +68,30 @@
     SONGS.forEach((x) => { x.key = (x.mine ? "mine:" : "") + x.title + (x.composer ? " - " + x.composer : ""); });
   }
   buildLibrary();
+  // Private songs: private.json is encrypted (AES-GCM, key from a passphrase via PBKDF2), so only a
+  // phone that opened the site once with #key=<passphrase> can read it. The key is then kept on the phone.
+  const hashKey = /^#key=(.+)$/.exec(location.hash);
+  if (hashKey) {
+    store.set("pkey", decodeURIComponent(hashKey[1]));
+    history.replaceState(null, "", location.pathname + location.search);
+  }
+  async function unseal(box, pass) {
+    const bytes = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+    const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pass), "PBKDF2", false, ["deriveKey"]);
+    const key = await crypto.subtle.deriveKey({ name: "PBKDF2", salt: bytes(box.salt), iterations: box.iter, hash: "SHA-256" },
+      base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+    const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: bytes(box.iv) }, key, bytes(box.data));
+    return JSON.parse(new TextDecoder().decode(plain));
+  }
+  function privateSongs() {
+    const pass = store.get("pkey", "");
+    if (!pass || !window.crypto || !crypto.subtle) return Promise.resolve([]);
+    return fetch("private.json").then((r) => (r.ok ? r.json() : null)).then((box) => (box ? unseal(box, pass) : [])).catch(() => []);
+  }
   // songs.json: classical pieces note by note; chords.json: songs played chord by chord
-  Promise.all(["songs.json", "chords.json"].map((f) => fetch(f).then((r) => (r.ok ? r.json() : [])).catch(() => [])))
-    .then(([pieces, chordSongs]) => {
-      fullPieces = [...pieces, ...chordSongs];
+  Promise.all([...["songs.json", "chords.json"].map((f) => fetch(f).then((r) => (r.ok ? r.json() : [])).catch(() => [])), privateSongs()])
+    .then(([pieces, chordSongs, mine]) => {
+      fullPieces = [...mine, ...pieces, ...chordSongs];
       buildLibrary();
       if (!$("songs").hidden) buildSongList($("songSearch").value);
     });
