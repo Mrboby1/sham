@@ -166,6 +166,14 @@
     s += `<ellipse class="head" cx="${x}" cy="${y(dia)}" rx="8.4" ry="6" transform="rotate(-20 ${x} ${y(dia)})"/>`;
     return s + "</svg>";
   }
+  // Where the staff sits on the keyboard: both clefs are told from middle Do (C4, the teal dot).
+  const exactRead = () => level === "hard";
+  function clefHint(m) {
+    const mid = fullName(60);
+    return m >= 60
+      ? `Treble clef: from middle ${nameOf(60)} (${mid}, the teal dot) up. Bottom line = ${fullName(64)}.`
+      : `Bass clef: below middle ${nameOf(60)} (${mid}, the teal dot). Top line = ${fullName(57)}.`;
+  }
   function drawCard() {
     const el = $("card"), c = card();
     el.classList.remove("ok");
@@ -182,7 +190,8 @@
       <p class="ask">${k.ask}</p>
       <div class="face">${face}</div>
       ${dots}
-      <p class="say" id="say">${c.type === "read" ? "Play it on the piano." : c.type === "echo" ? "Listen, then play it. Any octave." : "Listen, then play it back. Any octave."}</p>
+      ${c.type === "read" ? `<p class="hint">${clefHint(c.target)}</p>` : ""}
+      <p class="say" id="say">${c.type === "read" ? (exactRead() ? "Play that exact key." : "Play it on the piano. Any octave counts.") : c.type === "echo" ? "Listen, then play it. Any octave." : "Listen, then play it back. Any octave."}</p>
       <div class="cardbtns">
         ${c.type !== "read" ? '<button type="button" id="hear">Hear again</button>' : ""}
         <button type="button" id="show">Show me</button>
@@ -257,8 +266,13 @@
       miss(c, `That was ${nameOf(m)}. Note ${c.pos + 1} is different: try again.`);
       return;
     }
-    const ok = c.type === "read" ? m === c.target : pcEq(m, c.target);
-    if (ok) { win(c, `Right! That's ${fullName(c.target)}.`); return; }
+    const ok = c.type === "read" && exactRead() ? m === c.target : pcEq(m, c.target);
+    if (ok) {
+      const where = m === c.target ? "" : ` On the staff it's exactly ${fullName(c.target)}${c.target === 60 ? " (middle)" : c.target > 60 ? ", above middle " + nameOf(60) : ", below middle " + nameOf(60)}.`;
+      win(c, `Right! That's ${nameOf(c.target)}.${where}`);
+      if (where) showAnswer([c.target]);
+      return;
+    }
     if (c.type === "read" && pcEq(m, c.target)) { say(`Right note, wrong octave: you played ${fullName(m)}. Try the one on the staff.`, "bad"); el.classList.remove("shake"); void el.offsetWidth; el.classList.add("shake"); return; }
     miss(c, `That was ${fullName(m)}. Try again.`);
   }
@@ -275,7 +289,7 @@
     $("card").classList.add("ok");
     say(text + (c.misses === 0 && !c.shown ? "" : " (not first time)"), "ok");
     updateScore();
-    nextTimer = setTimeout(() => { if (card() === c) turn(); }, 1500);
+    nextTimer = setTimeout(() => { if (card() === c) turn(); }, text.length > 40 ? 3000 : 1500); // longer when there's more to read
   }
 
   // ---------------------------------------------------------------- keyboard
@@ -289,7 +303,7 @@
     for (let m = KBD_LO; m <= KBD_HI; m++) {
       const el = document.createElement("div");
       const black = IS_BLACK[m % 12] === 1;
-      el.className = "key " + (black ? "black" : "white") + (m % 12 === 0 ? " c" : "");
+      el.className = "key " + (black ? "black" : "white") + (m % 12 === 0 ? " c" : "") + (m === 60 ? " mid" : "");
       el.dataset.midi = m;
       el.innerHTML = `<span class="nm">${m % 12 === 0 ? fullName(m) : nameOf(m)}</span>`;
       if (black) { el.style.left = wi * w - w * 0.31 + "px"; el.style.width = w * 0.62 + "px"; }

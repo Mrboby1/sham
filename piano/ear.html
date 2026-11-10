@@ -128,6 +128,11 @@ button:disabled { opacity: 0.45; cursor: default; }
 .key.heard { background: var(--brass); color: var(--brass-ink); }
 .key.answer { box-shadow: inset 0 0 0 4px var(--teal); }
 .key.answer .nm, .key.heard .nm { visibility: visible; }
+/* middle Do (C4): a teal dot and a label, so the octave on the staff can be found on the keys */
+.white.mid { background: linear-gradient(#e6f4f1 80%, #d5ebe6); }
+.white.mid::before { content: ""; position: absolute; left: 50%; top: 58%; width: 8px; height: 8px; margin-left: -4px; border-radius: 50%; background: var(--teal); }
+.white.mid .nm { color: #0d5c52; }
+.hint { font-size: 13px; color: var(--card-muted); margin: 0; text-align: center; }
 .foot { font-size: 12px; color: var(--muted); margin: 0; }
 
 @media (orientation: landscape) and (min-width: 560px) {
@@ -180,12 +185,12 @@ button:disabled { opacity: 0.45; cursor: default; }
         </div>
       </div>
       <div class="chk" role="group" aria-label="Cards in the deck">
-        <input type="checkbox" id="g-read" value="read" checked><label for="g-read">𝅝 Read</label>
+        <input type="checkbox" id="g-read" value="read" checked><label for="g-read">♩ Read</label>
         <input type="checkbox" id="g-echo" value="echo" checked><label for="g-echo">♪ Play back</label>
         <input type="checkbox" id="g-melody" value="melody" checked><label for="g-melody">♫ Melody</label>
       </div>
       <p class="msg" id="msg" hidden></p>
-      <p class="foot">Each deck has 12 cards. Play your answer on the piano, or tap the keys below. On "Play back" and "Melody" cards any octave counts.</p>
+      <p class="foot">Each deck has 12 cards. Play your answer on the piano, or tap the keys below. Any octave counts, except on Hard "Read" cards, which want the exact key (the teal dot is middle Do, Do4).</p>
     </div>
 
     <div class="table">

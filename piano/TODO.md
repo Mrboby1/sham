@@ -63,6 +63,9 @@ Live app: https://mrboby1.github.io/sham/piano/
     and you play it back, (3) the app plays a short melody and you repeat it. A separate tab on the site.
    *(done 2026-11-10, first version: the "Ear" tab, ear.html. 12 cards per deck, Easy/Medium/Hard, the
    three games can be switched on and off, answers by mic or by tapping the keys)*
+25. **Ear tab: "how do I know which octave the note is?"** (Sham, 2026-11-10). Read cards on Easy and
+    Medium accept the note in any octave and then name the exact key; Hard still asks for the exact key.
+    Middle Do (Do4) is marked on the keys, and each card says where its clef sits relative to middle Do.
 
 ## Done
 
