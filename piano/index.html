@@ -211,6 +211,15 @@ input:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
 .songrow { display: flex; gap: 6px; }
 .songbtn { flex: 1; display: flex; justify-content: space-between; align-items: center; gap: 10px; text-align: left; font-weight: 700; background: var(--bg); }
 .songbtn small { font-weight: 400; color: var(--muted); font-size: 12px; white-space: nowrap; }
+/* Songs / Exercises and level filters; level shown as a coloured dot (Sham, 2026-11-10) */
+.sheetfilters { display: flex; gap: 8px; flex-wrap: wrap; }
+.sheetfilters .seg label { padding: 8px 10px; }
+.songbtn > span { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.songbtn .tip { font-weight: 400; font-size: 12px; color: var(--muted); white-space: normal; }
+.lvl { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: 1px; }
+.lvl.beginner { background: #3fb27f; } .lvl.intermediate { background: #e2b04e; } .lvl.advanced { background: #e5484d; }
+.both { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--teal); border: 1px solid var(--teal); border-radius: 999px; padding: 0 6px; margin-left: 6px; vertical-align: 1px; }
+.nowtip { font-size: 13px; color: var(--muted); margin: 4px 0 0; }
 .delbtn { flex: none; }
 .key.clearkey { box-shadow: inset 0 -5px 0 var(--danger); }
 
@@ -290,6 +299,7 @@ input:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
   .tabs a { min-height: 28px; padding: 5px 10px; font-size: 12px; }
   .controls { padding: 0; flex-wrap: nowrap; overflow-x: auto; min-width: 0; scrollbar-width: none; }
   .controls > * { flex: none; }
+  .sheet > .hint { display: none; } /* more room for the list when sideways */
   button, .seg label { min-height: 34px; padding: 7px 10px; font-size: 13px; white-space: nowrap; }
   .long { display: none; }
   .middle { display: grid; grid-template-columns: minmax(150px, 0.8fr) 2fr minmax(170px, 0.9fr); gap: 12px; align-items: stretch; min-height: 0; flex: 0 1 auto; }
@@ -378,7 +388,19 @@ body.playing .kbd-scroll { margin-top: 0; }
       <h2 id="songsTitle">Songs</h2>
       <button id="songsClose" type="button" class="ghost">Close</button>
     </div>
-    <p class="hint">Pick a piece to play along with. Classical pieces are complete, from free Mutopia Project scores (right-hand melody).</p>
+    <p class="hint">Pick a piece or an exercise to play along with. Classical pieces are complete, from free Mutopia Project scores (right-hand melody). Pieces marked <b>both hands</b> follow both hands.</p>
+    <div class="sheetfilters">
+      <div class="seg" role="radiogroup" aria-label="Songs or exercises">
+        <input type="radio" name="libkind" id="lk-song" value="song" checked><label for="lk-song">Songs</label>
+        <input type="radio" name="libkind" id="lk-exercise" value="exercise"><label for="lk-exercise">Exercises</label>
+      </div>
+      <div class="seg" role="radiogroup" aria-label="Level">
+        <input type="radio" name="liblevel" id="ll-all" value="all" checked><label for="ll-all">All</label>
+        <input type="radio" name="liblevel" id="ll-beginner" value="beginner"><label for="ll-beginner">Beginner</label>
+        <input type="radio" name="liblevel" id="ll-intermediate" value="intermediate"><label for="ll-intermediate">Middle</label>
+        <input type="radio" name="liblevel" id="ll-advanced" value="advanced"><label for="ll-advanced">Advanced</label>
+      </div>
+    </div>
     <div class="sheettools">
       <label class="sr" for="songSearch">Find a piece</label>
       <input id="songSearch" type="search" placeholder="Find a piece or composer" autocomplete="off">

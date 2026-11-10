@@ -61,11 +61,29 @@
   function buildLibrary() {
     SONGS = [
       ...mySongs.map((x) => ({ title: x.title, composer: "", notes: x.notes, mine: true })),
-      ...fullPieces.map((x) => ({ title: x.title, composer: x.composer, notes: x.notes, beats: x.beats, chords: x.chords, bpm: x.bpm })),
-      ...LIBRARY.filter((x) => !x.mine && !x.title.includes(" - ") && !fullPieces.some((f) => f.title === x.title))
-        .map((x) => ({ title: x.title, composer: "", notes: x.full })),
+      ...fullPieces.map((x) => ({ title: x.title, composer: x.composer, notes: x.notes, beats: x.beats, chords: x.chords, bpm: x.bpm,
+        fingers: x.fingers, kind: x.kind || "song", level: x.level || levelOf(x), tip: x.tip, hands: x.hands || (x.chords ? "both" : "right") })),
+      ...LIBRARY.filter((x) => !x.mine && !x.title.includes(" - ") && x.title !== "Brahms' Lullaby" /* songs.json has the whole piece */ && !fullPieces.some((f) => f.title === x.title))
+        .map((x) => ({ title: x.title, composer: "", notes: x.full, kind: "song", level: "beginner", hands: "right" })),
     ];
     SONGS.forEach((x) => { x.key = (x.mine ? "mine:" : "") + x.title + (x.composer ? " - " + x.composer : ""); });
+  }
+  // How hard each piece in songs.json / chords.json is (Sham, 2026-11-10: separate songs by difficulty).
+  // lessons.json carries its own level; anything unknown is judged by length.
+  const LEVELS = {
+    "Lullaby": "beginner",
+    "Fur Elise": "intermediate", "Minuet in G": "intermediate", "Prelude in C (Well-Tempered Clavier)": "intermediate",
+    "Gymnopedie No. 1": "intermediate", "Prelude Op. 28 No. 4": "intermediate", "Canon in D": "intermediate",
+    "Air on the G String": "intermediate", "Piano Sonata No. 16 (K. 545), 1st movement": "intermediate",
+    "Moonlight Sonata, 1st movement": "intermediate", "Moody Wind (chords)": "intermediate",
+    "Rondo alla Turca": "advanced", "Eine kleine Nachtmusik, 1st movement": "advanced", "Invention No. 1": "advanced",
+    "Toccata and Fugue in D minor": "advanced", "Clair de Lune": "advanced", "Arabesque No. 1": "advanced",
+    "In the Hall of the Mountain King": "advanced", "The Entertainer": "advanced",
+  };
+  function levelOf(x) {
+    if (LEVELS[x.title]) return LEVELS[x.title];
+    const n = (x.notes || []).length;
+    return n <= 80 ? "beginner" : n <= 400 ? "intermediate" : "advanced";
   }
   buildLibrary();
   // Private songs: private.json is encrypted (AES-GCM, key from a passphrase via PBKDF2), so only a
@@ -88,10 +106,11 @@
     if (!pass || !window.crypto || !crypto.subtle) return Promise.resolve([]);
     return fetch("private.json").then((r) => (r.ok ? r.json() : null)).then((box) => (box ? unseal(box, pass) : [])).catch(() => []);
   }
-  // songs.json: classical pieces note by note; chords.json: songs played chord by chord
-  Promise.all([...["songs.json", "chords.json"].map((f) => fetch(f).then((r) => (r.ok ? r.json() : [])).catch(() => [])), privateSongs()])
-    .then(([pieces, chordSongs, mine]) => {
-      fullPieces = [...mine, ...pieces, ...chordSongs];
+  // songs.json: classical pieces note by note; chords.json: songs played chord by chord; lessons.json:
+  // exercises and easy songs, some for both hands (built by tools/make_lessons.js)
+  Promise.all([...["songs.json", "chords.json", "lessons.json"].map((f) => fetch(f).then((r) => (r.ok ? r.json() : [])).catch(() => [])), privateSongs()])
+    .then(([pieces, chordSongs, lessons, mine]) => {
+      fullPieces = [...mine, ...lessons, ...pieces, ...chordSongs];
       buildLibrary();
       if (!$("songs").hidden) buildSongList($("songSearch").value);
     });
@@ -259,7 +278,7 @@
     const p = state.practice, n = p.song.notes;
     if (p.pos >= n.length) return;
     let step = -1;
-    for (let d = 0; d < 2 && step < 0; d++) {
+    for (let d = 0; d < (p.song.chords ? 1 : 2) && step < 0; d++) {
       if (p.pos + d < n.length && notes.some((m) => pcEq(m, n[p.pos + d]))) step = d;
     }
     if (step < 0) return;
@@ -279,7 +298,7 @@
       const done = p.pos >= n.length;
       return {
         title: p.song.title + (p.song.composer ? " - " + p.song.composer : ""),
-        at: p.pos, of: n.length, done, chord: true,
+        at: p.pos, of: n.length, done, chord: true, unit: c.every((x) => x.name) ? "chord" : "step",
         next: done ? [] : now.keys.slice(), fingers: done ? [] : now.fingers.slice(),
         names: c.slice(p.pos, p.pos + 4).map((x) => x.name), section: done ? "" : now.section,
         steps: c.slice(p.pos, p.pos + 4).map((x) => x.keys),
@@ -485,8 +504,10 @@
   function practiceHear(now, sr, quiet) {
     const p = state.practice, n = p.song.notes;
     if (p.pos >= n.length || !analyser) return;
-    const chord = p.song.chords ? p.song.chords[p.pos] : null;
-    const watch = chord ? [...new Set(chord.keys)] : [...new Set(n.slice(p.pos, p.pos + 4))];
+    // a step of a chord or two-hand song with just one key is heard like a melody note (more reliable)
+    const stepNow = p.song.chords ? p.song.chords[p.pos] : null;
+    const chord = stepNow && new Set(stepNow.keys).size > 1 ? stepNow : null;
+    const watch = chord ? [...new Set(chord.keys)] : stepNow ? [stepNow.keys[0]] : [...new Set(n.slice(p.pos, p.pos + 4))];
     const keysNow = new Set();
     for (const m of watch) keysNow.add(m - 1).add(m).add(m + 1);
     const level = new Map(), rise = new Map(), base = new Map(), lowUp = new Map();
@@ -520,7 +541,8 @@
       if (!struck) return;
       const ch = chroma(sr), top = Math.max(...ch);
       const pcs = [...new Set(chord.keys.map((m) => m % 12))];
-      const prev = new Set(p.pos > 0 ? p.song.chords[p.pos - 1].keys.map((m) => m % 12) : []);
+      // still ringing: the step before, and in a two-hand piece the one before that (a held bass note)
+      const prev = new Set(p.song.chords.slice(Math.max(0, p.pos - (p.song.hands === "both" ? 2 : 1)), p.pos).flatMap((c) => c.keys.map((m) => m % 12)));
       const got = pcs.filter((pc) => ch[pc] >= 0.25 * top).length;
       const wrong = ch.some((v, pc) => v >= 0.6 * top && !pcs.includes(pc) && !prev.has(pc));
       if (wrong || got < (pcs.length <= 3 ? pcs.length : pcs.length - 1)) return;
@@ -530,7 +552,7 @@
       return;
     }
     let sounding = null;
-    for (let d = 0; d < 2; d++) {
+    for (let d = 0; d < (p.song.chords ? 1 : 2); d++) { // no skipping ahead between steps of a chord song
       const want = n[p.pos + d];
       if (want === undefined) break;
       const q = hear.pend.get(want);
@@ -655,39 +677,52 @@
     $("songSearch").value = "";
   }
   function closeSongs() { $("songs").hidden = true; }
+  // The list: Songs or Exercises, filtered by level, grouped Beginner / Middle / Advanced (Sham, 2026-11-10).
+  // Searching looks through everything. My songs always come first.
+  const LEVEL_NAMES = { beginner: "Beginner", intermediate: "Middle", advanced: "Advanced" };
+  let libKind = store.get("libKind", "song"), libLevel = store.get("libLevel", "all");
   function buildSongList(filter = "") {
     const list = $("songList");
     list.textContent = "";
     const groups = new Map();
     const q = filter.trim().toLowerCase();
+    const order = ["My songs", "Beginner", "Middle", "Advanced"];
+    order.forEach((g) => groups.set(g, []));
     for (const s of SONGS) {
-      if (q && !(s.title + " " + s.composer).toLowerCase().includes(q)) continue;
-      const g = s.mine ? "My songs" : s.composer || "Traditional and folk";
-      if (!groups.has(g)) groups.set(g, []);
-      groups.get(g).push({ s, name: s.title });
+      if (q) { if (!(s.title + " " + s.composer).toLowerCase().includes(q)) continue; }
+      else if (!s.mine && ((s.kind || "song") !== libKind || (libLevel !== "all" && s.level !== libLevel))) continue;
+      if (s.mine && !q && libKind !== "song") continue;
+      groups.get(s.mine ? "My songs" : LEVEL_NAMES[s.level] || "Middle").push(s);
     }
-    const order = [...groups.keys()].sort((a, b) => (a === "My songs" ? -1 : b === "My songs" ? 1 : a === "Traditional and folk" ? 1 : b === "Traditional and folk" ? -1 : a.localeCompare(b)));
-    if (!order.length) {
-      const p = document.createElement("p");
-      p.className = "hint";
-      p.textContent = "No piece matches that.";
-      list.append(p);
-    }
+    let any = false;
     for (const g of order) {
+      const items = groups.get(g);
+      if (!items.length) continue;
+      any = true;
       const h = document.createElement("h3");
       h.textContent = g;
       list.append(h);
-      for (const { s, name } of groups.get(g)) {
+      // exercises keep their written order (they build on each other); songs: both-hands versions next to the tune
+      if (libKind === "song" && !q) items.sort((a, b) => a.title.localeCompare(b.title));
+      for (const s of items) {
         const row = document.createElement("div");
         row.className = "songrow";
         const b = document.createElement("button");
         b.type = "button";
         b.className = "songbtn";
-        b.innerHTML = "";
         const t = document.createElement("span");
-        t.textContent = name;
+        const name = document.createElement("b");
+        if (!s.mine) { const dot = document.createElement("i"); dot.className = "lvl " + s.level; name.append(dot); }
+        name.append(s.title);
+        if (s.hands === "both") { const bh = document.createElement("span"); bh.className = "both"; bh.textContent = "both hands"; name.append(bh); }
+        if (s.hands === "left") { const bh = document.createElement("span"); bh.className = "both"; bh.textContent = "left hand"; name.append(bh); }
+        t.append(name);
+        const sub = document.createElement("span");
+        sub.className = "tip";
+        sub.textContent = s.tip || (s.composer && s.composer !== "Exercise" ? s.composer : "");
+        if (sub.textContent) t.append(sub);
         const n = document.createElement("small");
-        n.textContent = `${s.notes.length} ${s.chords ? "chords" : "notes"}`;
+        n.textContent = `${s.notes.length} ${s.chords ? (s.hands === "both" && !s.chords.some((c) => c.name) ? "steps" : "chords") : "notes"}`;
         b.append(t, n);
         b.addEventListener("click", () => practise(s.key));
         row.append(b);
@@ -696,7 +731,7 @@
           del.type = "button";
           del.className = "ghost delbtn";
           del.textContent = "Delete";
-          del.setAttribute("aria-label", "Delete " + name);
+          del.setAttribute("aria-label", "Delete " + s.title);
           del.addEventListener("click", () => {
             if (del.dataset.armed !== "1") { del.dataset.armed = "1"; del.textContent = "Sure?"; return; }
             mySongs = mySongs.filter((x) => x.title !== s.title);
@@ -709,7 +744,21 @@
         list.append(row);
       }
     }
+    if (!any) {
+      const p = document.createElement("p");
+      p.className = "hint";
+      p.textContent = q ? "No piece matches that." : "Nothing at this level yet.";
+      list.append(p);
+    }
   }
+  document.querySelectorAll('input[name="libkind"]').forEach((r) => {
+    r.checked = r.value === libKind;
+    r.addEventListener("change", () => { libKind = r.value; store.set("libKind", libKind); buildSongList($("songSearch").value); });
+  });
+  document.querySelectorAll('input[name="liblevel"]').forEach((r) => {
+    r.checked = r.value === libLevel;
+    r.addEventListener("change", () => { libLevel = r.value; store.set("libLevel", libLevel); buildSongList($("songSearch").value); });
+  });
   function startRecording() {
     clearAll("");
     state.recording = [];
@@ -803,7 +852,7 @@
   function renderSong() {
     const box = $("song");
     const f = state.follow;
-    box.querySelectorAll(".title,.chips").forEach((n) => n.remove());
+    box.querySelectorAll(".title,.chips,.nowtip").forEach((n) => n.remove());
     const rec = $("rec");
     rec.hidden = !state.recording;
     if (state.recording) {
@@ -822,9 +871,16 @@
     title.textContent = name;
     const small = document.createElement("small");
     small.textContent = (composer ? composer + " · " : "") + (f.done ? "the end"
-      : f.chord ? `${f.section} · chord ${f.at + 1} of ${f.of}` : "note " + (f.at + 1) + " of " + f.of);
+      : f.chord ? `${f.section ? f.section + " · " : ""}${f.unit} ${f.at + 1} of ${f.of}` : "note " + (f.at + 1) + " of " + f.of);
     title.append(small);
     box.append(title);
+    // an exercise's tip: what to watch for
+    if (state.practice && state.practice.song.tip && !f.done) {
+      const tip = document.createElement("p");
+      tip.className = "nowtip";
+      tip.textContent = state.practice.song.tip;
+      box.append(tip);
+    }
     const lock = document.createElement("div");
     lock.className = "chips lockline";
     if (state.practice) {
@@ -1001,14 +1057,20 @@
     const show = !!(state.practice && f && f.fingers && f.fingers.length && keyNums === "finger" && !cal);
     if (!show) { handSvg.textContent = ""; return; }
     const H = kbd.clientHeight, w = keyW;
-    const thumb = Math.round(whiteIdx.get(f.next[0]) - (f.fingers[0] - 1));
+    // the left hand is a mirror image: its thumb is on the right (left-hand exercises, and the left
+    // hand's turn in a two-hand piece)
+    const song = state.practice.song;
+    const lefty = song.hands === "left" || (song.hands === "both" && isLeft(f.next[0]));
+    const dir = lefty ? -1 : 1;
+    const thumb = Math.round(whiteIdx.get(f.next[0]) - dir * (f.fingers[0] - 1));
     const tips = [null];
-    for (let i = 1; i <= 5; i++) tips.push({ x: (thumb + i - 1) * w + w / 2, black: false });
+    for (let i = 1; i <= 5; i++) tips.push({ x: (thumb + dir * (i - 1)) * w + w / 2, black: false });
     const placed = new Set();
     f.next.forEach((m, j) => {
       const fj = f.fingers[j];
       if (placed.has(fj) || !keys.has(m)) return;
-      if (Math.abs(whiteIdx.get(m) - (thumb + fj - 1)) > 1.01) return; // outside this hand position
+      if (song.hands === "both" && f.chord && isLeft(m) !== lefty) return; // the other hand's key
+      if (Math.abs(whiteIdx.get(m) - (thumb + dir * (fj - 1))) > 1.01) return; // outside this hand position
       const el = keys.get(m);
       tips[fj] = { x: el.offsetLeft + el.offsetWidth / 2, black: IS_BLACK[m % 12] === 1 };
       placed.add(fj);
@@ -1024,7 +1086,7 @@
     for (let i = 1; i <= 5; i++) {
       const t = tips[i], x = t.x - x0;
       const y = t.black ? H * 0.36 : H * 0.56;
-      const next = f.chord ? f.fingers.some((fi, j) => fi === i && !isLeft(f.next[j])) : f.fingers[0] === i;
+      const next = f.chord ? f.fingers.some((fi, j) => fi === i && isLeft(f.next[j]) === lefty) : f.fingers[0] === i;
       parts.push(`<line x1="${x}" y1="${palmTop + palmH - 2}" x2="${x}" y2="${y}" stroke="${FINGER_COLORS[i]}" stroke-width="${Math.max(3, r * 0.55)}" stroke-linecap="round"/>`);
       parts.push(`<circle cx="${x}" cy="${y}" r="${next ? r + 2 : r}" fill="${FINGER_COLORS[i]}" stroke="#fff" stroke-width="${next ? 2.5 : 1.5}"/>`);
       parts.push(`<text x="${x}" y="${y}" dy="0.35em" font-size="${Math.round(r * 1.15)}">${i}</text>`);

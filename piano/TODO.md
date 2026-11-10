@@ -80,6 +80,14 @@ Live app: https://mrboby1.github.io/sham/piano/
 29. **Can't reach the Ear tab from the Piano page held upright** (Sham, 2026-11-10): the "Tuned to your
     piano" badge squeezed the tabs until "Ear" was cut off. *(done 2026-11-10: the tabs keep their full
     size and the badge moves to its own line)*
+30. **"Improve the site as you see fit"** (Sham, 2026-11-10, while away): beginner exercises, beginner
+    songs, separate difficulty levels for songs and exercises; "remember I have both hands".
+    Restore point before the changes: git tag `restore-2026-11-10` in the publish repo.
+    *(done 2026-11-10: the Songs list has Songs / Exercises and All / Beginner / Middle / Advanced, with a
+    coloured dot per level. 20 exercises (five-finger positions, hands separately and together, first
+    chords, scales, arpeggio, Hanon, chromatic) and 14 easy songs with rhythm, 3 of them for both hands; 9 exercises are for both hands.
+    Play-along now follows both hands: notes played together are one step, and the hand picture turns
+    into a left hand for the left hand's notes. Source: tools/make_lessons.js -> lessons.json)*
 
 ## Done
 

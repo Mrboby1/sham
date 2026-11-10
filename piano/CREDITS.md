@@ -33,3 +33,9 @@ Only the chord progression is stored (no melody, no lyrics); the piano voicings 
 | Song | By | Chord chart |
 |---|---|---|
 | Moody Wind | Anthony Lazaro | https://www.cifraclub.com/anthony-lazaro/moody-wind/ |
+
+## Exercises and easy songs (lessons.json)
+
+Written for this app by `tools/make_lessons.js`: five-finger positions, scales, arpeggios, Hanon No. 1
+(C.-L. Hanon, 1873, public domain) and traditional or public-domain tunes (Hot Cross Buns, Lightly Row,
+Yankee Doodle, Jingle Bells by J. L. Pierpont 1857, Ode to Joy by Beethoven 1824, and others).
