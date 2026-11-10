@@ -89,7 +89,9 @@ Live app: https://mrboby1.github.io/sham/piano/
     Play-along now follows both hands: notes played together are one step, and the hand picture turns
     into a left hand for the left hand's notes. Source: tools/make_lessons.js -> lessons.json)*
 31. **Michael Burry buying Alibaba (and JD.com?), Chinese tech; and shorting NVDA** (Sham, 2026-11-10):
-    check the facts, what to do right now, and the risk.
+    check the facts, what to do right now, and the risk. *(answered in Telegram 2026-11-10: Burry sold all his
+    Alibaba in Q2 and moved it into JD; don't short NVDA stock right after a 10% scandal drop with earnings
+    next week; at most a small put spread, and JD only after its Nov 12 earnings or in halves)*
 
 ## Done
 
