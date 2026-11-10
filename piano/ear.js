@@ -13,7 +13,6 @@
   const SOLFEGE = ["Do", "Do♯", "Re", "Re♯", "Mi", "Fa", "Fa♯", "Sol", "Sol♯", "La", "La♯", "Si"];
   const IS_BLACK = [0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0];
   const LETTER_STEP = [0, 0, 1, 1, 2, 3, 3, 4, 4, 5, 5, 6];
-  const DECK_SIZE = 12;
   const KBD_LO = 48, KBD_HI = 84; // C3 to C6 on screen
 
   const $ = (id) => document.getElementById(id);
@@ -126,13 +125,18 @@
     do { m = pool[rand(pool.length)]; } while (prev && prev.target === m && pool.length > 1);
     return { type, target: m, misses: 0, done: false, shown: false };
   }
+  // The deck never runs out (Sham, 2026-11-10): the next card is dealt when it's turned. The games
+  // come from a shuffled bag, so each one turns up equally often.
+  let bag = [];
+  function nextType() {
+    if (!bag.length) {
+      bag = (games.length ? games : ["read", "echo", "melody"]).slice();
+      for (let i = bag.length - 1; i > 0; i--) { const j = rand(i + 1); [bag[i], bag[j]] = [bag[j], bag[i]]; }
+    }
+    return bag.pop();
+  }
   function newDeck() {
-    const types = games.length ? games : ["read", "echo", "melody"];
-    const list = [];
-    for (let i = 0; i < DECK_SIZE; i++) list.push(types[i % types.length]);
-    for (let i = list.length - 1; i > 0; i--) { const j = rand(i + 1); [list[i], list[j]] = [list[j], list[i]]; }
-    deck = [];
-    list.forEach((t) => deck.push(makeCard(t, deck[deck.length - 1])));
+    deck = []; bag = [];
     at = -1; right = 0;
     turn();
   }
@@ -144,6 +148,7 @@
     const el = $("card");
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const swap = () => {
+      if (at + 1 >= deck.length) deck.push(makeCard(nextType(), deck[deck.length - 1]));
       at++;
       det.armed = false;
       drawCard();
@@ -189,14 +194,14 @@
     el.classList.remove("ok");
     el.classList.toggle("has-face", !!c);
     showAnswer(null);
-    if (!c) { drawEnd(); return; }
+    if (!c) return;
     const k = KIND[c.type];
     let face = "";
     if (c.type === "read") face = staffSVG(c.target);
     else face = `<button class="ear" id="again" type="button" aria-label="Hear it again">${c.type === "echo" ? "♪" : "♫"}</button>`;
     const dots = c.type === "melody" ? `<div class="dots" id="dots">${c.seq.map(() => "<i></i>").join("")}</div>` : "";
     el.innerHTML = `
-      <div class="kind">${k.label} · card ${at + 1} of ${deck.length}</div>
+      <div class="kind">${k.label} · card ${at + 1}</div>
       <p class="ask">${k.ask}</p>
       <div class="face">${face}</div>
       ${dots}
@@ -214,23 +219,12 @@
     updateDots(c);
     updateScore();
   }
-  function drawEnd() {
-    const el = $("card");
-    el.innerHTML = `
-      <div class="kind">Deck done</div>
-      <p class="ask">You got</p>
-      <div class="big">${right} of ${deck.length}</div>
-      <p class="intro">right the first time.${right === deck.length ? " Perfect!" : ""}</p>
-      <div class="cardbtns"><button type="button" id="again2" class="go">New deck</button></div>`;
-    $("again2").onclick = () => newDeck();
-    updateScore();
-  }
   function drawIntro() {
     $("card").classList.remove("has-face");
     $("card").innerHTML = `
       <div class="kind">Recognise the sound</div>
-      <p class="ask">A deck of 12 cards</p>
-      <p class="intro">Each card asks you to <b>read a note</b>, <b>play back a note you hear</b> or <b>repeat a short melody</b>. Play on your piano: the app listens.</p>
+      <p class="ask">An endless deck</p>
+      <p class="intro">Each card asks you to <b>read a note</b>, <b>play back a note you hear</b> or <b>repeat a short melody</b>. Play on your piano (the app listens) or tap the keys. Any octave counts, except on Hard "Read" cards (the teal dot is middle ${nameOf(60)}, ${fullName(60)}).</p>
       <div class="cardbtns"><button type="button" id="start" class="go">Start</button></div>`;
     $("start").onclick = start;
   }
@@ -239,7 +233,7 @@
     [...$("dots").children].forEach((d, i) => { d.className = i < c.pos ? "done" : i === c.pos && !c.done ? "now" : ""; });
   }
   function updateScore() {
-    $("score").textContent = deck.length ? `${right} right · card ${Math.min(at + 1, deck.length)} of ${deck.length}` : `${DECK_SIZE} cards`;
+    $("score").textContent = deck.length ? `card ${at + 1} · ${right} right first time` : "";
   }
   function say(text, cls) { const s = $("say"); if (s) { s.textContent = text; s.className = "say" + (cls ? " " + cls : ""); } }
   function replay() {
@@ -285,22 +279,22 @@
     }
     if (c.type === "read" && pcEq(m, c.target)) { say(`Right note, wrong octave: you played ${fullName(m)}. Try the one on the staff.`, "bad"); el.classList.remove("shake"); void el.offsetWidth; el.classList.add("shake"); return; }
     if (c.type === "echo") {
-      // any octave counts, so measure from the nearest octave of the right note: -6..+6 half-steps
+      // any octave counts, so measure from the nearest octave of the right note: -6..+6 half-steps.
+      // Just an arrow, which way to go (Sham, 2026-11-10)
       const d = ((((m - c.target) % 12) + 18) % 12) - 6;
-      const n = Math.abs(d), steps = n === 1 ? "1 half-step" : `${n} half-steps`;
-      miss(c, d === -6 || d === 6
-        ? `That was ${nameOf(m)}: 6 half-steps off, the same distance up or down.`
-        : d > 0 ? `That was ${nameOf(m)}: too high ▲. Go down ${steps}.` : `That was ${nameOf(m)}: too low ▼. Go up ${steps}.`);
+      miss(c, d === 6 || d === -6 ? "▲▼" : d > 0 ? "▼" : "▲", "arrow", `${d > 0 ? "lower" : "higher"}`);
       return;
     }
     miss(c, `That was ${fullName(m)}. Try again.`);
   }
-  function miss(c, text) {
+  function miss(c, text, cls, label) {
     c.misses++;
     const el = $("card");
     el.classList.remove("shake"); void el.offsetWidth; el.classList.add("shake");
     if (c.misses >= 3 && !c.shown) { c.shown = true; reveal(c); return; }
-    say(text, "bad");
+    say(text, cls || "bad");
+    const sEl = $("say");
+    if (label && sEl) sEl.setAttribute("aria-label", label); else if (sEl) sEl.removeAttribute("aria-label");
   }
   function win(c, text) {
     c.done = true;
@@ -360,7 +354,7 @@
   // armed: a new card only takes a fresh key press (a strike, or a note after silence), so the last
   // answer still ringing on the piano doesn't answer the next card too.
   const det = { noise: 0.002, env: 0, held: null, cand: null, candN: 0, quiet: 0, lastT: 0, armed: true };
-  function showMsg(t) { const m = $("msg"); m.textContent = t; m.hidden = !t; }
+  function showMsg(t) { const m = $("msg"); m.textContent = t; m.hidden = !t; if (t) $("status").querySelector("span").textContent = "No mic: tap the keys"; }
   async function startMic() {
     if (stream) return true;
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {

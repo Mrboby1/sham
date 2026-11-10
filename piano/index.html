@@ -77,6 +77,13 @@ body {
 }
 .top, .middle { display: flex; flex-direction: column; gap: 12px; }
 header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+/* Upright phone: the page scrolls, so the header (Piano/Ear tabs) sticks to the top (Sham, 2026-11-10).
+   .top steps aside (display: contents) so the header can stick for the whole page, not just .top. */
+@media not all and (orientation: landscape) and (min-width: 560px) {
+  .top { display: contents; }
+  .top > * { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .top > header { position: sticky; top: 0; z-index: 30; background: var(--bg); padding-top: max(8px, env(safe-area-inset-top, 0px)); padding-bottom: 8px; margin-top: calc(-1 * max(10px, env(safe-area-inset-top, 0px))); }
+}
 h1 { margin: 0; font: 700 22px/1.1 var(--font-display); letter-spacing: 0.01em; }
 .status { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 6px; }
 .status i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); display: inline-block; }

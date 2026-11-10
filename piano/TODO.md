@@ -72,6 +72,11 @@ Live app: https://mrboby1.github.io/sham/piano/
     *(done 2026-11-10)*
 27. **Louder sound on the website** (Sham, 2026-11-10). *(done 2026-11-10: notes about 3x louder on the
     Piano tab and 2.5x on the Ear tab, with a soft limiter so chords don't crackle)*
+28. **Ear tab, round 2** (Sham, 2026-11-10): (a) the deck never ends, no 12-card limit; (b) a usable
+    sideways/wide layout; (c) high/low shown only as a ▲ or ▼ arrow (which way to go); (d) the Piano/Ear
+    tabs always on screen. *(done 2026-11-10: the Ear page fits one screen with no scrolling. Sideways, all
+    settings sit in one top row and the card gets the full width. On the Piano page the header with the
+    tabs sticks to the top while scrolling.)*
 
 ## Done
 

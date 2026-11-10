@@ -41,10 +41,11 @@
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-html, body { height: 100%; }
-body { margin: 0; overflow-x: hidden; background: var(--bg); color: var(--ink); font: 15px/1.4 var(--font-ui); -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; }
+/* one screen, no scrolling: the tabs stay at the top and the keys at the bottom */
+html, body { height: 100%; overflow: hidden; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.4 var(--font-ui); -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; }
 .app {
-  min-height: 100%; display: flex; flex-direction: column; gap: 12px;
+  height: 100vh; height: 100dvh; display: flex; flex-direction: column; gap: 10px; overflow: hidden;
   padding: max(10px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(12px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
 }
 header { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
@@ -55,6 +56,8 @@ h1 { margin: 0; font: 700 22px/1.1 var(--font-display); }
 .status { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 6px; }
 .status i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); display: inline-block; }
 .status.on i { background: var(--brass); box-shadow: 0 0 0 4px color-mix(in srgb, var(--brass) 25%, transparent); }
+.main { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 10px; }
+.side { display: flex; flex-direction: column; gap: 8px; flex: none; }
 .controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 button, .seg label, .chk label {
   font: 700 14px/1 var(--font-ui); color: var(--ink); background: var(--panel); border: 1px solid var(--line);
@@ -74,9 +77,9 @@ button:disabled { opacity: 0.45; cursor: default; }
 .msg { margin: 0; color: var(--danger); font-size: 14px; }
 
 /* The deck: a stack of card backs, the turned card on top. */
-.table { display: flex; flex-direction: column; align-items: center; gap: 10px; flex: 1 0 auto; justify-content: center; }
+.table { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; min-height: 0; justify-content: center; }
 .score { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; letter-spacing: 0.04em; }
-.deck { position: relative; width: min(calc(100% - 14px), 330px); height: clamp(300px, 50vh, 430px); margin-right: 14px; perspective: 1200px; }
+.deck { position: relative; width: min(calc(100% - 14px), 330px); flex: 1 1 auto; min-height: 200px; max-height: 430px; margin: 0 14px 10px 0; perspective: 1200px; }
 .back, .card { position: absolute; inset: 0; border-radius: 18px; }
 .back {
   background: repeating-linear-gradient(45deg, var(--back) 0 10px, var(--back-2) 10px 20px);
@@ -98,7 +101,7 @@ button:disabled { opacity: 0.45; cursor: default; }
 .kind { font: 700 12px/1.2 var(--font-ui); letter-spacing: 0.1em; text-transform: uppercase; color: var(--card-muted); }
 .ask { margin: 0; font: 700 22px/1.2 var(--font-display); }
 .face { flex: 1; display: flex; align-items: center; justify-content: center; width: 100%; min-height: 0; }
-.face svg { width: 100%; max-width: 280px; height: auto; }
+.face svg { width: 100%; max-width: 280px; height: auto; max-height: 100%; }
 .face .staffline { stroke: var(--card-ink); stroke-width: 1.2; }
 .face .clef { fill: var(--card-ink); font-family: "Bravura", "Apple Symbols", "Segoe UI Symbol", serif; }
 .face .head { fill: var(--card-ink); }
@@ -111,6 +114,8 @@ button:disabled { opacity: 0.45; cursor: default; }
 .say { min-height: 2.8em; margin: 0; font-size: 15px; font-weight: 700; color: var(--card-muted); }
 .say.ok { color: var(--ok); }
 .say.bad { color: #c0392b; }
+/* play back: just an arrow, which way to go */
+.say.arrow { font-size: 44px; line-height: 1; color: #c0392b; min-height: 0; }
 .cardbtns { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
 .cardbtns button { background: transparent; color: var(--card-ink); border-color: color-mix(in srgb, var(--card-ink) 25%, transparent); }
 .cardbtns button.go { background: var(--back); color: #fff; border-color: transparent; }
@@ -119,7 +124,7 @@ button:disabled { opacity: 0.45; cursor: default; }
 .intro b { color: var(--card-ink); }
 
 /* Keyboard: C3 to C6, tap a key to answer by touch. */
-.kbd { position: relative; height: 130px; flex: none; }
+.kbd { position: relative; height: 120px; flex: none; }
 .key { position: absolute; top: 0; display: flex; justify-content: center; align-items: flex-end; user-select: none; -webkit-user-select: none; touch-action: manipulation; font-size: 10px; font-weight: 700; }
 .white { height: 100%; background: linear-gradient(var(--ivory) 80%, #ece8de); border: 1px solid var(--ivory-edge); border-top: 0; border-radius: 0 0 6px 6px; color: #6b6658; padding-bottom: 6px; z-index: 1; }
 .black { height: 62%; background: linear-gradient(var(--ebony-top), var(--ebony) 12%); border: 1px solid #000; border-top: 0; border-radius: 0 0 4px 4px; color: #c8c4b8; padding-bottom: 4px; z-index: 2; }
@@ -133,29 +138,39 @@ button:disabled { opacity: 0.45; cursor: default; }
 .white.mid::before { content: ""; position: absolute; left: 50%; top: 58%; width: 8px; height: 8px; margin-left: -4px; border-radius: 50%; background: var(--teal); }
 .white.mid .nm { color: #0d5c52; }
 .hint { font-size: 13px; color: var(--card-muted); margin: 0; text-align: center; }
-.foot { font-size: 12px; color: var(--muted); margin: 0; }
 
 @media (orientation: landscape) and (min-width: 560px) {
   html, body { overflow: hidden; }
-  .app { height: 100%; min-height: 0; gap: 6px; padding-top: max(6px, env(safe-area-inset-top, 0px)); padding-bottom: max(6px, env(safe-area-inset-bottom, 0px)); }
+  .app { gap: 6px; padding-top: max(6px, env(safe-area-inset-top, 0px)); padding-bottom: max(6px, env(safe-area-inset-bottom, 0px)); }
   h1 { font-size: 18px; }
   .tabs a, button, .seg label, .chk label { min-height: 32px; padding: 6px 10px; font-size: 13px; }
-  .main { display: grid; grid-template-columns: minmax(220px, 300px) 1fr; gap: 16px; align-items: center; flex: 1; min-height: 0; }
-  .side { display: flex; flex-direction: column; gap: 8px; }
-  .table { gap: 4px; min-height: 0; }
-  .deck { width: min(calc(100% - 14px), 520px); height: calc(76vh - 108px); min-height: 160px; }
+  /* Sideways (Sham, 2026-11-10): one top row with the tabs and every setting, the card gets the
+     whole width in the middle, the keys along the bottom. */
+  .app { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto minmax(0, 1fr) auto; gap: 6px 12px; }
+  .main { display: contents; }
+  header { grid-column: 1; grid-row: 1; flex-wrap: nowrap; gap: 10px; }
+  h1 { display: none; }
+  .side { grid-column: 2; grid-row: 1; flex-direction: row; align-items: center; gap: 8px; overflow-x: auto; scrollbar-width: none; min-width: 0; }
+  .side > *, .controls > * { flex: none; }
+  .controls, .chk { flex-wrap: nowrap; }
+  .msg { display: none; } /* the mic status in the top row says "No mic" instead */
+  .seg label, .chk label { padding: 6px 8px; }
+  .table { grid-column: 1 / -1; grid-row: 2; gap: 4px; min-height: 0; }
+  .kbd { grid-column: 1 / -1; grid-row: 3; }
+  .deck { width: min(calc(100% - 14px), 680px); min-height: 0; max-height: none; margin-bottom: 8px; }
+  .cardbtns { flex-wrap: nowrap; }
   /* a wide card: the staff or the ear button on the left, the words and buttons on the right */
   .card.has-face { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto 1fr auto auto; gap: 4px 14px; padding: 10px 14px; align-items: center; }
   .card.has-face > .kind { grid-column: 2; grid-row: 1; }
-  .card.has-face > .ask { grid-column: 2; grid-row: 2; font-size: 19px; }
+  .card.has-face > .ask { grid-column: 2; grid-row: 2; font-size: 18px; }
   .card.has-face > .face { grid-column: 1; grid-row: 1 / span 5; height: 100%; }
   .card.has-face > .dots { grid-column: 2; grid-row: 3; }
   .card.has-face > .say { grid-column: 2; grid-row: 4; min-height: 0; font-size: 14px; }
   .card.has-face > .cardbtns { grid-column: 2; grid-row: 5; }
   .face svg { max-height: 100%; }
   .ear { width: 76px; height: 76px; font-size: 32px; }
-  .kbd { height: 24vh; min-height: 70px; }
-  .foot { display: none; }
+  .kbd { height: 26vh; height: 26dvh; min-height: 64px; max-height: 160px; }
+  .card.has-face > .say.arrow { font-size: 40px; line-height: 1; }
 }
 @media (prefers-reduced-motion: reduce) { .card { transition: none; } .card.shake { animation: none; } }
 </style>
@@ -190,11 +205,10 @@ button:disabled { opacity: 0.45; cursor: default; }
         <input type="checkbox" id="g-melody" value="melody" checked><label for="g-melody">♫ Melody</label>
       </div>
       <p class="msg" id="msg" hidden></p>
-      <p class="foot">Each deck has 12 cards. Play your answer on the piano, or tap the keys below. Any octave counts, except on Hard "Read" cards, which want the exact key (the teal dot is middle Do, Do4).</p>
     </div>
 
     <div class="table">
-      <div class="score" id="score" aria-live="polite">12 cards</div>
+      <div class="score" id="score" aria-live="polite"></div>
       <div class="deck" id="deck">
         <div class="back"></div><div class="back"></div><div class="back"></div>
         <div class="card" id="card" aria-live="polite"></div>
