@@ -274,6 +274,15 @@
       return;
     }
     if (c.type === "read" && pcEq(m, c.target)) { say(`Right note, wrong octave: you played ${fullName(m)}. Try the one on the staff.`, "bad"); el.classList.remove("shake"); void el.offsetWidth; el.classList.add("shake"); return; }
+    if (c.type === "echo") {
+      // any octave counts, so measure from the nearest octave of the right note: -6..+6 half-steps
+      const d = ((((m - c.target) % 12) + 18) % 12) - 6;
+      const n = Math.abs(d), steps = n === 1 ? "1 half-step" : `${n} half-steps`;
+      miss(c, d === -6 || d === 6
+        ? `That was ${nameOf(m)}: 6 half-steps off, the same distance up or down.`
+        : d > 0 ? `That was ${nameOf(m)}: too high ▲. Go down ${steps}.` : `That was ${nameOf(m)}: too low ▼. Go up ${steps}.`);
+      return;
+    }
     miss(c, `That was ${fullName(m)}. Try again.`);
   }
   function miss(c, text) {

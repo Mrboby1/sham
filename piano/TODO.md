@@ -66,6 +66,9 @@ Live app: https://mrboby1.github.io/sham/piano/
 25. **Ear tab: "how do I know which octave the note is?"** (Sham, 2026-11-10). Read cards on Easy and
     Medium accept the note in any octave and then name the exact key; Hard still asks for the exact key.
     Middle Do (Do4) is marked on the keys, and each card says where its clef sits relative to middle Do.
+    *(done 2026-11-10)*
+26. **"Play back" cards: say if what I played is too high or too low** (Sham, 2026-11-10). Since any
+    octave counts, it's measured from the nearest octave of the right note, e.g. "Too high: go down 2 half-steps".
 
 ## Done
 
