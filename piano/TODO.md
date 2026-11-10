@@ -108,6 +108,11 @@ Live app: https://mrboby1.github.io/sham/piano/
 36. **A list of actions: what to do with which stock** (Sham, 2026-11-10). *(sent in Telegram 2026-11-10: buy JD after
     Nov 12 earnings, GME shares, optional NVDA Nov 27 170/190 call spread, Signal's puts-on-a-bounce for NVDA, PLTR,
     CCL, LHA, LDO; don't short NVDA stock, skip Alibaba and short-dated GME calls)*
+37. **Two AIs debate each item on the action list (#36) and how to act; a third judges their mistakes and
+    gives the decision** (Sham, 2026-11-10). *(done 2026-11-10: bull and bear debated 2 rounds with web checks, the judge
+    decided: JD 1% now + up to 2% after earnings Nov 17; GME 1%; skip NVDA calls, PLTR, Lufthansa, Leonardo;
+    NVDA put spread only after earnings at $200-210; CCL put spread 0.5%. Caught: JD date was wrong, Cohen ~$97M not $200M,
+    GameStop's BTC is pledged, the 5 put bets were one correlated bet)*
 
 ## Done
 
