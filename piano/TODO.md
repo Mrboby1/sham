@@ -50,6 +50,10 @@ Live app: https://mrboby1.github.io/sham/piano/
     melody exists online (only chord charts). Needs an audio of the melody from Sham (a voice note of it
     played or sung, or the song file) to transcribe, or Sham records it with "Record my own".
 21. **6 facts about the Egyptian revolution** (2011). *(answered in Telegram 2026-11-09)*
+22. **Add "הילדה הכי יפה בגן" ("The prettiest girl in the kindergarten", Yehudit Ravitz)** (Sham, 2026-11-10).
+    A protected song: it can't go in the public library on the site, only into Sham's own songs.
+    Plan: Sham plays it in "Record my own", or sends a voice note that I turn into notes and add to Sham's
+    songs with a private link (needs a small "add this song" link feature; the same route serves #20).
 
 ## Done
 
