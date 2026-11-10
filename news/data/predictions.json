@@ -1,7 +1,7 @@
 {
- "updated": "2026-11-09",
+ "updated": "2026-11-10",
  "stats": {
-  "total": 26,
+  "total": 35,
   "resolved": 0,
   "right": 0,
   "brier": null,
@@ -11,7 +11,7 @@
   {
    "id": "2026-11-09-ukr-1",
    "statement": "The Abu Dhabi talks take place with Russian, Ukrainian and US delegations",
-   "probability": 0.85,
+   "probability": 0.95,
    "by": "2026-11-16",
    "markets": [
     {
@@ -25,12 +25,18 @@
    ],
    "story": "Ukraine: three-way talks in Abu Dhabi while both sides hit energy targets",
    "made": "2026-11-09",
-   "outcome": null
+   "outcome": null,
+   "history": [
+    {
+     "date": "2026-11-10",
+     "probability": 0.95
+    }
+   ]
   },
   {
    "id": "2026-11-09-iran-3",
    "statement": "At least one more US strike on Iranian territory or Iranian vessels is reported",
-   "probability": 0.6,
+   "probability": 0.4,
    "by": "2026-11-23",
    "markets": [
     {
@@ -45,12 +51,18 @@
    "watch": "Ship incidents in the Strait of Hormuz; Iran's \"rain down hell\" threats becoming actions.",
    "story": "US–Iran war: talks stalled, strikes continue",
    "made": "2026-11-09",
-   "outcome": null
+   "outcome": null,
+   "history": [
+    {
+     "date": "2026-11-10",
+     "probability": 0.4
+    }
+   ]
   },
   {
    "id": "2026-11-09-saudi-1",
    "statement": "The Houthis claim another strike on Saudi energy or financial infrastructure",
-   "probability": 0.7,
+   "probability": 0.75,
    "by": "2026-11-23",
    "markets": [
     {
@@ -65,7 +77,13 @@
    "watch": "The pace of airstrikes on Yemen; any Saudi–Houthi channel through Oman.",
    "story": "Houthis strike Riyadh's financial district and claim a hit on Abqaiq",
    "made": "2026-11-09",
-   "outcome": null
+   "outcome": null,
+   "history": [
+    {
+     "date": "2026-11-10",
+     "probability": 0.75
+    }
+   ]
   },
   {
    "id": "2026-11-09-ukr-3",
@@ -165,7 +183,7 @@
   {
    "id": "2026-11-09-iran-1",
    "statement": "A US–Iran negotiating round (direct, or mediated by Qatar) is publicly confirmed as having taken place",
-   "probability": 0.55,
+   "probability": 0.65,
    "by": "2026-11-30",
    "markets": [
     {
@@ -180,12 +198,18 @@
    "watch": "The outcome of the Qatar PM's White House meeting, and whether Iran's two-day proposal is accepted.",
    "story": "US–Iran war: talks stalled, strikes continue",
    "made": "2026-11-09",
-   "outcome": null
+   "outcome": null,
+   "history": [
+    {
+     "date": "2026-11-10",
+     "probability": 0.65
+    }
+   ]
   },
   {
    "id": "2026-11-09-nvda-2",
    "statement": "The Trump–Xi meeting at the APEC summit in China takes place",
-   "probability": 0.85,
+   "probability": 0.88,
    "by": "2026-11-30",
    "markets": [
     {
@@ -199,12 +223,18 @@
    ],
    "story": "Nvidia CEO Jensen Huang and the alleged Chinese spy",
    "made": "2026-11-09",
-   "outcome": null
+   "outcome": null,
+   "history": [
+    {
+     "date": "2026-11-10",
+     "probability": 0.88
+    }
+   ]
   },
   {
    "id": "2026-11-09-saudi-2",
    "statement": "Saudi Arabia or Aramco confirms a Houthi attack has cut oil output or exports",
-   "probability": 0.12,
+   "probability": 0.15,
    "by": "2026-11-30",
    "markets": [
     {
@@ -215,6 +245,109 @@
    "watch": "Satellite images or shipping data from Abqaiq and Ras Tanura.",
    "story": "Houthis strike Riyadh's financial district and claim a hit on Abqaiq",
    "made": "2026-11-09",
+   "outcome": null,
+   "history": [
+    {
+     "date": "2026-11-10",
+     "probability": 0.15
+    }
+   ]
+  },
+  {
+   "id": "2026-11-10-call-us_defence",
+   "type": "call",
+   "statement": "US defence stocks (ITA) closes lower than 71.67 on 2026-11-30",
+   "probability": 0.53,
+   "by": "2026-11-30",
+   "made": "2026-11-10",
+   "outcome": null,
+   "ticker": "ITA",
+   "from_price": 71.67,
+   "direction": "down",
+   "story": "US defence stocks (ITA)"
+  },
+  {
+   "id": "2026-11-10-chn-2",
+   "statement": "Trump, Xi and Putin hold a three-way meeting",
+   "probability": 0.35,
+   "by": "2026-11-30",
+   "markets": [
+    {
+     "asset": "Brent crude",
+     "if_true": "down (small)"
+    }
+   ],
+   "story": "China: a $1 trillion trade surplus before the Trump–Xi(–Putin) meeting",
+   "made": "2026-11-10",
+   "outcome": null
+  },
+  {
+   "id": "2026-11-10-iran-4",
+   "statement": "The US and Iran both publicly accept a ceasefire",
+   "probability": 0.3,
+   "by": "2026-11-30",
+   "markets": [
+    {
+     "asset": "Brent crude",
+     "if_true": "down"
+    },
+    {
+     "asset": "Airlines",
+     "if_true": "up"
+    },
+    {
+     "asset": "Defence stocks",
+     "if_true": "down (small)"
+    }
+   ],
+   "watch": "Statements from Tehran (Araghchi, the foreign ministry); a date for a signing in Doha.",
+   "story": "US–Iran war: Trump talks of an end, Qatar brings a ceasefire proposal",
+   "made": "2026-11-10",
+   "outcome": null
+  },
+  {
+   "id": "2026-11-10-nvda-4",
+   "statement": "Nvidia does worse than the S&P 500 from the 2026-11-09 close (178.67 vs 7,549.94) to the 2026-11-30 close",
+   "probability": 0.55,
+   "by": "2026-11-30",
+   "markets": [
+    {
+     "asset": "NVDA",
+     "if_true": "down vs market"
+    }
+   ],
+   "story": "Nvidia: the Huang affair widens to a chip-smuggling probe",
+   "made": "2026-11-10",
+   "outcome": null
+  },
+  {
+   "id": "2026-11-10-ukr-4",
+   "statement": "A Russia–Ukraine prisoner exchange is announced as agreed or carried out",
+   "probability": 0.6,
+   "by": "2026-11-30",
+   "markets": [
+    {
+     "asset": "European defence stocks",
+     "if_true": "neutral"
+    }
+   ],
+   "story": "Ukraine: US–Russia–Ukraine talks open in Abu Dhabi",
+   "made": "2026-11-10",
+   "outcome": null
+  },
+  {
+   "id": "2026-11-10-us-2",
+   "statement": "The House approves at least one article of impeachment against Hegseth",
+   "probability": 0.4,
+   "by": "2026-11-30",
+   "markets": [
+    {
+     "asset": "US defence stocks",
+     "if_true": "down (small)"
+    }
+   ],
+   "story": "Washington: House vote to impeach Hegseth over the Iran war",
+   "made": "2026-11-10",
    "outcome": null
   },
   {
@@ -233,7 +366,7 @@
   {
    "id": "2026-11-09-iran-2",
    "statement": "A US–Iran agreement is signed that ends the naval blockade",
-   "probability": 0.15,
+   "probability": 0.18,
    "by": "2026-12-31",
    "markets": [
     {
@@ -248,7 +381,13 @@
    "watch": "Movement on sequencing: partial sanctions relief in exchange for Hormuz access.",
    "story": "US–Iran war: talks stalled, strikes continue",
    "made": "2026-11-09",
-   "outcome": null
+   "outcome": null,
+   "history": [
+    {
+     "date": "2026-11-10",
+     "probability": 0.18
+    }
+   ]
   },
   {
    "id": "2026-11-09-isr-2",
@@ -268,7 +407,7 @@
   {
    "id": "2026-11-09-nvda-1",
    "statement": "Jensen Huang is still Nvidia's CEO",
-   "probability": 0.85,
+   "probability": 0.82,
    "by": "2026-12-31",
    "markets": [
     {
@@ -278,12 +417,18 @@
    ],
    "story": "Nvidia CEO Jensen Huang and the alleged Chinese spy",
    "made": "2026-11-09",
-   "outcome": null
+   "outcome": null,
+   "history": [
+    {
+     "date": "2026-11-10",
+     "probability": 0.82
+    }
+   ]
   },
   {
    "id": "2026-11-09-nvda-3",
    "statement": "A congressional hearing with Huang testifying is formally scheduled",
-   "probability": 0.3,
+   "probability": 0.35,
    "by": "2026-12-31",
    "markets": [
     {
@@ -293,7 +438,13 @@
    ],
    "story": "Nvidia CEO Jensen Huang and the alleged Chinese spy",
    "made": "2026-11-09",
-   "outcome": null
+   "outcome": null,
+   "history": [
+    {
+     "date": "2026-11-10",
+     "probability": 0.35
+    }
+   ]
   },
   {
    "id": "2026-11-09-t-ccl",
@@ -310,7 +461,11 @@
    ],
    "target": 25.5,
    "stop": 32.5,
-   "story": "Carnival"
+   "story": "Carnival",
+   "entered": {
+    "date": "2026-11-09",
+    "price": 30.809999465942383
+   }
   },
   {
    "id": "2026-11-09-t-ldo",
@@ -330,7 +485,7 @@
    "story": "Leonardo",
    "entered": {
     "date": "2026-11-09",
-    "price": 49.45000076293945
+    "price": 50.43000030517578
    }
   },
   {
@@ -351,7 +506,7 @@
    "story": "Lufthansa",
    "entered": {
     "date": "2026-11-09",
-    "price": 8.619999885559082
+    "price": 8.694000244140625
    }
   },
   {
@@ -395,6 +550,56 @@
    "watch": "Whether the outgoing Republican majority prefers a short stopgap that pushes fights into January.",
    "story": "US lame-duck Congress after the Democrats' midterm win",
    "made": "2026-11-09",
+   "outcome": null
+  },
+  {
+   "id": "2026-11-10-iran-5",
+   "statement": "The EU adopts sanctions on Iranian individuals or entities over the French supermarket cyberattacks",
+   "probability": 0.35,
+   "by": "2026-12-31",
+   "markets": [
+    {
+     "asset": "EUR/USD",
+     "if_true": "neutral"
+    }
+   ],
+   "watch": "The next EU foreign ministers' meeting; EU sanctions need all 27 governments.",
+   "story": "US–Iran war: Trump talks of an end, Qatar brings a ceasefire proposal",
+   "made": "2026-11-10",
+   "outcome": null
+  },
+  {
+   "id": "2026-11-10-us-3",
+   "statement": "Hegseth is no longer Defense Secretary (resigned, fired or removed)",
+   "probability": 0.2,
+   "by": "2026-12-31",
+   "markets": [
+    {
+     "asset": "US defence stocks",
+     "if_true": "neutral"
+    }
+   ],
+   "story": "Washington: House vote to impeach Hegseth over the Iran war",
+   "made": "2026-11-10",
+   "outcome": null
+  },
+  {
+   "id": "2026-11-10-us-4",
+   "statement": "The Senate passes the bipartisan permitting bill",
+   "probability": 0.7,
+   "by": "2026-12-31",
+   "markets": [
+    {
+     "asset": "Utilities and grid equipment",
+     "if_true": "up"
+    },
+    {
+     "asset": "Pipeline stocks",
+     "if_true": "up"
+    }
+   ],
+   "story": "Washington: House vote to impeach Hegseth over the Iran war",
+   "made": "2026-11-10",
    "outcome": null
   },
   {
