@@ -92,6 +92,10 @@ Live app: https://mrboby1.github.io/sham/piano/
     check the facts, what to do right now, and the risk. *(answered in Telegram 2026-11-10: Burry sold all his
     Alibaba in Q2 and moved it into JD; don't short NVDA stock right after a 10% scandal drop with earnings
     next week; at most a small put spread, and JD only after its Nov 12 earnings or in halves)*
+32. **GameStop calls?** (Sham, 2026-11-10): Ryan Cohen owns about 9% and runs it alone; about $9B cash including
+    4,710 bitcoin; if US stocks crash, GameStop's cash lets it profit. Do calls make sense, and how long could it take?
+    *(answered in Telegram 2026-11-10: about half of the "cash" is now $4.9B of eBay shares plus bitcoin, which fall
+    in a crash; calls lose in a crash and expire before a 2-5 year payoff; shares or small Jan 2028 calls instead)*
 
 ## Done
 
