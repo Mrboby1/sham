@@ -69,6 +69,9 @@ Live app: https://mrboby1.github.io/sham/piano/
     *(done 2026-11-10)*
 26. **"Play back" cards: say if what I played is too high or too low** (Sham, 2026-11-10). Since any
     octave counts, it's measured from the nearest octave of the right note, e.g. "Too high: go down 2 half-steps".
+    *(done 2026-11-10)*
+27. **Louder sound on the website** (Sham, 2026-11-10). *(done 2026-11-10: notes about 3x louder on the
+    Piano tab and 2.5x on the Ear tab, with a soft limiter so chords don't crackle)*
 
 ## Done
 

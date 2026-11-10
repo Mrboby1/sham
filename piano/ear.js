@@ -58,10 +58,20 @@
   // ---------------------------------------------------------------- sound
   let ctx = null;
   function audio() {
-    if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (!ctx) {
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      // louder for phone speakers (Sham, 2026-11-10): notes go in hot and a soft clipper (tanh)
+      // keeps chords from distorting harshly
+      master = ctx.createWaveShaper();
+      const n = 2048, curve = new Float32Array(n);
+      for (let i = 0; i < n; i++) { const x = (i / (n - 1)) * 2 - 1; curve[i] = Math.tanh(1.5 * x) / Math.tanh(1.5); }
+      master.curve = curve; master.oversample = "2x";
+      master.connect(ctx.destination);
+    }
     if (ctx.state === "suspended") ctx.resume();
     return ctx;
   }
+  let master = null;
   // A plucked-string tone like the main page's, but short, so the mic is free again soon.
   function tone(m, at, len) {
     const ac = audio();
@@ -69,9 +79,9 @@
     const f = midiToFreq(m) * Math.pow(2, offsetAt(m) / 1200); // in this piano's tuning
     const out = ac.createGain();
     out.gain.setValueAtTime(0.0001, t);
-    out.gain.exponentialRampToValueAtTime(0.3, t + 0.006);
+    out.gain.exponentialRampToValueAtTime(0.6, t + 0.006);
     out.gain.exponentialRampToValueAtTime(0.0001, t + len);
-    out.connect(ac.destination);
+    out.connect(master);
     [1, 0.5, 0.28, 0.14, 0.08, 0.04].forEach((a, i) => {
       const h = i + 1, fh = f * h * Math.sqrt(1 + 0.0004 * h * h);
       if (fh > 12000) return;

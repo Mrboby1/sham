@@ -167,10 +167,20 @@
   // ---------------------------------------------------------------- sound for tapped keys
   let ctx = null;
   function audio() {
-    if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (!ctx) {
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      // louder for phone speakers (Sham, 2026-11-10): notes go in hot and a soft clipper (tanh)
+      // keeps chords from distorting harshly
+      master = ctx.createWaveShaper();
+      const n = 2048, curve = new Float32Array(n);
+      for (let i = 0; i < n; i++) { const x = (i / (n - 1)) * 2 - 1; curve[i] = Math.tanh(1.5 * x) / Math.tanh(1.5); }
+      master.curve = curve; master.oversample = "2x";
+      master.connect(ctx.destination);
+    }
     if (ctx.state === "suspended") ctx.resume();
     return ctx;
   }
+  let master = null;
   function pluck(m) {
     const ac = audio();
     const t = ac.currentTime;
@@ -178,9 +188,9 @@
     const len = Math.max(0.6, 2.2 - (m - 21) / 50);
     const out = ac.createGain();
     out.gain.setValueAtTime(0.0001, t);
-    out.gain.exponentialRampToValueAtTime(0.22, t + 0.006);
+    out.gain.exponentialRampToValueAtTime(0.6, t + 0.006);
     out.gain.exponentialRampToValueAtTime(0.0001, t + len);
-    out.connect(ac.destination);
+    out.connect(master);
     [1, 0.5, 0.28, 0.14, 0.08, 0.04].forEach((a, i) => {
       const h = i + 1;
       const fh = f * h * Math.sqrt(1 + 0.0004 * h * h);
@@ -201,7 +211,7 @@
     if (!el) return;
     const m = Number(el.dataset.midi);
     pluck(m);
-    state.tapUntil = performance.now() + 600;
+    state.tapUntil = performance.now() + 1000; // the louder tap sound rings longer in the mic
     noteEvent([m]);
     flash([m]);
   });
@@ -1202,7 +1212,7 @@
       if (i >= tune.length) { demoTimer = 0; btn.textContent = "Demo"; return; }
       const m = tune[i++];
       pluck(m);
-      state.tapUntil = performance.now() + 600;
+      state.tapUntil = performance.now() + 1000; // the louder tap sound rings longer in the mic
       noteEvent([m]);
       flash([m]);
       demoTimer = setTimeout(step, 480);
