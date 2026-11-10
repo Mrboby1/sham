@@ -102,6 +102,9 @@ Live app: https://mrboby1.github.io/sham/piano/
 34. **NVDA calls two weeks out?** (Sham, 2026-11-10).
     *(answered in Telegram 2026-11-10: earnings Nov 17 after the close fall inside the 2 weeks; calls are expensive
     (panic + earnings) and lose that extra price after earnings; if at all, a Nov 27 call spread 170/190, about 1% of the account)*
+35. **What does the Signal forecast say about all this?** (Sham, 2026-11-10). *(answered in Telegram 2026-11-10:
+    NVDA 55% to lag the S&P by Nov 30, puts only on a bounce to 200-210 (not triggered yet); chips 55% up; Trump-Xi
+    meeting 88% = tailwind for JD; no GameStop forecast; no track record yet. Corrected my earlier "NVDA call came true")*
 
 ## Done
 
