@@ -82,6 +82,11 @@ header { display: flex; align-items: center; justify-content: space-between; gap
 @media not all and (orientation: landscape) and (min-width: 560px) {
   .top { display: contents; }
   .top > * { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  /* the tabs never shrink: with the "Tuned" badge showing, the header wraps instead (Sham, 2026-11-10) */
+  .top > header { flex-wrap: wrap; row-gap: 6px; }
+  .top > header h1 { white-space: nowrap; }
+  .top > header .tabs { flex: none; }
+  .top > header .tuned { order: 5; }
   .top > header { position: sticky; top: 0; z-index: 30; background: var(--bg); padding-top: max(8px, env(safe-area-inset-top, 0px)); padding-bottom: 8px; margin-top: calc(-1 * max(10px, env(safe-area-inset-top, 0px))); }
 }
 h1 { margin: 0; font: 700 22px/1.1 var(--font-display); letter-spacing: 0.01em; }

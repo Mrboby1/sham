@@ -77,6 +77,9 @@ Live app: https://mrboby1.github.io/sham/piano/
     tabs always on screen. *(done 2026-11-10: the Ear page fits one screen with no scrolling. Sideways, all
     settings sit in one top row and the card gets the full width. On the Piano page the header with the
     tabs sticks to the top while scrolling.)*
+29. **Can't reach the Ear tab from the Piano page held upright** (Sham, 2026-11-10): the "Tuned to your
+    piano" badge squeezed the tabs until "Ear" was cut off. *(done 2026-11-10: the tabs keep their full
+    size and the badge moves to its own line)*
 
 ## Done
 
