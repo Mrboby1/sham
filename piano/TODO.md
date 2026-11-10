@@ -96,6 +96,9 @@ Live app: https://mrboby1.github.io/sham/piano/
     4,710 bitcoin; if US stocks crash, GameStop's cash lets it profit. Do calls make sense, and how long could it take?
     *(answered in Telegram 2026-11-10: about half of the "cash" is now $4.9B of eBay shares plus bitcoin, which fall
     in a crash; calls lose in a crash and expire before a 2-5 year payoff; shares or small Jan 2028 calls instead)*
+33. **Big market moves expected tomorrow (Nov 11)?** (Sham, 2026-11-10): any reason for a big jump somewhere.
+    *(answered in Telegram 2026-11-10: nothing scheduled (Veterans Day, bonds closed, small earnings); the jump
+    risks are headlines: a US-Iran ceasefire or news on the Nvidia/Huang investigation; JD Thursday, NVDA next week)*
 
 ## Done
 
