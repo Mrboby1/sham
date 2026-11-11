@@ -68,25 +68,35 @@
   }
 
   // ---------------------------------------------------------------- microphone
-  let stream = null, analyser = null, buf = null, raf = 0, wake = null;
+  let stream = null, src = null, analyser = null, buf = null, raf = 0, wake = null;
+  let starting = false; // waiting for the microphone permission: a second tap must not start a second mic
   const det = { floor: 0.002, warm: 0, lastRun: 0 };
   async function start() {
+    if (starting || state.listening) return;
     showMsg("");
     audio(); // iPhone: create/resume the audio context inside the tap, before any await
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
       showMsg("This browser can't use the microphone here. Open the app from its https link in Safari, or upload a recording instead.");
       return;
     }
+    starting = true;
+    $("micText").textContent = "Starting…";
+    let s;
     try {
-      stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
+      s = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
     } catch (err) {
+      starting = false;
       showMsg(err && err.name === "NotAllowedError"
         ? "Microphone access is blocked. On iPhone: Settings > Safari > Microphone > Allow, then reload. Or upload a recording instead."
         : "Couldn't start the microphone (" + (err && err.message ? err.message : err) + ").");
+      render();
       return;
     }
+    if (!starting) { s.getTracks().forEach((t) => t.stop()); render(); return; } // Stop was tapped while waiting
+    starting = false;
+    stream = s;
     const a = audio();
-    const src = a.createMediaStreamSource(stream);
+    src = a.createMediaStreamSource(stream);
     analyser = a.createAnalyser();
     analyser.fftSize = 2048;
     analyser.smoothingTimeConstant = 0;
@@ -96,20 +106,28 @@
     state.listening = true;
     state.t0 = a.currentTime;
     Object.assign(det, { floor: 0.002, warm: 0, lastRun: 0 });
-    try { wake = await navigator.wakeLock.request("screen"); } catch (e) { wake = null; }
-    tick();
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(tick);
     render();
+    if (navigator.wakeLock) navigator.wakeLock.request("screen").then((w) => { if (state.listening) wake = w; else w.release(); }, () => {});
   }
   function stop() {
+    starting = false;
+    const was = state.listening;
     state.listening = false;
     cancelAnimationFrame(raf);
+    raf = 0;
+    if (src) { try { src.disconnect(); } catch (e) { /* already gone */ } src = null; }
     if (stream) stream.getTracks().forEach((t) => t.stop());
     stream = null;
     if (wake) { wake.release().catch(() => {}); wake = null; }
     state.live = null;
-    finish();
+    $("mic").style.removeProperty("--lvl");
+    if (was) finish(); else render();
   }
+  function toggle() { if (state.listening || starting) stop(); else start(); }
   function tick() {
+    if (!state.listening) return;
     raf = requestAnimationFrame(tick);
     analyser.getFloatTimeDomainData(buf);
     const sr = ac.sampleRate, t = ac.currentTime - state.t0;
@@ -119,7 +137,7 @@
     else det.floor += (lvl < det.floor ? 0.2 : 0.002) * (lvl - det.floor);
     const f = W.frame(buf, sr, Math.max(0.004, det.floor * 3));
     state.frames.push({ t, midi: f.midi, level: f.level });
-    document.documentElement.style.setProperty("--lvl", (1 + Math.min(0.25, f.level * 2)).toFixed(3));
+    $("mic").style.setProperty("--lvl", (1 + Math.min(0.25, f.level * 2)).toFixed(3));
     if (f.midi != null) {
       const off = state.result ? state.result.offset : 0;
       state.live = { midi: f.midi - off + shift() };
@@ -228,7 +246,7 @@
     const mic = $("mic");
     mic.classList.toggle("on", state.listening);
     mic.setAttribute("aria-label", state.listening ? "Stop listening" : "Start listening");
-    $("micText").textContent = state.listening ? "Stop" : "Whistle";
+    $("micText").textContent = state.listening ? "Stop" : starting ? "Starting…" : "Whistle";
     const s = shift();
     const oct = s / 12;
     $("octOut").textContent = (state.octave == null ? "Octave: auto" : "Octave") + (oct ? ` (${oct > 0 ? "+" : "−"}${Math.abs(oct)})` : "");
@@ -402,7 +420,7 @@
   }
 
   // ---------------------------------------------------------------- wiring
-  $("mic").addEventListener("click", () => (state.listening ? stop() : start()));
+  $("mic").addEventListener("click", toggle);
   $("file").addEventListener("change", (e) => upload(e.target.files && e.target.files[0]));
   $("play").addEventListener("click", play);
   $("copy").addEventListener("click", copy);
