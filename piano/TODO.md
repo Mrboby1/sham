@@ -167,6 +167,11 @@ Live app: https://mrboby1.github.io/sham/piano/
     draws them with those lengths. The note list shows each note's length as a bar. Tunes saved before this have no
     lengths: save them again)*
 
+48. **Whistle page still misreads: record a voice note while whistling and decipher that instead of live** (Sham,
+    2026-11-11). *(done 2026-11-11: the mic is also recorded; on Stop the whole recording is analysed offline, the same
+    way as an uploaded file, and replaces the live preview. New "My whistle" button plays the recording back to compare.
+    Tried shorter analysis windows for fast runs: no clear gain on Sham's Toccata, kept the 43 ms window)*
+
 ## Done
 
 - Whistle to Notes home page: whistle, hum or upload a recording, get clean piano notes, play, save and practise them
