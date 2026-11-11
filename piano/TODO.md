@@ -138,6 +138,9 @@ Live app: https://mrboby1.github.io/sham/piano/
     access.json, and Gabi restarting with start-sham-trader.ps1 -Voice. English voice only. Gabi asked lead.gibbs to do the Discord
     setup; request sent 2026-11-11)*
 
+42. **Postal code (מיקוד) for Golda Meir 32, Holon** (Sham, 2026-11-11). *(answered in Telegram 2026-11-11: 5845431, from the
+    Israel Post zip lookup)*
+
 ## Done
 
 - 88-key keyboard, listening through the mic, note names (C D E / Do Re Mi), grand staff
