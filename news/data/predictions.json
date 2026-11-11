@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-10",
+ "updated": "2026-11-11",
  "stats": {
-  "total": 35,
-  "resolved": 0,
-  "right": 0,
-  "brier": null,
+  "total": 38,
+  "resolved": 2,
+  "right": 2,
+  "brier": 0.033,
   "due": []
  },
  "predictions": [
@@ -25,18 +25,20 @@
    ],
    "story": "Ukraine: three-way talks in Abu Dhabi while both sides hit energy targets",
    "made": "2026-11-09",
-   "outcome": null,
+   "outcome": true,
    "history": [
     {
      "date": "2026-11-10",
      "probability": 0.95
     }
-   ]
+   ],
+   "evidence": "US-mediated trilateral talks with Russian and Ukrainian delegations opened in Abu Dhabi on Nov 10 and continued on Nov 11 (DW, SCMP, NPR, TASS, France 24).",
+   "resolved": "2026-11-11"
   },
   {
    "id": "2026-11-09-iran-3",
    "statement": "At least one more US strike on Iranian territory or Iranian vessels is reported",
-   "probability": 0.4,
+   "probability": 0.3,
    "by": "2026-11-23",
    "markets": [
     {
@@ -56,6 +58,10 @@
     {
      "date": "2026-11-10",
      "probability": 0.4
+    },
+    {
+     "date": "2026-11-11",
+     "probability": 0.3
     }
    ]
   },
@@ -77,13 +83,15 @@
    "watch": "The pace of airstrikes on Yemen; any Saudi–Houthi channel through Oman.",
    "story": "Houthis strike Riyadh's financial district and claim a hit on Abqaiq",
    "made": "2026-11-09",
-   "outcome": null,
+   "outcome": true,
    "history": [
     {
      "date": "2026-11-10",
      "probability": 0.75
     }
-   ]
+   ],
+   "evidence": "On Nov 10 the Houthis' military spokesman claimed four operations with ballistic missiles and drones on Riyadh airport and Saudi Aramco facilities (TASS).",
+   "resolved": "2026-11-11"
   },
   {
    "id": "2026-11-09-ukr-3",
@@ -98,6 +106,25 @@
    ],
    "story": "Ukraine: three-way talks in Abu Dhabi while both sides hit energy targets",
    "made": "2026-11-09",
+   "outcome": null
+  },
+  {
+   "id": "2026-11-11-saudi-3",
+   "statement": "The Houthis claim another strike on Saudi energy, airport or financial infrastructure",
+   "probability": 0.75,
+   "by": "2026-11-25",
+   "markets": [
+    {
+     "asset": "Brent crude",
+     "if_true": "up (small)"
+    },
+    {
+     "asset": "Saudi stocks (Tadawul)",
+     "if_true": "down"
+    }
+   ],
+   "story": "Houthis claim strikes on Riyadh airport and Aramco; the East-West pipeline hit again",
+   "made": "2026-11-11",
    "outcome": null
   },
   {
@@ -183,7 +210,7 @@
   {
    "id": "2026-11-09-iran-1",
    "statement": "A US–Iran negotiating round (direct, or mediated by Qatar) is publicly confirmed as having taken place",
-   "probability": 0.65,
+   "probability": 0.6,
    "by": "2026-11-30",
    "markets": [
     {
@@ -203,13 +230,17 @@
     {
      "date": "2026-11-10",
      "probability": 0.65
+    },
+    {
+     "date": "2026-11-11",
+     "probability": 0.6
     }
    ]
   },
   {
    "id": "2026-11-09-nvda-2",
    "statement": "The Trump–Xi meeting at the APEC summit in China takes place",
-   "probability": 0.88,
+   "probability": 0.85,
    "by": "2026-11-30",
    "markets": [
     {
@@ -228,6 +259,10 @@
     {
      "date": "2026-11-10",
      "probability": 0.88
+    },
+    {
+     "date": "2026-11-11",
+     "probability": 0.85
     }
    ]
   },
@@ -269,7 +304,7 @@
   {
    "id": "2026-11-10-chn-2",
    "statement": "Trump, Xi and Putin hold a three-way meeting",
-   "probability": 0.35,
+   "probability": 0.3,
    "by": "2026-11-30",
    "markets": [
     {
@@ -279,12 +314,18 @@
    ],
    "story": "China: a $1 trillion trade surplus before the Trump–Xi(–Putin) meeting",
    "made": "2026-11-10",
-   "outcome": null
+   "outcome": null,
+   "history": [
+    {
+     "date": "2026-11-11",
+     "probability": 0.3
+    }
+   ]
   },
   {
    "id": "2026-11-10-iran-4",
    "statement": "The US and Iran both publicly accept a ceasefire",
-   "probability": 0.3,
+   "probability": 0.25,
    "by": "2026-11-30",
    "markets": [
     {
@@ -303,7 +344,13 @@
    "watch": "Statements from Tehran (Araghchi, the foreign ministry); a date for a signing in Doha.",
    "story": "US–Iran war: Trump talks of an end, Qatar brings a ceasefire proposal",
    "made": "2026-11-10",
-   "outcome": null
+   "outcome": null,
+   "history": [
+    {
+     "date": "2026-11-11",
+     "probability": 0.25
+    }
+   ]
   },
   {
    "id": "2026-11-10-nvda-4",
@@ -323,7 +370,7 @@
   {
    "id": "2026-11-10-ukr-4",
    "statement": "A Russia–Ukraine prisoner exchange is announced as agreed or carried out",
-   "probability": 0.6,
+   "probability": 0.65,
    "by": "2026-11-30",
    "markets": [
     {
@@ -333,12 +380,18 @@
    ],
    "story": "Ukraine: US–Russia–Ukraine talks open in Abu Dhabi",
    "made": "2026-11-10",
-   "outcome": null
+   "outcome": null,
+   "history": [
+    {
+     "date": "2026-11-11",
+     "probability": 0.65
+    }
+   ]
   },
   {
    "id": "2026-11-10-us-2",
    "statement": "The House approves at least one article of impeachment against Hegseth",
-   "probability": 0.4,
+   "probability": 0.05,
    "by": "2026-11-30",
    "markets": [
     {
@@ -348,6 +401,31 @@
    ],
    "story": "Washington: House vote to impeach Hegseth over the Iran war",
    "made": "2026-11-10",
+   "outcome": null,
+   "history": [
+    {
+     "date": "2026-11-11",
+     "probability": 0.05
+    }
+   ]
+  },
+  {
+   "id": "2026-11-11-ukr-5",
+   "statement": "A further trilateral round (date announced or held) is confirmed after Abu Dhabi",
+   "probability": 0.6,
+   "by": "2026-12-15",
+   "markets": [
+    {
+     "asset": "European defence stocks",
+     "if_true": "down (small)"
+    },
+    {
+     "asset": "European gas (TTF)",
+     "if_true": "down (small)"
+    }
+   ],
+   "story": "Ukraine: the Abu Dhabi talks are \"productive\", but no ceasefire on the table",
+   "made": "2026-11-11",
    "outcome": null
   },
   {
@@ -366,7 +444,7 @@
   {
    "id": "2026-11-09-iran-2",
    "statement": "A US–Iran agreement is signed that ends the naval blockade",
-   "probability": 0.18,
+   "probability": 0.15,
    "by": "2026-12-31",
    "markets": [
     {
@@ -386,6 +464,10 @@
     {
      "date": "2026-11-10",
      "probability": 0.18
+    },
+    {
+     "date": "2026-11-11",
+     "probability": 0.15
     }
    ]
   },
@@ -407,7 +489,7 @@
   {
    "id": "2026-11-09-nvda-1",
    "statement": "Jensen Huang is still Nvidia's CEO",
-   "probability": 0.82,
+   "probability": 0.8,
    "by": "2026-12-31",
    "markets": [
     {
@@ -422,13 +504,17 @@
     {
      "date": "2026-11-10",
      "probability": 0.82
+    },
+    {
+     "date": "2026-11-11",
+     "probability": 0.8
     }
    ]
   },
   {
    "id": "2026-11-09-nvda-3",
    "statement": "A congressional hearing with Huang testifying is formally scheduled",
-   "probability": 0.35,
+   "probability": 0.4,
    "by": "2026-12-31",
    "markets": [
     {
@@ -443,6 +529,10 @@
     {
      "date": "2026-11-10",
      "probability": 0.35
+    },
+    {
+     "date": "2026-11-11",
+     "probability": 0.4
     }
    ]
   },
@@ -512,7 +602,7 @@
   {
    "id": "2026-11-09-ukr-2",
    "statement": "Russia and Ukraine both announce a general ceasefire",
-   "probability": 0.12,
+   "probability": 0.1,
    "by": "2026-12-31",
    "markets": [
     {
@@ -530,7 +620,13 @@
    ],
    "story": "Ukraine: three-way talks in Abu Dhabi while both sides hit energy targets",
    "made": "2026-11-09",
-   "outcome": null
+   "outcome": null,
+   "history": [
+    {
+     "date": "2026-11-11",
+     "probability": 0.1
+    }
+   ]
   },
   {
    "id": "2026-11-09-us-1",
@@ -571,7 +667,7 @@
   {
    "id": "2026-11-10-us-3",
    "statement": "Hegseth is no longer Defense Secretary (resigned, fired or removed)",
-   "probability": 0.2,
+   "probability": 0.12,
    "by": "2026-12-31",
    "markets": [
     {
@@ -581,12 +677,18 @@
    ],
    "story": "Washington: House vote to impeach Hegseth over the Iran war",
    "made": "2026-11-10",
-   "outcome": null
+   "outcome": null,
+   "history": [
+    {
+     "date": "2026-11-11",
+     "probability": 0.12
+    }
+   ]
   },
   {
    "id": "2026-11-10-us-4",
    "statement": "The Senate passes the bipartisan permitting bill",
-   "probability": 0.7,
+   "probability": 0.75,
    "by": "2026-12-31",
    "markets": [
     {
@@ -600,6 +702,32 @@
    ],
    "story": "Washington: House vote to impeach Hegseth over the Iran war",
    "made": "2026-11-10",
+   "outcome": null,
+   "history": [
+    {
+     "date": "2026-11-11",
+     "probability": 0.75
+    }
+   ]
+  },
+  {
+   "id": "2026-11-11-ai-1",
+   "statement": "Anthropic's IPO is priced above $78 a share (the top of the first range)",
+   "probability": 0.55,
+   "by": "2026-12-31",
+   "markets": [
+    {
+     "asset": "AI stocks",
+     "if_true": "up"
+    },
+    {
+     "asset": "NVDA",
+     "if_true": "up (small)"
+    }
+   ],
+   "watch": "Whether the range is raised (the FT reports bankers preparing a $1.5tn valuation).",
+   "story": "Nvidia: the Huang affair reaches the cabinet; the AI trade wobbles as Anthropic eyes a record IPO",
+   "made": "2026-11-11",
    "outcome": null
   },
   {
@@ -639,7 +767,7 @@
   {
    "id": "2026-11-09-isr-1",
    "statement": "An Eisenkot-led government is sworn in",
-   "probability": 0.45,
+   "probability": 0.47,
    "by": "2027-01-31",
    "markets": [
     {
@@ -653,7 +781,13 @@
    ],
    "story": "Israel: Eisenkot gets six weeks to replace Netanyahu",
    "made": "2026-11-09",
-   "outcome": null
+   "outcome": null,
+   "history": [
+    {
+     "date": "2026-11-11",
+     "probability": 0.47
+    }
+   ]
   }
  ]
 }

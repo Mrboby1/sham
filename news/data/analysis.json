@@ -1,76 +1,73 @@
 {
- "generated": "2026-11-10T08:00:12+02:00",
- "by": "lead.sham (Claude), from news/data/stories.json of 2026-11-10",
+ "generated": "2026-11-11T07:45:00+02:00",
+ "by": "lead.sham (Claude), from news/data/stories.json of 2026-11-11",
  "note": "Built only from headlines and outlet summaries of the last 48 hours. Probabilities are estimates, not certainties, and nothing here is financial advice.",
- "big_picture": "Trump is now signalling an end to the Iran war: after meeting Qatar's prime minister he spoke of \"positive momentum\", called the war \"effectively over\" militarily and said more strikes \"don't seem necessary\", while staying \"locked and loaded\". Qatar has delivered a ceasefire proposal. Oil kept falling (Brent about $92, −10% in a month) and chip stocks bounced hard, but Nvidia itself fell on new reports that it intervened in a US chip-smuggling probe. In Washington, a Republican (Massie) is forcing a House vote this week to impeach Defense Secretary Hegseth over the war, and some Republicans say it could pass. The Russia–Ukraine–US talks in Abu Dhabi start on 10–11 November, and the Trump–Xi(–Putin) meeting in China is next week. The Houthis are not part of Trump's de-escalation and keep hitting Saudi targets.",
+ "big_picture": "The Iran war is turning into a blockade and a shadow war: Rubio says major combat is no longer needed, while Iran lifts its missile-range limit and threats reach US officials and bases in Britain. Oil steadied (Brent about $92.5). The Houthis claim new strikes on Riyadh airport and Aramco. The Ukraine talks in Abu Dhabi are called productive, but a ceasefire is not on the table, and Ukrainian drones hit the Ust-Luga oil port. Nvidia fell another 5.5% to $168.89 as the Huang affair reaches the cabinet; it reports on Nov 17. In Washington the Hegseth impeachment was shelved 211–204. Signal's Carnival and Lufthansa put ideas reached their entry ranges (CCL $30.74, LHA €8.69); a ceasefire would hurt both.",
  "stories": [
   {
    "key": "iran",
-   "title": "US–Iran war: Trump talks of an end, Qatar brings a ceasefire proposal",
+   "title": "US–Iran: Rubio says no more major combat needed, while Iran's threats move west",
    "story_ids": [
-    "s8",
-    "s15",
-    "s18",
+    "s36",
+    "s7",
+    "s9",
+    "s3",
     "s26",
-    "s11",
-    "s2",
-    "s21"
+    "s32"
    ],
-   "reality": "The US is winding the war down after the midterm losses showed how unpopular it is: Trump calls it militarily \"effectively over\" and sees \"positive momentum\" after a 45-minute meeting with Qatar's prime minister, who delivered a ceasefire proposal. No deal exists yet, the naval blockade stays, and Trump keeps the threat of strikes. The conflict goes on at the edges: the US moved aircraft out of a second UK base over an Iranian threat, and France blamed Iran's Revolutionary Guards for a cyberattack on about 700 supermarkets' fridges and wants EU sanctions.",
+   "reality": "Washington is shifting from bombs to money: Rubio says \"major combat operations\" are no longer needed because the economic offensive and the naval blockade are doing the damage. Iran is not standing down: it lifted its self-imposed 2,000 km missile-range limit, the US moved more aircraft out of UK bases over an Iranian threat, Treasury Secretary Bessent was moved to a military base after alleged threats on his life, and US prosecutors charged three alleged Iranian operatives over plots including the RAF Fairford air base. France blames Iran for hacking supermarket fridges and weighs sanctions; Iran denies it. No answer from Tehran on Qatar's ceasefire proposal has been reported.",
    "agreed": [
-    "Trump and Qatar's prime minister both called their talks \"positive\"; Trump spoke of \"positive momentum toward an end to this conflict\".",
-    "Qatar delivered a ceasefire proposal (Al Jazeera, Middle East Eye).",
-    "Trump says further military action \"doesn't seem to be a very necessary thing\" but the US is \"locked and loaded\" if anything changes.",
-    "Rubio and Hegseth defend the war as \"necessary\", while admitting it is not popular.",
-    "France says IRGC hackers took over refrigeration controllers at around 700 retail sites last month; it summoned Iran's ambassador and will seek EU sanctions."
+    "Rubio, after the G7 in Paris: no need for major combat operations; economic pressure and the blockade are working (NYT, Breitbart, France 24).",
+    "The IRGC announced it lifted the 2,000 km limit on its ballistic missiles (RT, Al Jazeera).",
+    "The US moved military aircraft from a second British base over an Iranian threat (NBC, Fox News).",
+    "Bessent was moved from his home near Washington to a military base after alleged Iranian threats (NYT, CNBC, Jerusalem Post).",
+    "The US charged three alleged Iran-backed operatives over plots in Europe and the US, including RAF Fairford (BBC, DW, Al Jazeera)."
    ],
    "disputed": [
     {
-     "claim": "The war is ending soon",
+     "claim": "Iran was behind the cyberattack on French supermarket fridges",
      "for": [
-      "Trump (Bloomberg, Anadolu, Breitbart, FT)",
-      "Qatar's prime minister (The Hill)"
+      "France (NYT, CNBC)"
      ],
      "against": [
-      "Netanyahu, reportedly calling Trump every day to push for resuming the war (Times of Israel)",
-      "The US moving aircraft out of UK bases over an Iranian threat (WSJ via Times of Israel, TWZ)"
+      "Iran (BBC, NPR)"
      ],
-     "note": "Talk of an end is coming from Washington and Doha; nothing has been heard yet from Tehran on the ceasefire proposal."
+     "note": "France is pushing for EU sanctions; that needs all 27 governments."
     },
     {
-     "claim": "The Gulf states want the Hormuz blockade kept",
+     "claim": "The war is winding down",
      "for": [
-      "Jerusalem Post, citing Trump"
+      "Rubio and Trump: no major combat needed (NYT)"
      ],
      "against": [
-      "Trump to Reuters: Qatar and Saudi Arabia \"would rather see a peaceful solution\" (Middle East Eye, TASS)"
+      "Iran lifting its missile-range limit and the threats against US officials and bases (Al Jazeera, NYT)"
      ],
-     "note": "Both can be true: a ceasefire first, with the blockade as leverage for a later deal."
+     "note": "The fighting may be over while the conflict is not: a blockade plus a shadow war is the likely next phase."
     }
    ],
    "framing": [
     {
-     "who": "Bloomberg (US business)",
-     "how": "Trump is winding the war down because the midterms showed it is unpopular."
+     "who": "NYT / CNBC (US)",
+     "how": "Rubio's line that economic pressure replaces combat; threats to US officials."
     },
     {
-     "who": "Al Jazeera / Middle East Eye (Qatar-funded / pan-Arab)",
-     "how": "Qatar's mediation and its ceasefire proposal at the centre."
+     "who": "Al Jazeera / Middle East Eye",
+     "how": "Iran's missile-range move and the charges against Iranian operatives."
     },
     {
-     "who": "Times of Israel / Jerusalem Post (Israel)",
-     "how": "The remaining Iranian threat, and Netanyahu pushing to resume the war."
+     "who": "RT / TASS (Russia, state)",
+     "how": "Iran's new missile range and \"missile city\" as defiance."
     },
     {
-     "who": "TASS (Russia, state)",
-     "how": "Leads with \"US ready to strike Iran again\"."
+     "who": "Jerusalem Post / Fox News",
+     "how": "The Iranian threat to the West: aircraft moved, plots charged."
     }
    ],
    "predictions": [
     {
      "id": "2026-11-09-iran-1",
      "statement": "A US–Iran negotiating round (direct, or mediated by Qatar) is publicly confirmed as having taken place",
-     "probability": 0.65,
+     "probability": 0.6,
      "by": "2026-11-30",
      "markets": [
       {
@@ -87,7 +84,7 @@
     {
      "id": "2026-11-10-iran-4",
      "statement": "The US and Iran both publicly accept a ceasefire",
-     "probability": 0.3,
+     "probability": 0.25,
      "by": "2026-11-30",
      "markets": [
       {
@@ -102,30 +99,28 @@
        "asset": "Defence stocks",
        "if_true": "down (small)"
       }
-     ],
-     "watch": "Statements from Tehran (Araghchi, the foreign ministry); a date for a signing in Doha."
+     ]
     },
     {
      "id": "2026-11-09-iran-2",
      "statement": "A US–Iran agreement is signed that ends the naval blockade",
-     "probability": 0.18,
+     "probability": 0.15,
      "by": "2026-12-31",
      "markets": [
       {
        "asset": "Brent crude",
-       "if_true": "down sharply"
+       "if_true": "down"
       },
       {
-       "asset": "Tanker shipping stocks",
+       "asset": "Oil tanker stocks",
        "if_true": "down"
       }
-     ],
-     "watch": "Sequencing: a ceasefire may come first, with the blockade kept as leverage."
+     ]
     },
     {
      "id": "2026-11-09-iran-3",
      "statement": "At least one more US strike on Iranian territory or Iranian vessels is reported",
-     "probability": 0.4,
+     "probability": 0.3,
      "by": "2026-11-23",
      "markets": [
       {
@@ -133,11 +128,11 @@
        "if_true": "up"
       },
       {
-       "asset": "US defence stocks",
+       "asset": "Defence stocks",
        "if_true": "up"
       }
      ],
-     "watch": "Ship incidents in the Strait of Hormuz; Iranian action against US bases abroad."
+     "watch": "Rubio now says major combat is not needed, so lower than before."
     },
     {
      "id": "2026-11-10-iran-5",
@@ -156,44 +151,44 @@
   },
   {
    "key": "saudi",
-   "title": "Houthis keep hitting Saudi Arabia: Aramco tower, East-West pipeline",
+   "title": "Houthis claim strikes on Riyadh airport and Aramco; the East-West pipeline hit again",
    "story_ids": [
-    "s16"
+    "s19"
    ],
-   "reality": "The Houthis are not part of Trump's de-escalation. After damaging the Aramco tower in Riyadh, they hit the East-West pipeline (Saudi Arabia reported damage) and fired more missiles at Riyadh, which were intercepted. No official word on lost oil flow. The pipeline matters because it lets Saudi oil bypass Hormuz to the Red Sea.",
+   "reality": "The Houthis keep up their campaign against Saudi Arabia: on Nov 10 they claimed four missile and drone operations on Riyadh airport and Aramco facilities. A key Saudi oil pipeline was hit again, this time with the Houthis denying it. Syria is weighing sending troops to help Saudi Arabia. There is still no Saudi confirmation of lost oil output.",
    "agreed": [
-    "Saudi authorities reported damage to the key East-West pipeline (Al Jazeera).",
-    "Saudi forces intercepted two missiles fired at Riyadh hours later.",
-    "The Aramco tower in Riyadh's financial district was hit by \"falling shrapnel\", with no one hurt (NYT)."
+    "The Houthi spokesman claimed four operations on Riyadh airport and Saudi Aramco facilities (TASS).",
+    "The Aramco building in Riyadh's financial district was damaged in an earlier attack (WSJ via Business Insider).",
+    "Syria has sent reconnaissance teams ahead of a possible deployment; no decision yet (NYT)."
    ],
    "disputed": [
     {
-     "claim": "The attacks have cut Saudi oil flows",
+     "claim": "Who hit the pipeline this time",
      "for": [
-      "Houthi claims (via RT, TASS)"
+      "Attack reported (RT)"
      ],
      "against": [
-      "No confirmation from Saudi Arabia or Aramco"
+      "The Houthis deny responsibility (RT)"
      ],
-     "note": "The same pipeline was out for weeks after a drone attack in September; a repeat would matter for oil."
+     "note": "If not the Houthis, the attacker is unknown; that adds uncertainty for Saudi exports."
     }
    ],
    "framing": [
     {
-     "who": "RT (Russia, state)",
-     "how": "Houthi videos of the strike."
+     "who": "TASS / RT (Russia, state)",
+     "how": "Houthi claims and damage to Saudi oil."
     },
     {
-     "who": "NYT / Al Jazeera",
-     "how": "Lead with the Saudi line: little damage, missiles intercepted."
+     "who": "NYT",
+     "how": "A widening Saudi war with the Houthis, now possibly with Syrian troops."
     }
    ],
    "predictions": [
     {
-     "id": "2026-11-09-saudi-1",
-     "statement": "The Houthis claim another strike on Saudi energy or financial infrastructure",
+     "id": "2026-11-11-saudi-3",
+     "statement": "The Houthis claim another strike on Saudi energy, airport or financial infrastructure",
      "probability": 0.75,
-     "by": "2026-11-23",
+     "by": "2026-11-25",
      "markets": [
       {
        "asset": "Brent crude",
@@ -203,8 +198,7 @@
        "asset": "Saudi stocks (Tadawul)",
        "if_true": "down"
       }
-     ],
-     "watch": "Whether a US–Iran ceasefire also covers the Houthis."
+     ]
     },
     {
      "id": "2026-11-09-saudi-2",
@@ -214,98 +208,103 @@
      "markets": [
       {
        "asset": "Brent crude",
-       "if_true": "up sharply"
+       "if_true": "up"
+      },
+      {
+       "asset": "Oil tanker stocks",
+       "if_true": "up"
       }
      ],
-     "watch": "The East-West pipeline's status; Red Sea loadings at Yanbu."
+     "watch": "Saudi statements after each attack; the East-West pipeline status."
     }
    ]
   },
   {
    "key": "ukraine",
-   "title": "Ukraine: US–Russia–Ukraine talks open in Abu Dhabi",
+   "title": "Ukraine: the Abu Dhabi talks are \"productive\", but no ceasefire on the table",
    "story_ids": [
-    "s4",
-    "s19",
-    "s30",
-    "s35",
+    "s2",
+    "s24",
+    "s14",
     "s40"
    ],
-   "reality": "The first three-way talks since February are on 10–11 November, with Medinsky leading Russia's delegation. The US says it wants a \"final end\" to the war and a \"long-term security architecture\" between Moscow and Europe. A ceasefire is not on the table, and the old sticking point is unchanged: Ukraine wants security guarantees that Russia rejects. Europe pushes for a seat; the US proposes bringing Europeans in after the three-way round. Drones killed two workers at the Zaporizhzhia nuclear and thermal plants.",
+   "reality": "The first Russia–Ukraine talks since February ran about four hours on Nov 10 under US mediation (Kushner, Witkoff) and resumed on Nov 11. The US calls them \"very productive\" and \"constructive\" and wants a \"new\" European security framework; prisoner exchanges are on the agenda. A ceasefire is not. The war goes on around the talks: Ukrainian drones set fire to the Ust-Luga Baltic oil-export port, and Russia says it downed about 150 drones near St Petersburg.",
    "agreed": [
-    "The Russian and Ukrainian delegations have left for Abu Dhabi; talks are set for 10–11 November (TASS, Anadolu).",
-    "Security guarantees are the top item, per Rubio and Lavrov; prisoner exchanges are also on the agenda.",
-    "Trump sees a \"strong inclination\" to end the war.",
-    "India spoke with both sides ahead of the talks.",
-    "The IAEA condemned drone strikes that killed two power plant workers at Zaporizhzhia."
+    "US-mediated trilateral talks ran about 4–4.5 hours on Nov 10 and resumed Nov 11 (TASS, NPR, Guardian).",
+    "Rubio called them \"very productive\"; Kushner \"constructive\" (TASS).",
+    "A ceasefire is not on the table (NYT); prisoner exchanges are (RT).",
+    "A drone attack sparked a fire at the Ust-Luga oil port, injuring three (Bloomberg, TASS)."
    ],
    "disputed": [
     {
-     "claim": "Europe sits at the table",
+     "claim": "Real progress",
      "for": [
-      "France / NPR: European officials will attend"
+      "Rubio, Kushner; Zelensky \"happy\" with the US approach (France 24)"
      ],
      "against": [
-      "Reuters via TASS: the US proposes bringing Europeans in only after the three-way talks"
-     ]
+      "Zelensky rejects Russia's Donbas claims (Kyiv Post); a Russian diplomat says it's too early to judge (TASS)"
+     ],
+     "note": "Three earlier rounds this year brought no breakthrough (NPR)."
     },
     {
-     "claim": "Who killed the Zaporizhzhia workers",
+     "claim": "Europe's role",
      "for": [
-      "The Russian-run plant blames Ukraine (TASS)"
+      "European diplomats press Rubio for a seat (Al Jazeera)"
      ],
      "against": [
-      "The IAEA and Kyiv Independent don't assign blame"
-     ]
+      "The format remains US–Russia–Ukraine"
+     ],
+     "note": "Europe at the table matters for defence stocks and gas."
     }
    ],
    "framing": [
     {
-     "who": "TASS (Russia, state)",
-     "how": "Procedural, and Ukraine blamed for the plant attack."
+     "who": "RT / TASS (Russia)",
+     "how": "A \"major shift\": the talks move to Europe's security order, on Moscow's agenda."
     },
     {
-     "who": "The Guardian / CNBC",
-     "how": "The US's ambitious \"final end\" goal and Trump's optimism."
+     "who": "Kyiv Independent / Kyiv Post (Ukraine)",
+     "how": "Strikes on Russia's oil ports, and Zelensky rejecting Donbas demands."
     },
     {
-     "who": "NYT / DW",
-     "how": "Low expectations: no ceasefire on the table, the same sticking points."
+     "who": "NPR / NYT (US)",
+     "how": "Cautious: no ceasefire, past rounds failed."
     }
    ],
    "predictions": [
     {
-     "id": "2026-11-09-ukr-1",
-     "statement": "The Abu Dhabi talks take place with Russian, Ukrainian and US delegations",
-     "probability": 0.95,
-     "by": "2026-11-16",
+     "id": "2026-11-10-ukr-4",
+     "statement": "A Russia–Ukraine prisoner exchange is announced as agreed or carried out",
+     "probability": 0.65,
+     "by": "2026-11-30",
+     "markets": [
+      {
+       "asset": "Russian rouble",
+       "if_true": "neutral"
+      }
+     ],
+     "watch": "Prisoner exchanges are on the Abu Dhabi agenda."
+    },
+    {
+     "id": "2026-11-11-ukr-5",
+     "statement": "A further trilateral round (date announced or held) is confirmed after Abu Dhabi",
+     "probability": 0.6,
+     "by": "2026-12-15",
      "markets": [
       {
        "asset": "European defence stocks",
        "if_true": "down (small)"
       },
       {
-       "asset": "EUR/USD",
-       "if_true": "up (small)"
-      }
-     ]
-    },
-    {
-     "id": "2026-11-10-ukr-4",
-     "statement": "A Russia–Ukraine prisoner exchange is announced as agreed or carried out",
-     "probability": 0.6,
-     "by": "2026-11-30",
-     "markets": [
-      {
-       "asset": "European defence stocks",
-       "if_true": "neutral"
+       "asset": "European gas (TTF)",
+       "if_true": "down (small)"
       }
      ]
     },
     {
      "id": "2026-11-09-ukr-2",
      "statement": "Russia and Ukraine both announce a general ceasefire",
-     "probability": 0.12,
+     "probability": 0.1,
      "by": "2026-12-31",
      "markets": [
       {
@@ -329,61 +328,77 @@
      "by": "2026-11-23",
      "markets": [
       {
-       "asset": "Diesel / gasoil",
-       "if_true": "up"
+       "asset": "Diesel prices",
+       "if_true": "up (small)"
       }
-     ]
+     ],
+     "watch": "Ust-Luga (Nov 11) is an oil-export port, not a refinery, so it doesn't count."
     }
    ]
   },
   {
    "key": "nvidia",
-   "title": "Nvidia: the Huang affair widens to a chip-smuggling probe",
+   "title": "Nvidia: the Huang affair reaches the cabinet; the AI trade wobbles as Anthropic eyes a record IPO",
    "story_ids": [
-    "s3",
-    "s12",
-    "s34",
-    "s36",
-    "s29",
-    "s37"
+    "s5",
+    "s10",
+    "s27",
+    "s29"
    ],
-   "reality": "The story has moved from the CEO's private life to the company's conduct. NYT and Bloomberg report that a Commerce Department inquiry into Megaspeed, a Singapore buyer of Nvidia chips suspected of supplying China, was halted after a top Nvidia executive contacted officials, and passed to the Justice Department. Trump says the FBI is reviewing the affair but backs Huang. Nvidia fell again (−4%) even as other chip stocks bounced strongly, so the market now prices company-specific risk. Google's new AI chips add competition.",
+   "reality": "Nvidia fell another 5.5% on Nov 10 to $168.89 (−25% in a month). The affair now reaches the administration: Trump says the FBI is investigating, the NYT says he was reminded of the intelligence before his China trip, and a report says Commerce Secretary Lutnick got a memo on it. Nvidia hired Wachtell Lipton (former prosecutor Joon Kim) for an independent probe; Huang apologized. Megaspeed, the alleged spy's company, is under US investigation for smuggling Nvidia chips into China. Around it the AI trade is mixed: SoftBank posted a $7 billion loss and revised its US data-centre plans (GE Vernova fell), while Anthropic set an IPO range of $70–78 a share (about $1.4 trillion), with bankers reportedly preparing to raise it. Nvidia reports on Nov 17.",
    "agreed": [
-    "Trump says the FBI is reviewing Huang's relationship and that Xi may raise the case; he believes Huang didn't know.",
-    "The Commerce inquiry into Megaspeed went to the Justice Department after an Nvidia executive contacted Commerce officials (NYT, Bloomberg).",
-    "Lawmakers from both parties want to question Huang.",
-    "Nvidia fell while the chip sector rallied; Asian tech stocks had their best two days in three months as oil fell."
+    "Trump says the FBI is investigating (BBC).",
+    "Nvidia hired Wachtell Lipton to lead an independent investigation (BBC, MarketWatch).",
+    "Megaspeed is under US investigation for allegedly smuggling Nvidia chips into China; it denies it (DW, CNBC).",
+    "Senate Republicans are pressing for answers on who knew (Washington Examiner).",
+    "SoftBank lost $7 billion and revised its US data-centre plans (WSJ, Reuters).",
+    "Anthropic: 825 million shares at $70–78 (France 24, Bloomberg)."
    ],
    "disputed": [
     {
-     "claim": "Nvidia improperly interfered with the Megaspeed probe",
+     "claim": "Huang's job is at risk",
      "for": [
-      "NYT, Bloomberg reporting"
+      "Senate Republicans recoiling; officials knew before the China trip (NYT, Washington Examiner)"
      ],
      "against": [
-      "No public response from Nvidia in the collected articles"
-     ]
+      "The board says no secrets were compromised; Trump spoke to Huang and leaves it to the FBI (BBC)"
+     ],
+     "note": "The independent probe decides; no timeline given."
+    },
+    {
+     "claim": "The AI spending boom is cracking",
+     "for": [
+      "SoftBank's loss and data-centre cutbacks (WSJ, Bloomberg)"
+     ],
+     "against": [
+      "Demand for a ~$1.4–1.5 trillion Anthropic IPO (FT, CNBC)"
+     ],
+     "note": "Nvidia's Nov 17 report will move the whole sector."
     }
    ],
    "framing": [
     {
-     "who": "Bloomberg / NYT (US)",
-     "how": "Corporate conduct: the halted Megaspeed probe."
+     "who": "NYT / Washington Examiner (US)",
+     "how": "Who in the administration knew, and when."
     },
     {
      "who": "SCMP (Hong Kong)",
-     "how": "Key-person risk and a valuation test; Megaspeed's China links."
+     "how": "Could become another \"spy balloon\" for US–China ties."
     },
     {
-     "who": "Anadolu / Al Jazeera",
-     "how": "Trump's defence of Huang."
+     "who": "DW / CNBC",
+     "how": "Megaspeed and chip smuggling into China."
+    },
+    {
+     "who": "Breitbart",
+     "how": "Mockery of Huang."
     }
    ],
    "predictions": [
     {
      "id": "2026-11-09-nvda-1",
      "statement": "Jensen Huang is still Nvidia's CEO",
-     "probability": 0.82,
+     "probability": 0.8,
      "by": "2026-12-31",
      "markets": [
       {
@@ -395,14 +410,15 @@
     {
      "id": "2026-11-09-nvda-3",
      "statement": "A congressional hearing with Huang testifying is formally scheduled",
-     "probability": 0.35,
+     "probability": 0.4,
      "by": "2026-12-31",
      "markets": [
       {
        "asset": "NVDA",
        "if_true": "down (small)"
       }
-     ]
+     ],
+     "watch": "Senate Republicans are now asking questions too."
     },
     {
      "id": "2026-11-10-nvda-4",
@@ -415,69 +431,89 @@
        "if_true": "down vs market"
       }
      ]
+    },
+    {
+     "id": "2026-11-11-ai-1",
+     "statement": "Anthropic's IPO is priced above $78 a share (the top of the first range)",
+     "probability": 0.55,
+     "by": "2026-12-31",
+     "markets": [
+      {
+       "asset": "AI stocks",
+       "if_true": "up"
+      },
+      {
+       "asset": "NVDA",
+       "if_true": "up (small)"
+      }
+     ],
+     "watch": "Whether the range is raised (the FT reports bankers preparing a $1.5tn valuation)."
     }
    ]
   },
   {
    "key": "uscongress",
-   "title": "Washington: House vote to impeach Hegseth over the Iran war",
+   "title": "Washington: Hegseth impeachment shelved 211–204; Jordan and Thune lead a shrunken GOP",
    "story_ids": [
     "s1",
     "s21",
-    "s22",
-    "s10"
+    "s8",
+    "s37",
+    "s39",
+    "s30"
    ],
-   "reality": "Republican Thomas Massie filed eight articles of impeachment against Defense Secretary Hegseth and is forcing a House vote, possibly on Wednesday. Democrats back it, and several Republicans privately say it could pass. Republicans still hold the outgoing House, so leadership can try to table it. Even if the House impeaches, conviction in the Senate needs two-thirds, which is very unlikely. Elsewhere: the Senate advanced a bipartisan permitting bill 73–25 (pipelines, power lines, data centres pay for their own grid upgrades), and Jeffries says Democrats will target tariffs, Medicaid cuts and the Iran war in January.",
+   "reality": "The House voted 211–204 to refer Massie's impeachment resolution against Hegseth to committee, killing it until Democrats take over in January; 11 Democrats, including Pelosi, missed the vote. Hegseth called it a \"farce\"; Trump praised the outcome. Republicans picked Jim Jordan and John Thune as their leaders for the next Congress, while some Democratic senators oppose Schumer. The Senate advanced the bipartisan permitting bill.",
    "agreed": [
-    "Massie introduced eight articles of impeachment and forced a privileged vote this week.",
-    "Democrats, led by Jeffries, back it; Trump and Rubio defend Hegseth.",
-    "The Senate voted 73–25 to advance the permitting bill.",
-    "Democrats' priorities for January include ending Trump's tariffs."
+    "211–204 vote to refer the resolution to committee (The Hill, Reason, Bloomberg).",
+    "11 Democrats missed the vote (Washington Examiner, Al Jazeera).",
+    "Democrats can try again next year (BBC).",
+    "Jordan (House) and Thune (Senate) elected GOP leaders (CNBC, SCMP).",
+    "The Senate advanced the permitting bill (CNBC, The Hill)."
    ],
    "disputed": [
     {
-     "claim": "The impeachment will pass the House",
+     "claim": "Impeachment is over",
      "for": [
-      "A member of Congress to The Intercept (\"high chance\")",
-      "Republicans privately (Fox News)",
-      "National Review (\"significant chance\")"
+      "Republicans and Trump: \"total victory\" (Guardian)"
      ],
      "against": [
-      "Republican leadership can move to table it; Trump is pressing Republicans (Al Jazeera)"
-     ]
+      "Democrats can re-file once they hold the majority in January (BBC)"
+     ],
+     "note": "Nothing more is likely before January."
     }
    ],
    "framing": [
     {
-     "who": "Reason / The Intercept (libertarian / left)",
-     "how": "Hegseth deserves impeachment for an \"unconstitutional war\"."
+     "who": "Breitbart / Fox News",
+     "how": "Republicans reject a \"farce\"; Hegseth defiant."
     },
     {
-     "who": "Fox News (US, right)",
-     "how": "Republican nerves: it could pass."
+     "who": "The Intercept / Reason",
+     "how": "Massie is right; Hegseth's defence debunked."
     },
     {
-     "who": "SCMP / DW (abroad)",
-     "how": "A test of Congress over the Iran war."
+     "who": "Al Jazeera",
+     "how": "Blocked only because 11 Democrats were absent."
     }
    ],
    "predictions": [
     {
      "id": "2026-11-10-us-2",
      "statement": "The House approves at least one article of impeachment against Hegseth",
-     "probability": 0.4,
+     "probability": 0.05,
      "by": "2026-11-30",
      "markets": [
       {
        "asset": "US defence stocks",
-       "if_true": "down (small)"
+       "if_true": "neutral"
       }
-     ]
+     ],
+     "watch": "Effectively dead until January."
     },
     {
      "id": "2026-11-10-us-3",
      "statement": "Hegseth is no longer Defense Secretary (resigned, fired or removed)",
-     "probability": 0.2,
+     "probability": 0.12,
      "by": "2026-12-31",
      "markets": [
       {
@@ -489,7 +525,7 @@
     {
      "id": "2026-11-10-us-4",
      "statement": "The Senate passes the bipartisan permitting bill",
-     "probability": 0.7,
+     "probability": 0.75,
      "by": "2026-12-31",
      "markets": [
       {
@@ -500,7 +536,8 @@
        "asset": "Pipeline stocks",
        "if_true": "up"
       }
-     ]
+     ],
+     "watch": "The bill advanced again on Nov 10 (The Hill)."
     },
     {
      "id": "2026-11-09-us-1",
@@ -516,48 +553,49 @@
        "asset": "USD",
        "if_true": "down (small)"
       }
-     ]
+     ],
+     "watch": "Whether the outgoing Republican majority prefers a short stopgap that pushes fights into January."
     }
    ]
   },
   {
    "key": "china",
-   "title": "China: a $1 trillion trade surplus before the Trump–Xi(–Putin) meeting",
+   "title": "China: the Trump–Xi meeting ahead, with the Nvidia spy affair as a new irritant",
    "story_ids": [
-    "s14",
-    "s28"
+    "s5"
    ],
-   "reality": "China's trade surplus passed $1 trillion in ten months, a record pace: exports rose 35.2% in October and imports grew at the fastest pace in five years. That raises trade tension just as Trump goes to China next week. Trump says he will meet Xi and Putin there and wants their help to end the Iran war; WSJ reports the US balked at China's demand for a tightly scripted three-way summit.",
+   "reality": "Few new China headlines today. The Nvidia affair touches US–China ties directly: Beijing calls the spy story unsubstantiated, and Chinese experts warn that Washington's China hawks could use it to push for tighter chip rules (SCMP). The Trump–Xi meeting at APEC is still expected.",
    "agreed": [
-    "Exports +35.2% year on year in October (expected +33.5%); the surplus is above $1 trillion for the first ten months.",
-    "Trump expects to meet Xi and Putin during his China visit next week."
+    "Beijing denies the spy narrative.",
+    "China hawks in Washington could use the affair to push for tighter rules (SCMP)."
    ],
    "disputed": [
     {
-     "claim": "A three-way Trump–Xi–Putin summit will happen",
+     "claim": "The affair will hurt US–China ties",
      "for": [
-      "Trump (Breitbart, Reuters)"
+      "SCMP's Chinese experts: another \"spy balloon\""
      ],
      "against": [
-      "WSJ: the US balks at China's demand for a tightly scripted summit"
-     ]
+      "Trump spoke to Huang and leaves it to the FBI (BBC)"
+     ],
+     "note": "Watch whether chip-export rules come up at the summit."
     }
    ],
    "framing": [
     {
-     "who": "FT / NYT",
-     "how": "The surplus will intensify tensions with trading partners."
+     "who": "SCMP (Hong Kong)",
+     "how": "Risk to US–China ties."
     },
     {
-     "who": "SCMP (Hong Kong)",
-     "how": "Can Xi and Putin give Trump the Iran exit he needs?"
+     "who": "NYT",
+     "how": "Trump knew before his own China trip."
     }
    ],
    "predictions": [
     {
      "id": "2026-11-09-nvda-2",
      "statement": "The Trump–Xi meeting at the APEC summit in China takes place",
-     "probability": 0.88,
+     "probability": 0.85,
      "by": "2026-11-30",
      "markets": [
       {
@@ -573,7 +611,7 @@
     {
      "id": "2026-11-10-chn-2",
      "statement": "Trump, Xi and Putin hold a three-way meeting",
-     "probability": 0.35,
+     "probability": 0.3,
      "by": "2026-11-30",
      "markets": [
       {
@@ -598,44 +636,44 @@
   },
   {
    "key": "israel",
-   "title": "Israel: Eisenkot tries to form a government",
+   "title": "Israel: new Knesset sworn in; Eisenkot breaks off talks with Likud",
    "story_ids": [
-    "s5",
-    "s31"
+    "s6",
+    "s17"
    ],
-   "reality": "Eisenkot has up to six weeks and is reaching out to Netanyahu's allies; analysts see several routes but formidable obstacles. In Washington, bipartisan support for Israel is eroding: Democrats push to limit military aid, and Vice President Vance is among Republicans calling for change.",
+   "reality": "The new Knesset was sworn in with an opposition majority. Eisenkot, who has the first chance to form a government, pledged an official October 7 inquiry and to reverse many of Netanyahu's policies, then cancelled coalition talks with Likud after Netanyahu's speech claiming Arab parties seek Israel's destruction. He still has no coalition.",
    "agreed": [
-    "Eisenkot was tasked with forming a government and has up to six weeks.",
-    "He warns Israel is near a \"point of no return\".",
-    "Support for Israel in Congress is weakening in both parties (NYT, Bloomberg)."
+    "The opposition led by Eisenkot holds a majority in the new Knesset (NYT).",
+    "Eisenkot cancelled a meeting with Likud after Netanyahu's speech (Jerusalem Post, Times of India).",
+    "Eisenkot has not yet formed a coalition (DW)."
    ],
    "disputed": [
     {
-     "claim": "Eisenkot is likely to succeed",
+     "claim": "Eisenkot can form a government without Netanyahu",
      "for": [
-      "The Economist (\"has a chance\")"
+      "His broad left-to-right bloc and its majority (Japan Times, NYT)"
      ],
      "against": [
-      "France 24 (\"so many other generals have failed\")",
-      "NYT (\"or not\")"
-     ]
+      "Netanyahu demands a unity government and rules out Arab parties (Times of Israel)"
+     ],
+     "note": "A coalition may need the Arab parties' support, which Netanyahu attacks."
     }
    ],
    "framing": [
     {
-     "who": "The Guardian / NYT",
-     "how": "Routes to unseat Netanyahu."
+     "who": "Times of Israel / Jerusalem Post",
+     "how": "Netanyahu's speech and the collapse of unity talks."
     },
     {
-     "who": "RT (Russia, state)",
-     "how": "Questions over Eisenkot's Palestinian policy."
+     "who": "Washington Post / NYT",
+     "how": "The new parliament moves against Netanyahu."
     }
    ],
    "predictions": [
     {
      "id": "2026-11-09-isr-1",
      "statement": "An Eisenkot-led government is sworn in",
-     "probability": 0.45,
+     "probability": 0.47,
      "by": "2027-01-31",
      "markets": [
       {
@@ -656,7 +694,7 @@
      "markets": [
       {
        "asset": "Israeli shekel (ILS)",
-       "if_true": "neutral"
+       "if_true": "down (small)"
       }
      ]
     }
@@ -770,7 +808,8 @@
    "stories": [
     "iran",
     "uscongress"
-   ]
+   ],
+   "id": "2026-11-10-call-us_defence"
   }
  ],
  "trade_ideas": [
