@@ -225,12 +225,17 @@
   }
 
   function save() {
-    const notes = tuneNotes().map((n) => n.midi);
+    const tune = tuneNotes();
+    const notes = tune.map((n) => n.midi);
     if (notes.length < 2) return;
+    // keep the rhythm as whistled (Sham, 2026-11-11): at 60 bpm one beat = one second
+    const t0 = tune[0].start, r2 = (x) => Math.round(x * 100) / 100;
+    const beats = tune.map((n) => r2(n.start - t0));
+    const durs = tune.map((n) => Math.max(0.1, r2(n.dur)));
     let mine = [];
     try { mine = JSON.parse(store.get("mysongs", "[]")) || []; } catch (e) { mine = []; }
     const title = $("name").value.trim() || "My whistle " + (mine.length + 1);
-    mine = mine.filter((x) => x.title !== title).concat([{ title, notes }]);
+    mine = mine.filter((x) => x.title !== title).concat([{ title, notes, beats, durs, bpm: 60 }]);
     store.set("mysongs", JSON.stringify(mine));
     const link = "piano.html#practise=" + encodeURIComponent("mine:" + title);
     $("saved").innerHTML = "";
@@ -295,11 +300,15 @@
       p.textContent = state.listening ? "Notes appear as you whistle…" : "The notes you whistle show up here.";
       box.append(p);
     }
+    const longest = Math.max(0.1, ...notes.map((n) => n.dur));
     notes.forEach((n, i) => {
       const b = document.createElement("button");
       b.type = "button";
       b.className = "chip" + (i === state.playing ? " now" : "");
       b.textContent = name(n.midi);
+      const len = document.createElement("i"); // how long the note was held, against the longest note
+      len.style.width = Math.max(8, Math.round((100 * n.dur) / longest)) + "%";
+      b.append(len);
       b.title = W.noteName(n.midi, !solf()) + ", " + n.dur.toFixed(2) + " s";
       b.addEventListener("click", () => { pluck(n.midi); state.playing = i; renderNotes(); drawKeys(); drawTrace(); state.playing = -1; });
       box.append(b);

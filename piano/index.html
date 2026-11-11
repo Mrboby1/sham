@@ -91,7 +91,9 @@ button:focus-visible, .filebtn:focus-within, a:focus-visible { outline: 2px soli
 .kbd { width: 100%; height: 110px; display: block; }
 
 .notes { display: flex; flex-wrap: wrap; gap: 6px; min-height: 44px; }
-.chip { min-height: 40px; min-width: 48px; padding: 0 10px; font-size: 16px; border-radius: 8px; background: var(--bg); }
+.chip { min-height: 44px; min-width: 48px; padding: 6px 10px 5px; font-size: 16px; border-radius: 8px; background: var(--bg); flex-direction: column; gap: 4px; align-items: stretch; }
+.chip i { display: block; height: 3px; border-radius: 2px; background: var(--brass); }
+.chip.now i { background: var(--bg); }
 .chip.now { background: var(--teal); color: var(--bg); border-color: var(--teal); }
 .empty { color: var(--muted); margin: 6px 0; }
 h2 { font: 700 18px/1.2 var(--font-display); margin: 0 0 10px; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
@@ -190,6 +192,6 @@ h2 small { font: 400 13px/1 var(--font-ui); color: var(--muted); }
 </div>
 <script src="detect.js"></script>
 <script src="whistle-core.js?v=3"></script>
-<script src="whistle.js?v=3"></script>
+<script src="whistle.js?v=4"></script>
 </body>
 </html>

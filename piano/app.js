@@ -55,12 +55,13 @@
   let fullPieces = [];
   let mySongs = [];
   try { mySongs = JSON.parse(store.get("mysongs", "[]")) || []; } catch (e) { mySongs = []; }
-  mySongs = mySongs.map((x) => ({ title: x.title.replace(/ - My songs$/, ""), notes: x.notes }));
+  // whistled songs also carry their rhythm: beats (onsets), durs (how long each note was held) and bpm
+  mySongs = mySongs.map((x) => ({ title: x.title.replace(/ - My songs$/, ""), notes: x.notes, beats: x.beats, durs: x.durs, bpm: x.bpm }));
   const saveMySongs = () => store.set("mysongs", JSON.stringify(mySongs));
   let SONGS = [];
   function buildLibrary() {
     SONGS = [
-      ...mySongs.map((x) => ({ title: x.title, composer: "", notes: x.notes, mine: true })),
+      ...mySongs.map((x) => ({ title: x.title, composer: "", notes: x.notes, beats: x.beats, durs: x.durs, bpm: x.bpm, mine: true })),
       ...fullPieces.map((x) => ({ title: x.title, composer: x.composer, notes: x.notes, beats: x.beats, chords: x.chords, bpm: x.bpm,
         fingers: x.fingers, kind: x.kind || "song", level: x.level || levelOf(x), tip: x.tip, hands: x.hands || (x.chords ? "both" : "right") })),
       ...LIBRARY.filter((x) => !x.mine && !x.title.includes(" - ") && x.title !== "Brahms' Lullaby" /* songs.json has the whole piece */ && !fullPieces.some((f) => f.title === x.title))
@@ -655,12 +656,15 @@
     if (!song) return;
     clearAll("");
     if (!song.fingers) song.fingers = song.chords ? song.chords.map((c) => c.fingers[0]) : window.Fingering.fingerRH(song.notes);
-    if (!song.durs) {
+    if (!song.onsets) {
       // onsets in beats (one beat per note when the song has no rhythm) and how long each note lasts
       const b = song.beats && song.beats.length === song.notes.length ? song.beats : song.notes.map((_, i) => i);
       song.onsets = b;
       const longest = song.chords ? 8 : 4;
-      song.durs = b.map((t, i) => (i + 1 < b.length ? Math.max(0.25, Math.min(longest, b[i + 1] - t)) : song.chords ? 4 : 1));
+      // a whistled song keeps the lengths it was whistled with (Sham, 2026-11-11); others: until the next note
+      if (!(song.durs && song.durs.length === song.notes.length)) {
+        song.durs = b.map((t, i) => (i + 1 < b.length ? Math.max(0.25, Math.min(longest, b[i + 1] - t)) : song.chords ? 4 : 1));
+      }
     }
     state.practice = { song, pos: 0 };
     roll.beat = song.onsets[0] - 2; // a short count-in before the first note

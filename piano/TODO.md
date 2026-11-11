@@ -162,6 +162,11 @@ Live app: https://mrboby1.github.io/sham/piano/
     the median of the whole note; the whistler's tuning is followed as it drifts. New Key ♭/♯ control to move the tune
     into the key you meant. On Sham's recording: E F C♯ D comes out exactly; ornaments and fast runs are still rough)*
 
+47. **Whistle page: save each note's real length, not all the same length** (Sham, 2026-11-11). *(done 2026-11-11:
+    saved whistles keep when each note started and how long it was held (beats/durs at 60 bpm); the Piano page plays and
+    draws them with those lengths. The note list shows each note's length as a bar. Tunes saved before this have no
+    lengths: save them again)*
+
 ## Done
 
 - Whistle to Notes home page: whistle, hum or upload a recording, get clean piano notes, play, save and practise them
