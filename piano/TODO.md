@@ -172,6 +172,10 @@ Live app: https://mrboby1.github.io/sham/piano/
     way as an uploaded file, and replaces the live preview. New "My whistle" button plays the recording back to compare.
     Tried shorter analysis windows for fast runs: no clear gain on Sham's Toccata, kept the 43 ms window)*
 
+49. **Piano practice: the falling tiles confuse me, only highlight the note to play next** (Sham, 2026-11-11).
+    *(done 2026-11-11: falling tiles and their Pause/Speed bar turned off (SHOW_ROLL = false in app.js), and the keyboard
+    lights only the next key (all keys of a chord). The finger hand and the "next" chips above the keys stay)*
+
 ## Done
 
 - Whistle to Notes home page: whistle, hum or upload a recording, get clean piano notes, play, save and practise them
