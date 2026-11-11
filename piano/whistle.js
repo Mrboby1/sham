@@ -71,6 +71,9 @@
 
   // ---------------------------------------------------------------- microphone
   let stream = null, src = null, analyser = null, buf = null, raf = 0, wake = null;
+  // The whistle is also recorded; on Stop the whole recording is analysed again, offline, which is steadier
+  // than the live pass (Sham, 2026-11-11). The live notes are only a preview.
+  let rec = null, recChunks = [], recUrl = null;
   let starting = false; // waiting for the microphone permission: a second tap must not start a second mic
   const det = { floor: 0.002, warm: 0, lastRun: 0 };
   async function start() {
@@ -108,6 +111,15 @@
     state.listening = true;
     state.t0 = a.currentTime;
     Object.assign(det, { floor: 0.002, warm: 0, lastRun: 0 });
+    recChunks = [];
+    rec = null;
+    if (window.MediaRecorder) {
+      try {
+        rec = new MediaRecorder(stream);
+        rec.ondataavailable = (e) => { if (e.data && e.data.size) recChunks.push(e.data); };
+        rec.start();
+      } catch (e) { rec = null; }
+    }
     cancelAnimationFrame(raf);
     raf = requestAnimationFrame(tick);
     render();
@@ -120,12 +132,45 @@
     cancelAnimationFrame(raf);
     raf = 0;
     if (src) { try { src.disconnect(); } catch (e) { /* already gone */ } src = null; }
-    if (stream) stream.getTracks().forEach((t) => t.stop());
-    stream = null;
+    const s = stream, r = rec;
+    stream = null; rec = null;
+    const endTracks = () => { if (s) s.getTracks().forEach((t) => t.stop()); };
     if (wake) { wake.release().catch(() => {}); wake = null; }
     state.live = null;
     $("mic").style.removeProperty("--lvl");
+    if (was && r && r.state !== "inactive") {
+      state.analysing = true;
+      r.onstop = () => { endTracks(); analyseRecording(new Blob(recChunks, { type: r.mimeType || "" })); };
+      try { r.stop(); } catch (e) { endTracks(); state.analysing = false; }
+    } else endTracks();
     if (was) finish(); else render();
+  }
+  // decode any audio (recording or uploaded file) and track its pitch
+  async function framesOf(blob) {
+    const data = await blob.arrayBuffer();
+    const a = audio();
+    const audioBuf = await new Promise((res, rej) => {
+      const p = a.decodeAudioData(data, res, rej); // Safari: callback form
+      if (p && p.then) p.then(res, rej);
+    });
+    if (audioBuf.duration > 600) throw new Error("that recording is longer than 10 minutes");
+    await new Promise((r) => setTimeout(r, 30)); // let "Analysing…" show before the heavy part
+    return W.analyze(audioBuf.getChannelData(0), audioBuf.sampleRate);
+  }
+  function keepRecording(blob) {
+    if (recUrl) URL.revokeObjectURL(recUrl);
+    recUrl = blob && blob.size ? URL.createObjectURL(blob) : null;
+  }
+  async function analyseRecording(blob) {
+    keepRecording(blob);
+    render();
+    try {
+      const frames = await framesOf(blob);
+      const r = W.transcribe(frames);
+      if (r.notes.length || !state.result || !state.result.notes.length) { state.frames = frames; state.result = r; }
+    } catch (e) { /* this browser can't decode its own recording: keep the live result */ }
+    state.analysing = false;
+    render();
   }
   function toggle() { if (state.listening || starting) stop(); else start(); }
   function tick() {
@@ -158,16 +203,10 @@
     showMsg("");
     $("sub").textContent = "Reading " + file.name + "…";
     try {
-      const data = await file.arrayBuffer();
-      const a = audio();
-      const audioBuf = await new Promise((res, rej) => {
-        const p = a.decodeAudioData(data, res, rej); // Safari: callback form
-        if (p && p.then) p.then(res, rej);
-      });
-      const ch = audioBuf.getChannelData(0);
-      if (audioBuf.duration > 600) throw new Error("that recording is longer than 10 minutes");
+      const frames = await framesOf(file);
       clearTune();
-      state.frames = W.analyze(ch, audioBuf.sampleRate);
+      keepRecording(file);
+      state.frames = frames;
       finish();
       if (!state.result.notes.length) showMsg("No clear notes found in that recording. Whistle a bit louder or closer to the phone.");
     } catch (err) {
@@ -186,6 +225,7 @@
     state.frames = [];
     state.result = null;
     state.playing = -1;
+    keepRecording(null);
     $("saved").hidden = true;
     render();
   }
@@ -271,6 +311,10 @@
       big.classList.remove("idle");
       sub.textContent = `${W.noteName(m, !solf()).replace("#", "♯")} · ${c >= 0 ? "+" : "−"}${Math.abs(c)} cents`;
       needle.style.left = `calc(${50 + c}% - 2px)`;
+    } else if (state.analysing) {
+      big.textContent = "…";
+      big.classList.add("idle");
+      sub.textContent = "Analysing your recording…";
     } else if (state.listening) {
       big.textContent = "…";
       big.classList.add("idle");
@@ -316,6 +360,7 @@
     $("count").textContent = notes.length ? `${notes.length} notes` : "";
     const has = notes.length > 0 && !state.listening;
     $("actions").hidden = !has;
+    $("hear").hidden = !recUrl;
     $("saveRow").hidden = !has || notes.length < 2;
   }
 
@@ -434,6 +479,15 @@
   $("mic").addEventListener("click", toggle);
   $("file").addEventListener("change", (e) => upload(e.target.files && e.target.files[0]));
   $("play").addEventListener("click", play);
+  let hearing = null;
+  $("hear").addEventListener("click", () => {
+    if (hearing) { hearing.pause(); hearing = null; $("hear").innerHTML = "&#9654; My whistle"; return; }
+    if (!recUrl) return;
+    hearing = new Audio(recUrl);
+    hearing.onended = () => { hearing = null; $("hear").innerHTML = "&#9654; My whistle"; };
+    hearing.play().catch(() => { hearing = null; });
+    $("hear").innerHTML = "&#9632; Stop";
+  });
   $("copy").addEventListener("click", copy);
   $("clear").addEventListener("click", () => { stopPlay(); clearTune(); });
   $("save").addEventListener("click", save);
