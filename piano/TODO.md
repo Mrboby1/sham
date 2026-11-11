@@ -114,6 +114,11 @@ Live app: https://mrboby1.github.io/sham/piano/
     NVDA put spread only after earnings at $200-210; CCL put spread 0.5%. Caught: JD date was wrong, Cohen ~$97M not $200M,
     GameStop's BTC is pledged, the 5 put bets were one correlated bet)*
 
+38. **Spark Meitav (sparkmeitav.ordernet.co.il): where do I get an API key?** (Sham, 2026-11-11).
+    *(answered in Telegram 2026-11-11: no official API or key; Spark logs in with username + password and uses a
+    temporary token. Unofficial tools: ordernet (PyPI), spark-ordernet-mcp (read-only), ordernet-api (npm).
+    Offered to set up the read-only one; waiting for Sham)*
+
 ## Done
 
 - 88-key keyboard, listening through the mic, note names (C D E / Do Re Mi), grand staff
