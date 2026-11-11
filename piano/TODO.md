@@ -131,6 +131,10 @@ Live app: https://mrboby1.github.io/sham/piano/
     "What about Discord?": possible and free; a bot in a voice channel + Deepgram + a synthetic voice, a few seconds'
     delay, about a day to build. Asked Gabi to approve)*
 
+41. **Set up Discord voice calls with lead.sham** (Sham, 2026-11-11, "Ok let's set up"): a Discord bot in a voice
+    channel; Deepgram hears (speech to text) and speaks (Deepgram's voice), and lead.sham answers. Code in sham/voice.
+    Needs: a Discord bot token in sham/voice/discord_token.txt, the bot added to a server, Gabi restarting the session.
+
 ## Done
 
 - 88-key keyboard, listening through the mic, note names (C D E / Do Re Mi), grand staff
