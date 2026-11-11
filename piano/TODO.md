@@ -133,7 +133,9 @@ Live app: https://mrboby1.github.io/sham/piano/
 
 41. **Set up Discord voice calls with lead.sham** (Sham, 2026-11-11, "Ok let's set up"): a Discord bot in a voice
     channel; Deepgram hears (speech to text) and speaks (Deepgram's voice), and lead.sham answers. Code in sham/voice.
-    Needs: a Discord bot token in sham/voice/discord_token.txt, the bot added to a server, Gabi restarting the session.
+    *(built 2026-11-11: sham/voice/discord (server.mjs, README.md); hearing and the voice tested with Deepgram.
+    Waiting for: the bot token (save-token.ps1), the bot added to a Discord server, Sham's and Gabi's Discord ids in
+    access.json, and Gabi restarting with start-sham-trader.ps1 -Voice. English voice only)*
 
 ## Done
 
