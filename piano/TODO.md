@@ -135,7 +135,8 @@ Live app: https://mrboby1.github.io/sham/piano/
     channel; Deepgram hears (speech to text) and speaks (Deepgram's voice), and lead.sham answers. Code in sham/voice.
     *(built 2026-11-11: sham/voice/discord (server.mjs, README.md); hearing and the voice tested with Deepgram.
     Waiting for: the bot token (save-token.ps1), the bot added to a Discord server, Sham's and Gabi's Discord ids in
-    access.json, and Gabi restarting with start-sham-trader.ps1 -Voice. English voice only)*
+    access.json, and Gabi restarting with start-sham-trader.ps1 -Voice. English voice only. Gabi asked lead.gibbs to do the Discord
+    setup; request sent 2026-11-11)*
 
 ## Done
 
