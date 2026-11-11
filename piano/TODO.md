@@ -135,8 +135,9 @@ Live app: https://mrboby1.github.io/sham/piano/
     channel; Deepgram hears (speech to text) and speaks (Deepgram's voice), and lead.sham answers. Code in sham/voice.
     *(built 2026-11-11: sham/voice/discord (server.mjs, README.md); hearing and the voice tested with Deepgram.
     Waiting for: the bot token (save-token.ps1), the bot added to a Discord server, Sham's and Gabi's Discord ids in
-    access.json, and Gabi restarting with start-sham-trader.ps1 -Voice. English voice only. Gabi asked lead.gibbs to do the Discord
-    setup; request sent 2026-11-11)*
+    access.json, and Gabi restarting with start-sham-trader.ps1 -Voice. English voice only. lead.gibbs did the Discord setup the same day:
+    bot lead.sham#1572, server "Sham Trader" (voice channel General), token saved encrypted, Gabi allowed; the bridge
+    logs in fine. Left: Sham joins the server (invite sent in Telegram) and Gabi restarts lead.sham with -Voice)*
 
 42. **Postal code (מיקוד) for Golda Meir 32, Holon** (Sham, 2026-11-11). *(answered in Telegram 2026-11-11: 5845431, from the
     Israel Post zip lookup)*
