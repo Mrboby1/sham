@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Piano Notes</title>
-<meta name="description" content="Shows the piano keys you play, the notes on a staff, and what comes next in tunes it knows.">
+<title>Whistle to Notes</title>
+<meta name="description" content="Whistle or hum a tune and see it as piano notes: live on the keys, cleaned up into a note list you can play back, save and practise.">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Piano Notes">
@@ -17,469 +17,173 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
 <style>
-/* Layout: one screen, top to bottom - controls, the note you're playing, a grand staff, the tune it
-   recognised, then the full 88-key keyboard you swipe sideways. Dark lacquer by default (it sits on a
-   music stand), with a light version. Brass = sounding now, teal = play next. */
+/* Same lacquer look as the Piano and Ear pages. Brass = what you whistled, teal = playing back. */
 :root {
-  --bg: #121519;
-  --panel: #1a1e24;
-  --line: #2a3039;
-  --ink: #eceae4;
-  --muted: #8f97a3;
-  --brass: #e2b04e;
-  --lh: #f0645c;
-  --brass-ink: #1d1606;
-  --teal: #4fcac0;
-  --danger: #ff8a7a;
-  --ivory: #f7f4ec;
-  --ivory-edge: #c9c5ba;
-  --ebony: #1a1c20;
-  --ebony-top: #3a3e46;
+  --bg: #121519; --panel: #1a1e24; --line: #2a3039; --ink: #eceae4; --muted: #8f97a3;
+  --brass: #e2b04e; --brass-ink: #1d1606; --teal: #4fcac0; --danger: #ff8a7a;
+  --ivory: #f7f4ec; --ivory-edge: #c9c5ba; --ebony: #1a1c20; --lane: #161a1f;
   --font-display: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
   --font-ui: "Atkinson Hyperlegible", -apple-system, "Segoe UI", system-ui, sans-serif;
-  --wkey: 34px;
   color-scheme: dark;
 }
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
     --bg: #edeff2; --panel: #ffffff; --line: #d6dae1; --ink: #16191e; --muted: #5d6573;
-    --brass: #b07d12; --brass-ink: #ffffff; --teal: #0d8a81; --danger: #b3261e; --lh: #c8322b;
-    --ivory-edge: #b9b5aa; color-scheme: light;
+    --brass: #b07d12; --brass-ink: #ffffff; --teal: #0d8a81; --danger: #b3261e;
+    --ivory-edge: #b9b5aa; --lane: #e4e7ec; color-scheme: light;
   }
 }
 :root[data-theme="light"] {
   --bg: #edeff2; --panel: #ffffff; --line: #d6dae1; --ink: #16191e; --muted: #5d6573;
-  --brass: #b07d12; --brass-ink: #ffffff; --teal: #0d8a81; --danger: #b3261e; --lh: #c8322b;
-  --ivory-edge: #b9b5aa; color-scheme: light;
+  --brass: #b07d12; --brass-ink: #ffffff; --teal: #0d8a81; --danger: #b3261e;
+  --ivory-edge: #b9b5aa; --lane: #e4e7ec; color-scheme: light;
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-html, body { height: 100%; }
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--ink);
-  font: 15px/1.4 var(--font-ui);
-  -webkit-text-size-adjust: 100%;
-  -webkit-tap-highlight-color: transparent;
-}
+html, body { min-height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.4 var(--font-ui); -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; }
 .app {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding-top: max(10px, env(safe-area-inset-top, 0px));
-  padding-bottom: max(12px, env(safe-area-inset-bottom, 0px));
+  max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px;
+  padding: max(10px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
 }
-.wrap {
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-}
-.top, .middle { display: flex; flex-direction: column; gap: 12px; }
-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-/* Upright phone: the page scrolls, so the header (Piano/Ear tabs) sticks to the top (Sham, 2026-11-10).
-   .top steps aside (display: contents) so the header can stick for the whole page, not just .top. */
-@media not all and (orientation: landscape) and (min-width: 560px) {
-  .top { display: contents; }
-  .top > * { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-  /* the tabs never shrink: with the "Tuned" badge showing, the header wraps instead (Sham, 2026-11-10) */
-  .top > header { flex-wrap: wrap; row-gap: 6px; }
-  .top > header h1 { white-space: nowrap; }
-  .top > header .tabs { flex: none; }
-  .top > header .tuned { order: 5; }
-  .top > header { position: sticky; top: 0; z-index: 30; background: var(--bg); padding-top: max(8px, env(safe-area-inset-top, 0px)); padding-bottom: 8px; margin-top: calc(-1 * max(10px, env(safe-area-inset-top, 0px))); }
-}
-h1 { margin: 0; font: 700 22px/1.1 var(--font-display); letter-spacing: 0.01em; }
-.status { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 6px; }
-.status i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); display: inline-block; }
-.status.on i { background: var(--brass); box-shadow: 0 0 0 4px color-mix(in srgb, var(--brass) 25%, transparent); }
-
-.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-button, .seg label {
-  font: 700 14px/1 var(--font-ui);
-  color: var(--ink);
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 10px 12px;
-  min-height: 40px;
-  cursor: pointer;
-  touch-action: manipulation;
-}
-button:focus-visible, .seg input:focus-visible + label { outline: 2px solid var(--teal); outline-offset: 2px; }
-#listen { background: var(--brass); color: var(--brass-ink); border-color: transparent; padding-inline: 16px; }
-#listen.on { background: transparent; color: var(--brass); border-color: var(--brass); }
-.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
-.seg input { position: absolute; opacity: 0; pointer-events: none; }
-.seg label { border: 0; border-radius: 0; background: transparent; color: var(--muted); }
-.seg input:checked + label { background: var(--panel); color: var(--ink); box-shadow: inset 0 -2px 0 var(--teal); }
-.ghost { background: transparent; color: var(--muted); }
+header { display: flex; align-items: center; justify-content: space-between; gap: 10px 12px; flex-wrap: wrap; }
+h1 { margin: 0; font: 700 22px/1.1 var(--font-display); white-space: nowrap; }
 .tabs { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
 .tabs a { font: 700 14px/1 var(--font-ui); color: var(--muted); text-decoration: none; padding: 10px 14px; min-height: 40px; display: inline-flex; align-items: center; }
 .tabs a[aria-current="page"] { color: var(--ink); background: var(--panel); box-shadow: inset 0 -2px 0 var(--teal); }
 
-.msg { margin: 0; color: var(--danger); font-size: 14px; }
+button, .filebtn { font: 700 15px/1 var(--font-ui); border-radius: 10px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); min-height: 44px; padding: 0 16px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+button:disabled { opacity: 0.45; cursor: default; }
+button:focus-visible, .filebtn:focus-within, a:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+.primary { background: var(--brass); color: var(--brass-ink); border-color: var(--brass); }
 
-.now { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; align-items: center; min-height: 86px; }
-.big { font: 700 56px/0.95 var(--font-display); min-width: 2.4ch; font-variant-numeric: lining-nums; }
-.big.idle { color: var(--muted); font-weight: 500; }
-.big sub { font-size: 0.42em; vertical-align: baseline; margin-left: 2px; font-weight: 500; }
-.detail { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-.alt { font-size: 17px; }
-.freq { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.meter { position: relative; height: 8px; border-radius: 4px; background: var(--line); max-width: 220px; }
-.meter::after { content: ""; position: absolute; left: 50%; top: -3px; bottom: -3px; width: 2px; margin-left: -1px; background: var(--muted); }
-.meter b { position: absolute; top: 0; width: 10px; height: 8px; margin-left: -5px; border-radius: 4px; background: var(--brass); left: 50%; transition: left 80ms linear; }
-.meter.off b { display: none; }
+.hero { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 16px; }
+.mic { width: 96px; height: 96px; border-radius: 50%; padding: 0; flex-direction: column; gap: 4px; font-size: 14px; background: var(--brass); color: var(--brass-ink); border: 0; position: relative; }
+.mic svg { width: 32px; height: 32px; }
+.mic.on { background: var(--danger); color: #1d0b08; }
+.mic.on::after { content: ""; position: absolute; inset: -6px; border-radius: 50%; border: 3px solid var(--danger); opacity: 0.5; transform: scale(var(--lvl, 1)); transition: transform 60ms linear; }
+.now { min-width: 0; }
+.big { font: 700 56px/1 var(--font-display); letter-spacing: -0.01em; min-height: 56px; }
+.big.idle { color: var(--muted); }
+.sub { color: var(--muted); margin-top: 6px; min-height: 21px; }
+.cents { height: 6px; background: var(--line); border-radius: 3px; margin-top: 10px; position: relative; max-width: 240px; }
+.cents b { position: absolute; top: -3px; width: 4px; height: 12px; border-radius: 2px; background: var(--brass); left: calc(50% - 2px); transition: left 80ms linear; }
+.cents::before { content: ""; position: absolute; left: 50%; top: -4px; bottom: -4px; width: 1px; background: var(--muted); }
 
-.staff { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
-#staff { display: block; width: 100%; height: 206px; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg label { padding: 0 14px; min-height: 42px; display: inline-flex; align-items: center; color: var(--muted); font-weight: 700; cursor: pointer; }
+.seg input:checked + label { background: var(--panel); color: var(--ink); box-shadow: inset 0 -2px 0 var(--teal); }
+.seg input:focus-visible + label { outline: 2px solid var(--teal); outline-offset: -2px; }
+.oct { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.oct button { border: 0; border-radius: 0; min-width: 44px; padding: 0 12px; background: transparent; }
+.oct output { min-width: 112px; text-align: center; font-weight: 700; padding: 0 4px; cursor: pointer; }
+.filebtn input { position: absolute; width: 1px; height: 1px; opacity: 0; }
 
-.song { display: flex; flex-direction: column; gap: 8px; min-height: 64px; }
-.song h2 { margin: 0; font: 500 13px/1.2 var(--font-ui); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
-.song .title { font: 700 20px/1.2 var(--font-display); }
-.song .title small { font: 400 13px var(--font-ui); color: var(--muted); margin-left: 6px; }
-.chips { display: flex; flex-wrap: wrap; gap: 6px; }
-.chip { font-size: 14px; font-weight: 700; padding: 5px 10px; border-radius: 999px; border: 1.5px solid var(--teal); color: var(--teal); font-variant-numeric: tabular-nums; }
-.chip:first-child { background: var(--teal); color: var(--bg); }
-.handbox { display: flex; gap: 12px; align-items: center; }
-#hand { width: 58px; height: 56px; flex: none; }
-.chip.fchip { border-color: var(--fc); color: var(--fc); }
-.chip.fchip:first-child { background: var(--fc); color: #fff; box-shadow: 0 0 0 2px var(--ink); }
-.now.practising .meter, .now.practising .handkey, .now.practising .freq { display: none; }
-#hand .palm { fill: var(--line); }
-#hand .finger rect { fill: var(--line); stroke: var(--muted); stroke-width: 1; }
-#hand .finger text { fill: var(--muted); font: 700 11px var(--font-ui); text-anchor: middle; }
-#hand .finger[data-f="1"] rect { fill: #e93d82; }
-#hand .finger[data-f="2"] rect { fill: #f76b15; }
-#hand .finger[data-f="3"] rect { fill: #29a383; }
-#hand .finger[data-f="4"] rect { fill: #3e63dd; }
-#hand .finger[data-f="5"] rect { fill: #8e4ec6; }
-#hand .finger text { fill: #fff; }
-#hand .finger:not(.on) { opacity: 0.45; }
-#hand .finger.on rect { stroke: var(--ink); stroke-width: 2.5; }
-.handside { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-.handside p { margin: 0; font-size: 13px; }
-.seg-sm label { min-height: 28px; padding: 4px 6px; font-size: 11px; white-space: nowrap; }
-.handside .seg { align-self: flex-start; max-width: 100%; }
-.key.next.first { box-shadow: inset 0 0 0 4px var(--teal); }
-.key.next:not(.first) .ord { background: transparent; color: var(--teal); border: 2px solid var(--teal); }
-.hint { color: var(--muted); font-size: 14px; margin: 0; }
-.lockline { font-size: 12px; color: var(--muted); }
-.tuned { font-size: 11px; font-weight: 700; letter-spacing: 0.04em; color: var(--teal); border: 1px solid var(--teal); border-radius: 999px; padding: 2px 8px; white-space: nowrap; }
-.cal {
-  position: fixed; z-index: 20;
-  top: calc(env(safe-area-inset-top, 0px) + 12px);
-  left: max(16px, env(safe-area-inset-left, 0px)); right: max(16px, env(safe-area-inset-right, 0px));
-  max-width: 560px; margin-inline: auto;
-  background: var(--panel); border: 1.5px solid var(--teal); border-radius: 14px;
-  padding: 14px 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-  display: flex; flex-direction: column; gap: 8px;
-}
-.cal h2 { margin: 0; font: 700 18px/1.2 var(--font-display); }
-.cal p { margin: 0; }
-.calprog { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
-.calbtns { display: flex; flex-wrap: wrap; gap: 8px; }
-#calSave, #recSave, #recStart { background: var(--teal); color: #071b19; border-color: transparent; }
-#recSave:disabled { opacity: 0.45; cursor: default; }
-.songsbtn { border-color: var(--teal); color: var(--teal); }
-.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-input[type=text], input[type=search] {
-  font: 15px var(--font-ui); color: var(--ink); background: var(--bg);
-  border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px; min-height: 40px; min-width: 0;
-}
-input:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
-.rec { display: flex; flex-direction: column; gap: 8px; }
-.rec p { margin: 0; font-weight: 700; color: var(--danger); }
-.songhead { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
-.linkbtn { background: none; border: 0; padding: 0; min-height: 0; color: var(--teal); font-size: 12px; text-decoration: underline; }
-.sheet {
-  position: fixed; z-index: 30;
-  inset: calc(env(safe-area-inset-top, 0px) + 10px) max(16px, env(safe-area-inset-right, 0px)) calc(env(safe-area-inset-bottom, 0px) + 10px) max(16px, env(safe-area-inset-left, 0px));
-  max-width: 640px; margin-inline: auto;
-  background: var(--panel); border: 1px solid var(--line); border-radius: 16px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
-  padding: 14px 16px; display: flex; flex-direction: column; gap: 10px;
-}
-.sheethead { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-.sheet h2 { margin: 0; font: 700 22px/1.1 var(--font-display); }
-.sheet .hint { font-size: 13px; }
-.sheettools { display: flex; gap: 8px; flex-wrap: wrap; }
-.sheettools input { flex: 1 1 180px; }
-.songlist { overflow-y: auto; -webkit-overflow-scrolling: touch; min-height: 0; flex: 1; display: flex; flex-direction: column; gap: 6px; padding-bottom: 6px; }
-.songlist h3 { margin: 8px 0 2px; font: 500 12px/1.2 var(--font-ui); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
-.songrow { display: flex; gap: 6px; }
-.songbtn { flex: 1; display: flex; justify-content: space-between; align-items: center; gap: 10px; text-align: left; font-weight: 700; background: var(--bg); }
-.songbtn small { font-weight: 400; color: var(--muted); font-size: 12px; white-space: nowrap; }
-/* Songs / Exercises and level filters; level shown as a coloured dot (Sham, 2026-11-10) */
-.sheetfilters { display: flex; gap: 8px; flex-wrap: wrap; }
-.sheetfilters .seg label { padding: 8px 10px; }
-.songbtn > span { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.songbtn .tip { font-weight: 400; font-size: 12px; color: var(--muted); white-space: normal; }
-.lvl { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: 1px; }
-.lvl.beginner { background: #3fb27f; } .lvl.intermediate { background: #e2b04e; } .lvl.advanced { background: #e5484d; }
-.both { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--teal); border: 1px solid var(--teal); border-radius: 999px; padding: 0 6px; margin-left: 6px; vertical-align: 1px; }
-.nowtip { font-size: 13px; color: var(--muted); margin: 4px 0 0; }
-.delbtn { flex: none; }
-.key.clearkey { box-shadow: inset 0 -5px 0 var(--danger); }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 12px; }
+.trace { width: 100%; height: 220px; display: block; border-radius: 10px; touch-action: pan-y; }
+.legend { display: flex; gap: 16px; color: var(--muted); font-size: 13px; margin-top: 8px; flex-wrap: wrap; }
+.legend span::before { content: ""; display: inline-block; width: 14px; height: 4px; border-radius: 2px; margin-right: 6px; vertical-align: middle; background: var(--brass); }
+.legend .raw::before { height: 2px; background: var(--muted); }
+.legend .play::before { background: var(--teal); }
 
-.kbd-scroll {
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 6px;
-  margin-top: auto;
-  scrollbar-width: thin;
-}
-.kbd { position: relative; height: 190px; margin-inline: max(16px, env(safe-area-inset-left, 0px)); }
-.key { position: absolute; top: 0; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; user-select: none; -webkit-user-select: none; touch-action: pan-x; }
-.white {
-  width: var(--wkey); height: 100%;
-  background: linear-gradient(var(--ivory) 80%, #ece8de);
-  border: 1px solid var(--ivory-edge);
-  border-top: 0;
-  border-radius: 0 0 6px 6px;
-  color: #6b6658;
-  font-size: 11px;
-  padding-bottom: 8px;
-  z-index: 1;
-}
-.white .nm { font-weight: 700; }
-.white.c .nm { color: #22201b; font-size: 12px; }
-.black {
-  width: calc(var(--wkey) * 0.62); height: 62%;
-  background: linear-gradient(var(--ebony-top), var(--ebony) 12%);
-  border: 1px solid #000;
-  border-top: 0;
-  border-radius: 0 0 4px 4px;
-  color: #c8c4b8;
-  font-size: 9px;
-  padding-bottom: 6px;
-  z-index: 2;
-}
-.black .nm { visibility: hidden; }
-.key.on { background: var(--brass); border-color: color-mix(in srgb, var(--brass) 70%, #000); color: var(--brass-ink); }
-.key.on.lh { background: var(--lh); border-color: color-mix(in srgb, var(--lh) 70%, #000); color: #fff; }
-.key.on.lh .nm { color: #fff; }
-.big .lh { color: var(--lh); }
-.handkey { display: inline-flex; gap: 10px; font-size: 12px; color: var(--muted); }
-.handkey b { font-weight: 700; }
-.handkey .l { color: var(--lh); }
-.handkey .r { color: var(--brass); }
-.key.on .nm { visibility: visible; color: var(--brass-ink); }
-.key.next { box-shadow: inset 0 0 0 3px var(--teal); }
-.key.next .nm { visibility: visible; }
-.key .ord { display: none; width: min(20px, calc(var(--wkey) - 2px)); aspect-ratio: 1; border-radius: 50%; background: var(--teal); color: #071b19; font-size: min(12px, calc(var(--wkey) * 0.6)); font-weight: 700; align-items: center; justify-content: center; margin-bottom: 6px; }
-.key.next .ord { display: flex; }
-.black .ord { width: min(16px, calc(var(--wkey) * 0.6)); }
-.foot { font-size: 12px; color: var(--muted); }
+.kbd { width: 100%; height: 110px; display: block; }
 
-/* All 88 keys always fit the width. Narrow keys drop their labels (C keys keep the octave). */
-.kbd-scroll { overflow: hidden; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-.kbd { margin-inline: 0; }
-.kbd.slim .white:not(.c) .nm { visibility: hidden; }
-.kbd.slim .white .nm { font-size: 9px; }
-.kbd.slim .white { padding-bottom: 4px; }
-.kbd.tiny .nm { display: none; }
-.kbd.tiny { height: 120px; }
-.kbd.slim .key.on .nm, .kbd.slim .key.next .nm { visibility: visible; }
-.kbd.slim .black .nm, .kbd.slim .key.next .nm { display: none; }
-.rotate { display: none; }
-@media (orientation: portrait) and (max-width: 700px) { .rotate { display: inline; } }
-@media (min-width: 900px) { .big { font-size: 68px; } }
+.notes { display: flex; flex-wrap: wrap; gap: 6px; min-height: 44px; }
+.chip { min-height: 40px; min-width: 48px; padding: 0 10px; font-size: 16px; border-radius: 8px; background: var(--bg); }
+.chip.now { background: var(--teal); color: var(--bg); border-color: var(--teal); }
+.empty { color: var(--muted); margin: 6px 0; }
+h2 { font: 700 18px/1.2 var(--font-display); margin: 0 0 10px; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+h2 small { font: 400 13px/1 var(--font-ui); color: var(--muted); }
+.actions { margin-top: 12px; }
+.save { margin-top: 10px; }
+.save input { font: 16px var(--font-ui); min-height: 44px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); padding: 0 12px; flex: 1; min-width: 160px; }
+.msg { margin: 0; padding: 10px 12px; border-radius: 10px; background: color-mix(in srgb, var(--danger) 14%, var(--panel)); border: 1px solid color-mix(in srgb, var(--danger) 40%, var(--line)); }
+.ok { color: var(--teal); font-weight: 700; }
+.ok a { color: inherit; }
+.tips { color: var(--muted); font-size: 14px; margin: 0; padding-left: 18px; }
+.tips li { margin: 2px 0; }
 
-/* Widescreen: phone turned sideways (or any wide screen) - one screen, nothing scrolls.
-   Top: controls in one row. Middle: note | staff | tune. Bottom: the keyboard fills the rest. */
-@media (orientation: landscape) and (min-width: 560px) {
-  html, body { overflow: hidden; }
-  .app { height: 100%; min-height: 0; gap: 8px; padding-top: max(6px, env(safe-area-inset-top, 0px)); padding-bottom: max(6px, env(safe-area-inset-bottom, 0px)); }
-  .top { flex-direction: row; align-items: center; gap: 14px; }
-  .top header { flex: none; flex-direction: column; align-items: flex-start; gap: 2px; }
-  .top h1 { font-size: 18px; }
-  .tabs a { min-height: 28px; padding: 5px 10px; font-size: 12px; }
-  .controls { padding: 0; flex-wrap: nowrap; overflow-x: auto; min-width: 0; scrollbar-width: none; }
-  .controls > * { flex: none; }
-  .sheet > .hint { display: none; } /* more room for the list when sideways */
-  button, .seg label { min-height: 34px; padding: 7px 10px; font-size: 13px; white-space: nowrap; }
-  .long { display: none; }
-  .middle { display: grid; grid-template-columns: minmax(150px, 0.8fr) 2fr minmax(170px, 0.9fr); gap: 12px; align-items: stretch; min-height: 0; flex: 0 1 auto; }
-  .middle > * { padding-inline: 0; min-width: 0; }
-  .now { grid-template-columns: 1fr; min-height: 0; align-content: center; gap: 2px; }
-  .big { font-size: 44px; }
-  .alt { font-size: 14px; }
-  .meter { max-width: none; }
-  #staff { height: 140px; }
-  .song { min-height: 0; justify-content: center; }
-  .song .title { font-size: 17px; }
-  .chip { font-size: 12px; padding: 3px 8px; }
-  .hint { font-size: 13px; }
-  .kbd-scroll { flex: 1 1 auto; min-height: 90px; display: flex; padding-bottom: 0; margin-top: 0; }
-  .kbd, .kbd.tiny { height: auto; flex: 1; }
-  .foot { display: none; }
+@media (max-width: 520px) {
+  .hero { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+  .cents { margin-left: auto; margin-right: auto; }
+  .trace { height: 190px; }
+  .big { font-size: 48px; }
 }
-@media (orientation: landscape) and (min-width: 560px) {
-  body.playing .middle { display: block; flex: none; }
-  body.playing .song .chips:not(.lockline) { display: none; }
-  body.playing .now, body.playing .songhead { display: none; }
-  body.playing .song { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 4px 12px; min-height: 0; }
-  body.playing .song .title { font-size: 16px; }
-  body.playing .rollwrap { flex: 1 1 auto; height: auto; min-height: 70px; }
-  body.playing .kbd-scroll { flex: 0 0 auto; height: 34vh; min-height: 90px; }
-  body.playing .now .big { font-size: 34px; }
-}
-@media (orientation: landscape) and (min-width: 560px) and (min-height: 600px) {
-  #staff { height: 170px; }
-  .big { font-size: 60px; }
-}
-.rollctl { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
-.rollctl button { min-height: 32px; padding: 5px 12px; }
-.rollctl input[type=range] { width: 130px; accent-color: var(--teal); }
-.rollctl output { min-width: 3.2em; font-variant-numeric: tabular-nums; color: var(--ink); font-weight: 700; }
-/* Play-along: the falling-notes waterfall takes the staff's place, right above the keyboard. */
-.rollwrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-#roll { display: block; width: 100%; height: 100%; background: color-mix(in srgb, var(--panel) 70%, var(--bg)); border-radius: 10px 10px 0 0; }
-body.playing .staff { display: none; }
-body.playing .rollwrap { height: 220px; }
-body.playing .kbd-scroll { margin-top: 0; }
-/* Fingering on the keyboard: only the key to play now is coloured, filled with its finger's colour
-   (no frame). Upcoming keys keep their normal colour with a small numbered dot.
-   The hand layer floats above the keys and never takes taps. */
-.kbd.fingered .key.next { box-shadow: none; }
-.kbd.fingered .key.next .ord { background: var(--fc); color: #fff; border: 0; }
-.kbd.fingered .key.next.first { background: var(--fc); }
-.kbd.fingered .key.next.first .ord { background: transparent; color: #fff; font-size: 1.15em; }
-.handover { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; overflow: visible; }
-.handover g { transition: transform 0.25s ease; }
-.handover .hpalm { fill: var(--panel); stroke: var(--muted); stroke-width: 1; opacity: 0.92; }
-.handover text { fill: #fff; font-family: var(--font-ui); font-weight: 700; text-anchor: middle; }
-@media (prefers-reduced-motion: reduce) { .meter b, .handover g { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .mic.on::after, .cents b { transition: none; } }
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="top wrap">
   <header>
-    <h1>Piano Notes</h1>
-    <nav class="tabs" aria-label="Sections"><a href="./" aria-current="page">Piano</a><a href="ear.html">Ear</a></nav>
-    <div class="status" id="status"><i></i><span>Mic off</span></div>
-    <div class="tuned" id="tuned" hidden></div>
+    <h1>Whistle to Notes</h1>
+    <nav class="tabs" aria-label="Sections"><a href="./" aria-current="page">Whistle</a><a href="piano.html">Piano</a><a href="ear.html">Ear</a></nav>
   </header>
 
-  <div class="controls">
-    <button id="listen" type="button">Listen</button>
-    <button id="songsBtn" type="button" class="songsbtn">Songs</button>
-    <div class="seg" role="radiogroup" aria-label="What to listen for">
-      <input type="radio" name="mode" id="mode-single" value="single" checked><label for="mode-single">Notes</label>
-      <input type="radio" name="mode" id="mode-chords" value="chords"><label for="mode-chords">Chords</label>
+  <section class="hero" aria-live="polite">
+    <button id="mic" class="mic" type="button" aria-label="Start listening">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+      <span id="micText">Whistle</span>
+    </button>
+    <div class="now">
+      <div class="big idle" id="big">&ndash;</div>
+      <div class="sub" id="sub">Tap the mic and whistle (or hum) a tune.</div>
+      <div class="cents" id="cents" title="How far from the exact note: centre = spot on"><b id="needle"></b></div>
     </div>
+  </section>
+
+  <p class="msg" id="msg" hidden></p>
+
+  <div class="row">
     <div class="seg" role="radiogroup" aria-label="Note names">
       <input type="radio" name="names" id="names-letter" value="letter" checked><label for="names-letter">C D E</label>
       <input type="radio" name="names" id="names-solfege" value="solfege"><label for="names-solfege">Do Re Mi</label>
     </div>
-    <button id="demo" type="button" class="ghost">Demo</button>
-    <button id="clear" type="button" class="ghost">Clear</button>
-    <button id="tune" type="button" class="ghost">Tune<span class="long"> to my</span> piano</button>
-  </div>
-  </div>
-  <p class="msg wrap" id="msg" hidden></p>
-
-  <div class="sheet" id="songs" role="dialog" aria-labelledby="songsTitle" hidden>
-    <div class="sheethead">
-      <h2 id="songsTitle">Songs</h2>
-      <button id="songsClose" type="button" class="ghost">Close</button>
+    <div class="oct" role="group" aria-label="Octave">
+      <button id="octDown" type="button" aria-label="One octave lower">&minus;</button>
+      <output id="octOut" title="Tap for automatic">Octave: auto</output>
+      <button id="octUp" type="button" aria-label="One octave higher">+</button>
     </div>
-    <p class="hint">Pick a piece or an exercise to play along with. Classical pieces are complete, from free Mutopia Project scores (right-hand melody). Pieces marked <b>both hands</b> follow both hands.</p>
-    <div class="sheetfilters">
-      <div class="seg" role="radiogroup" aria-label="Songs or exercises">
-        <input type="radio" name="libkind" id="lk-song" value="song" checked><label for="lk-song">Songs</label>
-        <input type="radio" name="libkind" id="lk-exercise" value="exercise"><label for="lk-exercise">Exercises</label>
-      </div>
-      <div class="seg" role="radiogroup" aria-label="Level">
-        <input type="radio" name="liblevel" id="ll-all" value="all" checked><label for="ll-all">All</label>
-        <input type="radio" name="liblevel" id="ll-beginner" value="beginner"><label for="ll-beginner">Beginner</label>
-        <input type="radio" name="liblevel" id="ll-intermediate" value="intermediate"><label for="ll-intermediate">Middle</label>
-        <input type="radio" name="liblevel" id="ll-advanced" value="advanced"><label for="ll-advanced">Advanced</label>
-      </div>
-    </div>
-    <div class="sheettools">
-      <label class="sr" for="songSearch">Find a piece</label>
-      <input id="songSearch" type="search" placeholder="Find a piece or composer" autocomplete="off">
-      <button id="recStart" type="button">Record my own</button>
-    </div>
-    <div class="songlist" id="songList"></div>
+    <label class="filebtn"><input id="file" type="file" accept="audio/*,video/*">Upload a recording</label>
   </div>
 
-  <div class="cal" id="cal" role="dialog" aria-labelledby="calTitle" hidden>
-    <h2 id="calTitle">Tune to my piano</h2>
-    <p id="calText"></p>
-    <p class="calprog" id="calProg"></p>
-    <div class="calbtns">
-      <button id="calSave" type="button" hidden>Save</button>
-      <button id="calSkip" type="button" class="ghost" hidden>Skip this key</button>
-      <button id="calCancel" type="button" class="ghost">Cancel</button>
-      <button id="calReset" type="button" class="ghost">Forget tuning</button>
-    </div>
-  </div>
-
-  <div class="middle wrap">
-  <section class="now" aria-live="polite">
-    <div class="big idle" id="big">&ndash;</div>
-    <div class="detail">
-      <div class="alt" id="alt">Tap <b>Listen</b> and play, or tap the keys.</div>
-      <div class="freq" id="freq">Middle C is C4 (Do).</div>
-      <div class="handkey"><b class="l">● Left hand</b><b class="r">● Right hand</b></div>
-      <div class="meter off" id="meter" title="Tuning: centre = in tune"><b id="needle"></b></div>
-      <div class="handbox" id="handbox" hidden>
-        <svg id="hand" viewBox="0 0 104 100" role="img" aria-label="Right hand, fingers numbered 1 (thumb) to 5 (little finger)">
-          <rect class="palm" x="26" y="54" width="70" height="42" rx="16"/>
-          <g class="finger" data-f="1"><rect x="4" y="52" width="17" height="34" rx="8.5" transform="rotate(-28 12 69)"/><text x="10" y="60">1</text></g>
-          <g class="finger" data-f="2"><rect x="28" y="16" width="15" height="46" rx="7.5"/><text x="35.5" y="30">2</text></g>
-          <g class="finger" data-f="3"><rect x="46" y="6" width="15" height="56" rx="7.5"/><text x="53.5" y="20">3</text></g>
-          <g class="finger" data-f="4"><rect x="64" y="12" width="15" height="50" rx="7.5"/><text x="71.5" y="26">4</text></g>
-          <g class="finger" data-f="5"><rect x="82" y="28" width="13" height="36" rx="6.5"/><text x="88.5" y="41">5</text></g>
-        </svg>
-        <div class="handside">
-          <p id="handText"></p>
-          <div class="seg seg-sm" role="radiogroup" aria-label="Numbers on the keys">
-            <input type="radio" name="keynums" id="keynums-finger" value="finger" checked><label for="keynums-finger">Finger</label>
-            <input type="radio" name="keynums" id="keynums-order" value="order"><label for="keynums-order">Order</label>
-          </div>
-        </div>
-      </div>
-    </div>
+  <section class="card">
+    <canvas class="trace" id="trace" aria-label="Your pitch over time: the line is what you whistled, the bars are the notes found"></canvas>
+    <div class="legend"><span class="raw">your whistle</span><span>notes found</span><span class="play">playing</span></div>
   </section>
 
-  <div class="staff"><canvas id="staff" aria-label="Notes played, on a grand staff"></canvas></div>
-
-  <section class="song" id="song">
-    <div class="songhead"><h2>Tune</h2><button id="copyNotes" type="button" class="linkbtn">Copy the notes I played</button></div>
-    <div class="rec" id="rec" hidden>
-      <p id="recCount">Recording. Play your melody.</p>
-      <label class="sr" for="recName">Name</label>
-      <input id="recName" type="text" placeholder="Name it, e.g. My waltz" maxlength="40" autocomplete="off">
-      <div class="calbtns">
-        <button id="recSave" type="button" disabled>Save</button>
-        <button id="recCancel" type="button" class="ghost">Cancel</button>
-      </div>
-    </div>
-    <div class="rollctl" id="rollctl" hidden>
-      <button id="rollPlay" type="button">Pause</button>
-      <label for="speed">Speed</label>
-      <input id="speed" type="range" min="20" max="150" step="5" value="60">
-      <output id="speedOut" for="speed">60%</output>
-    </div>
-    <p class="hint" id="songHint">Tap <b>Songs</b>, pick a piece and play along. It lights up the next keys and only moves on when you play the right one.</p>
+  <section class="card">
+    <canvas class="kbd" id="kbd" aria-label="Piano keys of your tune; the lit key is the note now"></canvas>
   </section>
-  </div>
 
-  <div class="rollwrap" id="rollwrap" hidden><canvas id="roll" aria-label="Falling notes: each bar is a note over its key, as long as it is held, numbered by finger"></canvas></div>
-  <div class="kbd-scroll" id="kbdScroll"><div class="kbd" id="kbd"></div></div>
-  <div class="foot wrap">All 88 keys, A0 to C8.<span class="rotate"> Turn your phone sideways for bigger keys.</span></div>
+  <section class="card">
+    <h2>Your tune <small id="count"></small></h2>
+    <div class="notes" id="notes"><p class="empty">The notes you whistle show up here.</p></div>
+    <div class="row actions" id="actions" hidden>
+      <button id="play" type="button" class="primary">&#9654; Play</button>
+      <button id="copy" type="button">Copy notes</button>
+      <button id="clear" type="button">Clear</button>
+    </div>
+    <div class="row save" id="saveRow" hidden>
+      <input id="name" type="text" placeholder="Name it, e.g. My whistle" maxlength="40" autocomplete="off">
+      <button id="save" type="button">Save &amp; practise</button>
+    </div>
+    <p class="ok" id="saved" hidden></p>
+  </section>
+
+  <section class="card">
+    <h2>Tips</h2>
+    <ul class="tips">
+      <li>Whistle clearly, one note at a time, close to the phone. Humming works too.</li>
+      <li>For a repeated note, take a tiny breath between the two.</li>
+      <li>Whistles are high, so the tune is moved down into the piano's middle. Use &minus; / + to change the octave.</li>
+      <li>You don't need perfect pitch: it finds your own tuning and snaps to the nearest notes.</li>
+    </ul>
+  </section>
 </div>
-
 <script src="detect.js"></script>
-<script src="melody.js"></script>
-<script src="fingering.js"></script>
-<script src="app.js"></script>
+<script src="whistle-core.js"></script>
+<script src="whistle.js"></script>
 </body>
 </html>

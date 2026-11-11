@@ -142,7 +142,19 @@ Live app: https://mrboby1.github.io/sham/piano/
 42. **Postal code (מיקוד) for Golda Meir 32, Holon** (Sham, 2026-11-11). *(answered in Telegram 2026-11-11: 5845431, from the
     Israel Post zip lookup)*
 
+43. **Interactive Brokers sign-up: what goes in the tax number (TIN) field?** (Sham, 2026-11-11). *(answered in
+    Telegram 2026-11-11: no Tax Authority login needed; an Israeli's TIN is the Teudat Zehut number. Tick "I have a
+    Tax Identification Number", type the ID, leave the "no TIN" reasons empty, tax country Israel)*
+
+44. **Pivot the piano app: whistle a tune and it turns it into piano notes** (Sham, 2026-11-11). *(done 2026-11-11:
+    the Whistle page is now the home page (index.html; whistle.js, whistle-core.js, test_whistle.js). Whistle or hum
+    live, or upload a recording; it finds your own tuning, cleans the pitch line into notes, moves them down into the
+    piano's middle (octave - / +), plays them back, copies them, and saves them to your songs with a link to practise on
+    the Piano page. The old Piano page moved to piano.html; Piano and Ear stay as tabs)*
+
 ## Done
+
+- Whistle to Notes home page: whistle, hum or upload a recording, get clean piano notes, play, save and practise them
 
 - 88-key keyboard, listening through the mic, note names (C D E / Do Re Mi), grand staff
 - Widescreen layout with all 88 keys always on screen

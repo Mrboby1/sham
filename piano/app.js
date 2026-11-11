@@ -1365,5 +1365,11 @@
   buildKeyboard();
   render();
   requestAnimationFrame(() => scrollToKey(60, false));
+  // piano.html#practise=<song key>: open a song straight away (the Whistle page links here after saving)
+  const hashSong = /^#practise=(.+)$/.exec(location.hash);
+  if (hashSong) {
+    history.replaceState(null, "", location.pathname + location.search);
+    practise(decodeURIComponent(hashSong[1]));
+  }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawStaff);
 })();
