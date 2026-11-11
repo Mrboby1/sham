@@ -145,6 +145,11 @@ h2 small { font: 400 13px/1 var(--font-ui); color: var(--muted); }
       <output id="octOut" title="Tap for automatic">Octave: auto</output>
       <button id="octUp" type="button" aria-label="One octave higher">+</button>
     </div>
+    <div class="oct" role="group" aria-label="Key">
+      <button id="keyDown" type="button" aria-label="One semitone lower">&flat;</button>
+      <output id="keyOut" title="Tap to go back to the key you whistled">Key: as whistled</output>
+      <button id="keyUp" type="button" aria-label="One semitone higher">&sharp;</button>
+    </div>
     <label class="filebtn"><input id="file" type="file" accept="audio/*,video/*">Upload a recording</label>
   </div>
 
@@ -177,13 +182,14 @@ h2 small { font: 400 13px/1 var(--font-ui); color: var(--muted); }
     <ul class="tips">
       <li>Whistle clearly, one note at a time, close to the phone. Humming works too.</li>
       <li>For a repeated note, take a tiny breath between the two.</li>
-      <li>Whistles are high, so the tune is moved down into the piano's middle. Use &minus; / + to change the octave.</li>
+      <li>Whistles are high, so the tune is moved down into the piano's middle. Use &minus; / + to change the octave, and &flat; / &sharp; to move it into the key you meant (e.g. D minor).</li>
+      <li>Louder or softer doesn't make a new note; only stopping the tone does.</li>
       <li>You don't need perfect pitch: it finds your own tuning and snaps to the nearest notes.</li>
     </ul>
   </section>
 </div>
 <script src="detect.js"></script>
-<script src="whistle-core.js?v=2"></script>
-<script src="whistle.js?v=2"></script>
+<script src="whistle-core.js?v=3"></script>
+<script src="whistle.js?v=3"></script>
 </body>
 </html>

@@ -152,6 +152,16 @@ Live app: https://mrboby1.github.io/sham/piano/
     piano's middle (octave - / +), plays them back, copies them, and saves them to your songs with a link to practise on
     the Piano page. The old Piano page moved to piano.html; Piano and Ear stay as tabs)*
 
+45. **Whistle page: the Stop button doesn't work** (Sham, 2026-11-11). *(fixed 2026-11-11: a second tap while the
+    iPhone was still asking for the mic started a second microphone that Stop didn't stop. Now "Starting…", and any tap
+    cancels)*
+
+46. **Whistle page: notes come out all wrong; tell loudness apart from notes** (Sham, 2026-11-11, with a whistled
+    Toccata in D minor as the test recording). *(fixed 2026-11-11: quiet notes are no longer thrown away; louder/softer
+    never makes a new note, only a stop of the tone does; fast slides between notes are left out; each note's pitch is
+    the median of the whole note; the whistler's tuning is followed as it drifts. New Key ♭/♯ control to move the tune
+    into the key you meant. On Sham's recording: E F C♯ D comes out exactly; ornaments and fast runs are still rough)*
+
 ## Done
 
 - Whistle to Notes home page: whistle, hum or upload a recording, get clean piano notes, play, save and practise them

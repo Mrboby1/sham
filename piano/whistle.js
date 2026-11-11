@@ -13,13 +13,15 @@
     frames: [],          // [{t, midi|null, level}] whistled pitch, not shifted
     result: null,        // transcribe() output
     octave: null,        // null = automatic, else semitone shift chosen with - / +
+    semi: 0,             // key move in semitones (whistlers rarely start on the written key)
     names: store.get("names", "letter"),
     live: null,          // {midi (fractional, tuned + shifted)} while sound is coming in
     playing: -1,         // index of the note being played back
     t0: 0,
   };
   const solf = () => state.names === "solfege";
-  const shift = () => (state.octave != null ? state.octave : state.result ? state.result.shift : liveShift());
+  const octShift = () => (state.octave != null ? state.octave : state.result ? state.result.shift : liveShift());
+  const shift = () => octShift() + state.semi; // octave move + key move (semitones)
   const name = (m) => W.noteName(m, solf()).replace("#", "♯");
   const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 
@@ -247,8 +249,8 @@
     mic.classList.toggle("on", state.listening);
     mic.setAttribute("aria-label", state.listening ? "Stop listening" : "Start listening");
     $("micText").textContent = state.listening ? "Stop" : starting ? "Starting…" : "Whistle";
-    const s = shift();
-    const oct = s / 12;
+    const oct = octShift() / 12;
+    $("keyOut").textContent = state.semi ? `Key ${state.semi > 0 ? "+" : "−"}${Math.abs(state.semi)}` : "Key: as whistled";
     $("octOut").textContent = (state.octave == null ? "Octave: auto" : "Octave") + (oct ? ` (${oct > 0 ? "+" : "−"}${Math.abs(oct)})` : "");
     renderNow();
     renderNotes();
@@ -427,7 +429,11 @@
   $("clear").addEventListener("click", () => { stopPlay(); clearTune(); });
   $("save").addEventListener("click", save);
   $("name").addEventListener("keydown", (e) => { if (e.key === "Enter") save(); });
-  const nudge = (d) => { state.octave = shift() + d; if (state.playing >= 0) stopPlay(); render(); };
+  const nudge = (d) => { state.octave = octShift() + d; if (state.playing >= 0) stopPlay(); render(); };
+  const key = (d) => { state.semi = Math.max(-11, Math.min(11, state.semi + d)); if (state.playing >= 0) stopPlay(); render(); };
+  $("keyDown").addEventListener("click", () => key(-1));
+  $("keyUp").addEventListener("click", () => key(1));
+  $("keyOut").addEventListener("click", () => { state.semi = 0; render(); });
   $("octDown").addEventListener("click", () => nudge(-12));
   $("octUp").addEventListener("click", () => nudge(12));
   $("octOut").addEventListener("click", () => { state.octave = null; render(); });
