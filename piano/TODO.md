@@ -125,6 +125,9 @@ Live app: https://mrboby1.github.io/sham/piano/
     Interactive Brokers' official API (paper account first, limits, every order confirmed on Telegram) or a Meitav
     "semi-bot" that prepares orders for Sham to click. Waiting for Sham's choice)*
 
+40. **"Let's get on a call"** (Sham, 2026-11-11). *(answered in Telegram 2026-11-11: bots can't take calls; voice notes
+    back and forth instead, or call Gabi)*
+
 ## Done
 
 - 88-key keyboard, listening through the mic, note names (C D E / Do Re Mi), grand staff
