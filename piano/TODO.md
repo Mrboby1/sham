@@ -126,7 +126,8 @@ Live app: https://mrboby1.github.io/sham/piano/
     "semi-bot" that prepares orders for Sham to click. Waiting for Sham's choice)*
 
 40. **"Let's get on a call"** (Sham, 2026-11-11). *(answered in Telegram 2026-11-11: bots can't take calls; voice notes
-    back and forth instead, or call Gabi)*
+    back and forth instead, or call Gabi. "How do we get on a call?": a real call would need a phone bridge (e.g.
+    Twilio number + Deepgram + a synthetic voice), a project with costs that needs Gabi's OK)*
 
 ## Done
 
