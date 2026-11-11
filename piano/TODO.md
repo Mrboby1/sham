@@ -119,6 +119,12 @@ Live app: https://mrboby1.github.io/sham/piano/
     temporary token. Unofficial tools: ordernet (PyPI), spark-ordernet-mcp (read-only), ordernet-api (npm).
     Offered to set up the read-only one; waiting for Sham)*
 
+39. **A bot of ours connected to Sham's Meitav account that executes orders** (Sham, 2026-11-11): find out how.
+    *(answered in Telegram 2026-11-11: Meitav has no API and its terms ban scraping/reverse engineering; Spark has an
+    undocumented SendOrder call that no public tool uses; US stocks at Meitav run on ViewTrade, not Spark. Suggested
+    Interactive Brokers' official API (paper account first, limits, every order confirmed on Telegram) or a Meitav
+    "semi-bot" that prepares orders for Sham to click. Waiting for Sham's choice)*
+
 ## Done
 
 - 88-key keyboard, listening through the mic, note names (C D E / Do Re Mi), grand staff
