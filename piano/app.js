@@ -1,6 +1,8 @@
 // Piano Notes - screen, microphone loop, keyboard and staff.
 (function () {
   "use strict";
+  // Off: the falling tiles confused Sham (2026-11-11). Practice now only lights the next key to play.
+  const SHOW_ROLL = false;
   const { yinPitch, chordNotes, rms, midiToFreq, freqToMidi, A0, C8 } = window.Detect;
   const { LIBRARY, CLEAR_KEYS } = window.Melody;
 
@@ -831,7 +833,7 @@
 
   function renderKeys() {
     const calKey = cal && cal.step === "keys" ? CAL_KEYS[cal.idx] : null;
-    const next = calKey !== null ? [calKey] : state.follow ? state.follow.next.slice(0, state.follow.chord ? 8 : 4) : [];
+    const next = calKey !== null ? [calKey] : state.follow ? state.follow.next.slice(0, state.follow.chord ? 8 : 1) : []; // only the note to play now
     const allNow = !!(calKey === null && state.follow && state.follow.chord);
     for (const [m, el] of keys) {
       const on = state.sounding.includes(m);
@@ -948,7 +950,7 @@
     return p.pos < o.length ? o[p.pos] : o[o.length - 1] + p.song.durs[o.length - 1];
   }
   function animateRoll() {
-    if (roll.raf) return; // already running
+    if (!SHOW_ROLL || roll.raf) return; // off, or already running
     roll.last = performance.now();
     roll.raf = requestAnimationFrame(rollFrame);
   }
@@ -970,7 +972,7 @@
   }
   function renderRollControls() {
     const ctl = $("rollctl");
-    ctl.hidden = !state.practice;
+    ctl.hidden = !(SHOW_ROLL && state.practice);
     $("rollPlay").textContent = roll.running ? "Pause" : "Play";
     $("rollPlay").setAttribute("aria-pressed", String(!roll.running));
     $("speed").value = speed;
@@ -1106,7 +1108,7 @@
     const playing = !!state.practice;
     if (document.body.classList.contains("playing") !== playing) {
       document.body.classList.toggle("playing", playing);
-      $("rollwrap").hidden = !playing;
+      $("rollwrap").hidden = !(SHOW_ROLL && playing);
       requestAnimationFrame(() => { buildKeyboard(); renderKeys(); drawRoll(); drawStaff(); });
     }
     document.querySelector(".now").classList.toggle("practising", show);
