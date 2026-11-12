@@ -1,7 +1,7 @@
 // Recognise the sound: ear training with a deck of cards, turned over one at a time.
-// Each card is one of three games:
-//   read   - a note on the staff: play that exact key
-//   echo   - the app plays one note: play it back (any octave)
+// Each card is from one of three categories, each with several kinds of exercise (ear-exercises.js):
+//   read   - notes on the staff: play them
+//   echo   - the app plays something: play it back (any octave)
 //   melody - the app plays a short tune: play it back note by note (any octave)
 // It listens through the microphone like the main page (detect.js, and this piano's tuning from
 // "Tune to my piano" if it was done), and the keys on screen can be tapped too.
@@ -41,18 +41,6 @@
   const pcEq = (a, b) => (((a - b) % 12) + 12) % 12 === 0;
   const rand = (n) => Math.floor(Math.random() * n);
   const keys = (lo, hi, whiteOnly) => { const r = []; for (let m = lo; m <= hi; m++) if (!whiteOnly || !IS_BLACK[m % 12]) r.push(m); return r; };
-
-  // What each level asks. Melodies move by scale steps of up to `leap` within `pool`.
-  const LEVELS = {
-    easy: { read: keys(60, 72, true), echo: keys(60, 67, true), melody: { pool: keys(60, 67, true), len: 3, leap: 2 } },
-    medium: { read: keys(43, 79, true), echo: keys(60, 72, true), melody: { pool: keys(60, 72, true), len: 4, leap: 3 } },
-    hard: { read: keys(40, 84, false), echo: keys(60, 72, false), melody: { pool: keys(57, 77, true), len: 5, leap: 4 } },
-  };
-  const KIND = {
-    read: { label: "Read", ask: "Play this note" },
-    echo: { label: "Play back", ask: "Play the note you hear" },
-    melody: { label: "Melody", ask: "Repeat the melody" },
-  };
 
   // ---------------------------------------------------------------- sound
   let ctx = null;
@@ -94,67 +82,106 @@
     });
   }
   let deafUntil = 0; // the mic ignores what it hears while the phone itself is playing
-  function playNotes(seq) {
+
+  // steps: each a list of notes sounded together (a chord rings a little longer)
+  function playSteps(steps) {
     const ac = audio();
-    const t0 = ac.currentTime + 0.08, gap = 0.62, len = 0.85;
-    seq.forEach((m, i) => tone(m, t0 + i * gap, len));
-    const ms = (0.08 + (seq.length - 1) * gap + len + 0.25) * 1000;
+    const t0 = ac.currentTime + 0.08, gap = 0.62;
+    let t = t0, end = t0;
+    steps.forEach((step) => {
+      const len = step.length > 1 ? 1.4 : 0.85;
+      step.forEach((m) => tone(m, t, len));
+      end = t + len;
+      t += step.length > 1 ? 1.1 : gap;
+    });
+    const ms = (end - ac.currentTime + 0.25) * 1000;
     deafUntil = performance.now() + ms;
     det.held = null;
     return ms;
   }
 
   // ---------------------------------------------------------------- the deck
+  // Every exercise has an id. The ones already dealt are remembered per level (this phone only), so
+  // the deck never deals the same one twice unless asked: "Do again" on the card, or "Start over"
+  // (Sham, 2026-11-12: "I don't want to repeat exercises if I don't choose to").
+  const EX = window.EarExercises.EX;
   let deck = [], at = -1, right = 0, nextTimer = 0;
-  function makeCard(type, prev) {
-    const L = LEVELS[level];
-    if (type === "melody") {
-      const { pool, len, leap } = L.melody;
-      let i = Math.floor(pool.length / 4) + rand(Math.ceil(pool.length / 2));
-      const seq = [pool[i]];
-      while (seq.length < len) {
-        let j;
-        do { j = i + (rand(2 * leap + 1) - leap); } while (j === i || j < 0 || j >= pool.length);
-        i = j;
-        seq.push(pool[i]);
+  let seen = {};
+  try { seen = JSON.parse(store.get("earSeen", "{}")) || {}; } catch (e) { seen = {}; }
+  const seenSet = () => new Set(seen[level] || []);
+  function markSeen(id) {
+    const list = seen[level] || (seen[level] = []);
+    if (!list.includes(id)) list.push(id);
+    if (list.length > 6000) list.splice(0, list.length - 6000);
+    store.set("earSeen", JSON.stringify(seen));
+  }
+  const used = () => (seen[level] || []).length;
+
+  // games come from a shuffled bag so each category turns up equally often; inside a category the
+  // kinds take turns the same way
+  let bag = [], kindBags = {}, emptyKinds = new Set();
+  const shuffle = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = rand(i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  function nextKind(cat) {
+    const left = EX[cat].filter((k) => !emptyKinds.has(cat + "." + k.key));
+    if (!left.length) return null;
+    let b = (kindBags[cat] || []).filter((k) => left.includes(k));
+    if (!b.length) b = shuffle(left.slice());
+    const k = b.pop();
+    kindBags[cat] = b;
+    return k;
+  }
+  // a new exercise nobody has seen on this level, or null when every one has been done
+  function deal() {
+    const cats = games.length ? games : ["read", "echo", "melody"];
+    const done = seenSet();
+    for (let tries = 0; tries < 40; tries++) {
+      if (!bag.length) bag = shuffle(cats.slice());
+      const cat = bag.pop();
+      const kind = nextKind(cat);
+      if (!kind) { if (cats.every((c) => !nextKind(c))) return null; continue; }
+      for (let i = 0; i < 300; i++) {
+        const e = kind.gen(level, Math.random);
+        if (!done.has(e.id) && !deck.some((d) => d.id === e.id)) return fresh({ ...e, type: cat, kind: kind.key, kindName: kind.name });
       }
-      return { type, seq, pos: 0, misses: 0, done: false, shown: false };
+      emptyKinds.add(cat + "." + kind.key); // every one of this kind is done
     }
-    const pool = L[type];
-    let m;
-    do { m = pool[rand(pool.length)]; } while (prev && prev.target === m && pool.length > 1);
-    return { type, target: m, misses: 0, done: false, shown: false };
+    return null;
   }
-  // The deck never runs out (Sham, 2026-11-10): the next card is dealt when it's turned. The games
-  // come from a shuffled bag, so each one turns up equally often.
-  let bag = [];
-  function nextType() {
-    if (!bag.length) {
-      bag = (games.length ? games : ["read", "echo", "melody"]).slice();
-      for (let i = bag.length - 1; i > 0; i--) { const j = rand(i + 1); [bag[i], bag[j]] = [bag[j], bag[i]]; }
-    }
-    return bag.pop();
-  }
+  const fresh = (e) => ({ again: false, ...e, pos: 0, got: [], misses: 0, done: false, shown: false });
   function newDeck() {
-    deck = []; bag = [];
+    deck = []; bag = []; kindBags = {}; emptyKinds = new Set();
     at = -1; right = 0;
     turn();
   }
   const card = () => (at >= 0 && at < deck.length ? deck[at] : null);
+  function playCard(c) {
+    if (!c || !c.play) return;
+    audio();
+    playSteps(c.play);
+  }
 
   // Turn over the next card (a quarter turn out, swap the face, a quarter turn back in).
-  function turn() {
+  // `repeat`: deal the same exercise again (the "Do again" button).
+  function turn(repeat) {
     clearTimeout(nextTimer);
     const el = $("card");
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const swap = () => {
-      if (at + 1 >= deck.length) deck.push(makeCard(nextType(), deck[deck.length - 1]));
+      if (repeat && card()) {
+        const { pos, got, misses, done, shown, ...e } = card();
+        deck.splice(at + 1, deck.length, fresh({ ...e, again: true }));
+      } else if (at + 1 >= deck.length) {
+        const c = deal();
+        if (!c) { el.classList.remove("turning"); drawAllDone(); return; }
+        deck.push(c);
+        markSeen(c.id);
+      }
       at++;
       det.armed = false;
       drawCard();
       el.classList.remove("turning");
       const c = card();
-      if (c && c.type !== "read") setTimeout(() => { if (card() === c) playNotes(c.type === "echo" ? [c.target] : c.seq); }, reduce ? 150 : 450);
+      if (c && c.play) setTimeout(() => { if (card() === c) playCard(c); }, reduce ? 150 : 450);
     };
     if (reduce || at < 0) { swap(); return; }
     el.classList.add("turning");
@@ -162,32 +189,57 @@
   }
 
   // ---------------------------------------------------------------- card faces
-  function staffSVG(m) {
-    // one staff: treble from middle C up, bass below it
-    const hs = 6, top = 40, W = 240, H = 150, x = 150;
-    const treble = m >= 60;
-    const dia = (Math.floor(m / 12) - 1) * 7 + LETTER_STEP[m % 12];
+  // Notes on one staff (treble or bass), side by side, or stacked for a chord.
+  function staffSVG(notes, clef, chord) {
+    const hs = 6, top = 40, W = 240, H = 150;
+    const treble = clef === "treble";
     const topDia = treble ? 38 : 26; // F5 / A3: the top line
+    const bottomDia = topDia - 8;
+    const dia = (m) => (Math.floor(m / 12) - 1) * 7 + LETTER_STEP[m % 12];
     const y = (d) => top + (topDia - d) * hs;
-    let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${treble ? "Treble" : "Bass"} staff with one note">`;
+    const n = notes.length;
+    const xs = notes.map((_, i) => (chord ? 150 : n === 1 ? 150 : 82 + (i * (W - 104)) / (n - 1)));
+    let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${treble ? "Treble" : "Bass"} staff with ${n === 1 ? "one note" : chord ? "a chord" : n + " notes"}">`;
     for (let i = 0; i < 5; i++) s += `<line class="staffline" x1="6" x2="${W - 6}" y1="${top + i * 2 * hs}" y2="${top + i * 2 * hs}"/>`;
     s += treble
       ? `<text class="clef" x="10" y="${top + 6 * hs + 4}" font-size="66">\u{1D11E}</text>`
       : `<text class="clef" x="12" y="${top + 6 * hs - 2}" font-size="42">\u{1D122}</text>`;
-    const bottomDia = topDia - 8;
-    for (let d = bottomDia - 2; d >= dia; d -= 2) s += `<line class="staffline" x1="${x - 14}" x2="${x + 14}" y1="${y(d)}" y2="${y(d)}"/>`;
-    for (let d = topDia + 2; d <= dia; d += 2) s += `<line class="staffline" x1="${x - 14}" x2="${x + 14}" y1="${y(d)}" y2="${y(d)}"/>`;
-    if (IS_BLACK[m % 12]) s += `<text class="acc" x="${x - 30}" y="${y(dia) + 9}">♯</text>`;
-    s += `<ellipse class="head" cx="${x}" cy="${y(dia)}" rx="8.4" ry="6" transform="rotate(-20 ${x} ${y(dia)})"/>`;
+    const sorted = notes.map((m, i) => [m, xs[i]]);
+    // in a chord, a note a step above its neighbour sits on the other side of the stem
+    const ds = notes.map(dia);
+    sorted.forEach(([m, x], i) => {
+      const d = ds[i];
+      const side = chord && ds.some((o, j) => j !== i && o === d - 1 && notes[j] < m) ? 16 : 0;
+      for (let k = bottomDia - 2; k >= d; k -= 2) s += `<line class="staffline" x1="${x - 14}" x2="${x + 14 + side}" y1="${y(k)}" y2="${y(k)}"/>`;
+      for (let k = topDia + 2; k <= d; k += 2) s += `<line class="staffline" x1="${x - 14}" x2="${x + 14 + side}" y1="${y(k)}" y2="${y(k)}"/>`;
+      if (IS_BLACK[m % 12]) s += `<text class="acc" x="${x - (chord ? 30 + 12 * (i % 2) : n > 3 ? 22 : 30)}" y="${y(d) + 9}"${n > 3 && !chord ? ' font-size="20"' : ""}>♯</text>`;
+      s += `<ellipse class="head" cx="${x + side}" cy="${y(d)}" rx="8.4" ry="6" transform="rotate(-20 ${x + side} ${y(d)})"/>`;
+    });
     return s + "</svg>";
   }
   // Where the staff sits on the keyboard: both clefs are told from middle Do (C4, the teal dot).
   const exactRead = () => level === "hard";
-  function clefHint(m) {
+  const isExact = (c) => c.type === "read" && exactRead();
+  function clefHint(c) {
     const mid = fullName(60);
-    return m >= 60
-      ? `Treble clef: from middle ${nameOf(60)} (${mid}, the teal dot) up. Bottom line = ${fullName(64)}.`
-      : `Bass clef: below middle ${nameOf(60)} (${mid}, the teal dot). Top line = ${fullName(57)}.`;
+    return c.clef === "treble"
+      ? `Treble clef: bottom line = ${fullName(64)}. The teal dot is middle ${nameOf(60)} (${mid}).`
+      : `Bass clef: top line = ${fullName(57)}. The teal dot is middle ${nameOf(60)} (${mid}).`;
+  }
+  const CAT = { read: "Read", echo: "Play back", melody: "Melody" };
+  function askOf(c) {
+    if (c.type === "read") return c.chord ? "Play this chord" : c.seq.length > 1 ? "Play these notes" : "Play this note";
+    if (c.type === "melody") return c.kind === "tune" ? "Repeat the tune" : "Repeat the melody";
+    return { fromC: "Play the second note", higher: "Play the higher note", lower: "Play the lower note", two: "Play both notes", chord: "Play the chord's notes" }[c.kind] || "Play the note you hear";
+  }
+  function sayOf(c) {
+    const oct = isExact(c) ? "Play the exact keys." : "Any octave counts.";
+    if (c.anyOrder) return `One note at a time, any order. ${oct}`;
+    if (c.type === "read") return c.seq.length > 1 ? `Left to right. ${oct}` : isExact(c) ? "Play that exact key." : "Play it on the piano. Any octave counts.";
+    if (c.kind === "fromC") return `First you hear ${nameOf(60)}, then a new note. Play the new one.`;
+    if (c.kind === "higher" || c.kind === "lower") return `Two notes${c.together ? " together" : ""}. Play the ${c.kind} one. Any octave.`;
+    if (c.kind === "tune") return "Listen, then play it back. Do you know it?";
+    return c.seq.length > 1 ? "Listen, then play it back. Any octave." : "Listen, then play it. Any octave.";
   }
   function drawCard() {
     const el = $("card"), c = card();
@@ -195,93 +247,131 @@
     el.classList.toggle("has-face", !!c);
     showAnswer(null);
     if (!c) return;
-    const k = KIND[c.type];
-    let face = "";
-    if (c.type === "read") face = staffSVG(c.target);
-    else face = `<button class="ear" id="again" type="button" aria-label="Hear it again">${c.type === "echo" ? "♪" : "♫"}</button>`;
-    const dots = c.type === "melody" ? `<div class="dots" id="dots">${c.seq.map(() => "<i></i>").join("")}</div>` : "";
+    const face = c.type === "read"
+      ? staffSVG(c.staff, c.clef, c.chord)
+      : `<button class="ear" id="again" type="button" aria-label="Hear it again">${c.type === "melody" ? "♫" : "♪"}</button>`;
+    const dots = c.seq.length > 1 ? `<div class="dots" id="dots">${c.seq.map(() => "<i></i>").join("")}</div>` : "";
     el.innerHTML = `
-      <div class="kind">${k.label} · card ${at + 1}</div>
-      <p class="ask">${k.ask}</p>
+      <div class="kind">${CAT[c.type]} · ${c.kindName} · card ${at + 1}${c.again ? " · again" : ""}</div>
+      <p class="ask">${askOf(c)}</p>
       <div class="face">${face}</div>
       ${dots}
-      ${c.type === "read" ? `<p class="hint">${clefHint(c.target)}</p>` : ""}
-      <p class="say" id="say">${c.type === "read" ? (exactRead() ? "Play that exact key." : "Play it on the piano. Any octave counts.") : c.type === "echo" ? "Listen, then play it. Any octave." : "Listen, then play it back. Any octave."}</p>
+      ${c.type === "read" ? `<p class="hint">${clefHint(c)}</p>` : ""}
+      <p class="say" id="say">${sayOf(c)}</p>
       <div class="cardbtns">
-        ${c.type !== "read" ? '<button type="button" id="hear">Hear again</button>' : ""}
+        ${c.play ? '<button type="button" id="hear">Hear again</button>' : ""}
         <button type="button" id="show">Show me</button>
+        <button type="button" id="redo" title="Deal this exercise again">Do again</button>
         <button type="button" id="next" class="go">Next</button>
       </div>`;
     if ($("again")) $("again").onclick = () => replay();
     if ($("hear")) $("hear").onclick = () => replay();
     $("show").onclick = () => { c.shown = true; c.misses = Math.max(c.misses, 1); reveal(c); };
+    $("redo").onclick = () => turn(true);
     $("next").onclick = () => turn();
     updateDots(c);
     updateScore();
   }
   function drawIntro() {
     $("card").classList.remove("has-face");
+    const n = used();
     $("card").innerHTML = `
       <div class="kind">Recognise the sound</div>
       <p class="ask">An endless deck</p>
-      <p class="intro">Each card asks you to <b>read a note</b>, <b>play back a note you hear</b> or <b>repeat a short melody</b>. Play on your piano (the app listens) or tap the keys. Any octave counts, except on Hard "Read" cards (the teal dot is middle ${nameOf(60)}, ${fullName(60)}).</p>
-      <div class="cardbtns"><button type="button" id="start" class="go">Start</button></div>`;
+      <p class="intro"><b>Read</b>: notes, sharps, ledger lines, phrases and chords on the staff. <b>Play back</b>: single notes, the higher or lower of two, notes after ${nameOf(60)}, chords. <b>Melody</b>: steps, jumps, scales, black keys and tunes to name. Play on your piano (the app listens) or tap the keys. An exercise you've done isn't dealt again; tap <b>Do again</b> on a card to repeat it.</p>
+      <div class="cardbtns"><button type="button" id="start" class="go">Start</button>${n ? `<button type="button" id="reset">Start over (${n} done)</button>` : ""}</div>`;
     $("start").onclick = start;
+    if ($("reset")) $("reset").onclick = resetSeen;
+  }
+  function drawAllDone() {
+    $("card").classList.remove("has-face");
+    const L = level[0].toUpperCase() + level.slice(1);
+    $("card").innerHTML = `
+      <div class="kind">${L} level</div>
+      <p class="ask">All done!</p>
+      <p class="intro">You've done every exercise ${games.length < 3 ? "in the categories you picked " : ""}on ${L}. Try a harder level, or start over to get them all again.</p>
+      <div class="cardbtns"><button type="button" id="reset" class="go">Start over</button></div>`;
+    $("reset").onclick = () => { resetSeen(); newDeck(); };
+    updateScore();
+  }
+  function resetSeen() {
+    if (!confirm(`Forget the ${used()} exercises done on ${level}? They can be dealt again.`)) return;
+    seen[level] = [];
+    store.set("earSeen", JSON.stringify(seen));
+    emptyKinds = new Set();
+    if (!deck.length) drawIntro();
+    updateScore();
   }
   function updateDots(c) {
-    if (!c || c.type !== "melody" || !$("dots")) return;
-    [...$("dots").children].forEach((d, i) => { d.className = i < c.pos ? "done" : i === c.pos && !c.done ? "now" : ""; });
+    if (!c || c.seq.length < 2 || !$("dots")) return;
+    const ds = [...$("dots").children];
+    if (c.anyOrder) { ds.forEach((d, i) => { d.className = i < c.got.length ? "done" : ""; }); return; }
+    ds.forEach((d, i) => { d.className = i < c.pos ? "done" : i === c.pos && !c.done ? "now" : ""; });
   }
   function updateScore() {
-    $("score").textContent = deck.length ? `card ${at + 1} · ${right} right first time` : "";
+    $("score").textContent = deck.length ? `card ${at + 1} · ${right} right first time · ${used()} done on ${level}` : "";
   }
   function say(text, cls) { const s = $("say"); if (s) { s.textContent = text; s.className = "say" + (cls ? " " + cls : ""); } }
-  function replay() {
-    const c = card();
-    if (!c || c.type === "read") return;
-    audio();
-    playNotes(c.type === "echo" ? [c.target] : c.seq);
-  }
+  function replay() { playCard(card()); }
   function reveal(c) {
-    if (c.type === "melody") {
-      showAnswer(c.seq);
-      say("It goes " + c.seq.map(fullName).join(" – ") + ". Play it back.", "");
-    } else {
-      showAnswer([c.target]);
-      say(`It's ${fullName(c.target)}. Play it.`, "");
-    }
+    showAnswer(c.seq);
+    if (c.seq.length > 1) say((c.anyOrder ? "The notes: " : "It goes ") + c.seq.map(fullName).join(" – ") + (c.title ? ` (${c.title})` : "") + ". Play it.", "");
+    else say(`It's ${fullName(c.seq[0])}. Play it.`, "");
   }
 
   // ---------------------------------------------------------------- answers
+  const same = (c, m, want) => (isExact(c) ? m === want : pcEq(m, want));
   function answer(m) {
     const c = card();
     if (!c || c.done) return;
     flashHeard(m);
     const el = $("card");
-    if (c.type === "melody") {
+    const shake = () => { el.classList.remove("shake"); void el.offsetWidth; el.classList.add("shake"); };
+    const name = c.title && c.kind !== "jumps" ? ` (${c.title})` : "";
+    if (c.anyOrder) {
+      const want = c.seq.filter((x) => !c.got.includes(x));
+      const hit = want.find((x) => same(c, m, x));
+      if (hit !== undefined) {
+        c.got.push(hit);
+        updateDots(c);
+        if (c.got.length >= c.seq.length) { win(c, "Right! " + c.seq.map(fullName).join(" – ") + name); return; }
+        say(`${nameOf(m)} ✓ ${c.got.length} of ${c.seq.length}`, "ok");
+        return;
+      }
+      if (c.got.some((x) => same(c, m, x))) { say(`${nameOf(m)} you already have. ${c.seq.length - c.got.length} to go.`, ""); return; }
+      if (isExact(c) && want.some((x) => pcEq(m, x))) { say(`Right note, wrong octave: you played ${fullName(m)}.`, "bad"); shake(); return; }
+      miss(c, `${nameOf(m)} isn't in it. Try again.`);
+      return;
+    }
+    if (c.seq.length > 1) {
       const want = c.seq[c.pos];
-      if (pcEq(m, want)) {
+      if (same(c, m, want)) {
         c.pos++;
         updateDots(c);
-        if (c.pos >= c.seq.length) { win(c, "Right! " + c.seq.map(fullName).join(" – ")); return; }
+        if (c.pos >= c.seq.length) { win(c, "Right! " + c.seq.map(fullName).join(" – ") + name); return; }
         say(`${nameOf(m)} ✓ ${c.pos} of ${c.seq.length}`, "ok");
         return;
       }
+      if (isExact(c) && pcEq(m, want)) { say(`Right note, wrong octave: you played ${fullName(m)}.`, "bad"); shake(); return; }
       miss(c, `That was ${nameOf(m)}. Note ${c.pos + 1} is different: try again.`);
       return;
     }
-    const ok = c.type === "read" && exactRead() ? m === c.target : pcEq(m, c.target);
-    if (ok) {
-      const where = m === c.target ? "" : ` On the staff it's exactly ${fullName(c.target)}${c.target === 60 ? " (middle)" : c.target > 60 ? ", above middle " + nameOf(60) : ", below middle " + nameOf(60)}.`;
-      win(c, `Right! That's ${nameOf(c.target)}.${where}`);
-      if (where) showAnswer([c.target]);
+    const target = c.seq[0];
+    if (same(c, m, target)) {
+      const where = c.type === "read" && m !== target ? ` On the staff it's exactly ${fullName(target)}${target === 60 ? " (middle)" : target > 60 ? ", above middle " + nameOf(60) : ", below middle " + nameOf(60)}.` : "";
+      win(c, `Right! That's ${nameOf(target)}.${where}`);
+      if (where) showAnswer([target]);
       return;
     }
-    if (c.type === "read" && pcEq(m, c.target)) { say(`Right note, wrong octave: you played ${fullName(m)}. Try the one on the staff.`, "bad"); el.classList.remove("shake"); void el.offsetWidth; el.classList.add("shake"); return; }
+    if (c.type === "read" && pcEq(m, target)) { say(`Right note, wrong octave: you played ${fullName(m)}. Try the one on the staff.`, "bad"); shake(); return; }
     if (c.type === "echo") {
+      if (c.kind === "higher" || c.kind === "lower") {
+        const other = c.play.flat().find((x) => x !== target);
+        if (pcEq(m, other)) { miss(c, `That's the ${c.kind === "higher" ? "lower" : "higher"} one. Play the other.`); return; }
+      }
       // any octave counts, so measure from the nearest octave of the right note: -6..+6 half-steps.
       // Just an arrow, which way to go (Sham, 2026-11-10)
-      const d = ((((m - c.target) % 12) + 18) % 12) - 6;
+      const d = ((((m - target) % 12) + 18) % 12) - 6;
       miss(c, d === 6 || d === -6 ? "▲▼" : d > 0 ? "▼" : "▲", "arrow", `${d > 0 ? "lower" : "higher"}`);
       return;
     }
@@ -300,6 +390,7 @@
     c.done = true;
     if (c.misses === 0 && !c.shown) right++;
     $("card").classList.add("ok");
+    showAnswer(c.seq);
     say(text + (c.misses === 0 && !c.shown ? "" : " (not first time)"), "ok");
     updateScore();
     nextTimer = setTimeout(() => { if (card() === c) turn(); }, text.length > 40 ? 3000 : 1500); // longer when there's more to read

@@ -176,6 +176,13 @@ Live app: https://mrboby1.github.io/sham/piano/
     *(done 2026-11-11: falling tiles and their Pause/Speed bar turned off (SHOW_ROLL = false in app.js), and the keyboard
     lights only the next key (all keys of a chord). The finger hand and the "next" chips above the keys stay)*
 
+50. **Ear is too simple: add a bunch of exercises to each category; don't repeat exercises unless I choose to** (Sham,
+    2026-11-12). *(done 2026-11-12: ear-exercises.js. Read: treble, bass, ledger lines, sharps, two notes, phrase, chord.
+    Play back: one note, low notes, from Do, the higher one, the lower one, two notes, chord. Melody: steps, jumps,
+    scale run, black keys, name that tune (20 public-domain openings). Done exercises are remembered per level on the
+    phone and never dealt again; "Do again" on a card repeats it, "Start over" forgets them. Easy has ~300, Medium
+    thousands)*
+
 ## Done
 
 - Whistle to Notes home page: whistle, hum or upload a recording, get clean piano notes, play, save and practise them
