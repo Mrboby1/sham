@@ -192,6 +192,11 @@ Live app: https://mrboby1.github.io/sham/piano/
     practising: Right / Left / Both buttons (remembered); Both = every key starting at the same moment is one step,
     with fingering for each hand. Traditional tunes (melody.js) and My songs are still one hand)*
 
+53. **Bring the falling tiles back, coloured by the finger that plays them** (Sham, 2026-11-12). *(done 2026-11-12:
+    tiles on again, each in its finger colour with the finger number (pink thumb, orange index, green middle, blue
+    ring, purple little), and a "Falling tiles" on/off button next to Right / Left / Both (remembered). The
+    keyboard still lights only the next key)*
+
 ## Done
 
 - Whistle to Notes home page: whistle, hum or upload a recording, get clean piano notes, play, save and practise them

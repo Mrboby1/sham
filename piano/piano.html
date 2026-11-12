@@ -196,6 +196,8 @@ input:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
 .handpick { display: inline-flex; gap: 4px; margin-left: 10px; vertical-align: middle; }
 .handpick button { min-height: 28px; padding: 3px 10px; font-size: 12px; }
 .handpick button[aria-pressed="true"] { background: var(--teal); border-color: var(--teal); color: #fff; }
+.tilesbtn { min-height: 28px; padding: 3px 10px; font-size: 12px; margin-left: 10px; vertical-align: middle; }
+.tilesbtn[aria-pressed="true"] { background: var(--teal); border-color: var(--teal); color: #fff; }
 .sheet {
   position: fixed; z-index: 30;
   inset: calc(env(safe-area-inset-top, 0px) + 10px) max(16px, env(safe-area-inset-right, 0px)) calc(env(safe-area-inset-bottom, 0px) + 10px) max(16px, env(safe-area-inset-left, 0px));
@@ -483,6 +485,6 @@ body.playing .kbd-scroll { margin-top: 0; }
 <script src="detect.js"></script>
 <script src="melody.js"></script>
 <script src="fingering.js"></script>
-<script src="app.js?v=4"></script>
+<script src="app.js?v=5"></script>
 </body>
 </html>

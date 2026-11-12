@@ -1,8 +1,9 @@
 // Piano Notes - screen, microphone loop, keyboard and staff.
 (function () {
   "use strict";
-  // Off: the falling tiles confused Sham (2026-11-11). Practice now only lights the next key to play.
-  const SHOW_ROLL = false;
+  // Falling tiles: a Tiles on/off button while practising (Sham turned them off 2026-11-11, wanted them back
+  // 2026-11-12). Either way the keyboard lights only the next key to play.
+  let SHOW_ROLL = true;
   const { yinPitch, chordNotes, rms, midiToFreq, freqToMidi, A0, C8 } = window.Detect;
   const { LIBRARY, CLEAR_KEYS } = window.Melody;
 
@@ -657,6 +658,15 @@
   // can be practised by either hand alone, or both together as steps: every key that starts at the same
   // moment in either hand is one step.
   let handPick = store.get("hand", "right");
+  SHOW_ROLL = store.get("tiles", "on") === "on";
+  function setTiles(on) {
+    SHOW_ROLL = on;
+    store.set("tiles", on ? "on" : "off");
+    $("rollwrap").hidden = !(on && state.practice);
+    requestAnimationFrame(() => { buildKeyboard(); renderKeys(); drawRoll(); drawStaff(); });
+    animateRoll();
+    render();
+  }
   const fingerLH = (notes) => window.Fingering.fingerRH(notes.map((m) => 124 - m)); // the keyboard is a mirror image around D
   function partOf(base, hand) {
     if (!base.left || hand === "right") return base;
@@ -949,6 +959,13 @@
         }
         lock.append(pickBox);
       }
+      const tiles = document.createElement("button");
+      tiles.type = "button";
+      tiles.className = "tilesbtn";
+      tiles.textContent = "Falling tiles";
+      tiles.setAttribute("aria-pressed", String(SHOW_ROLL));
+      tiles.addEventListener("click", () => setTiles(!SHOW_ROLL));
+      lock.append(tiles);
     } else lock.textContent = !f.sure
       ? "Sounds like this. Keep playing to make sure."
       : f.lost
