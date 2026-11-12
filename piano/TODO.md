@@ -199,6 +199,10 @@ Live app: https://mrboby1.github.io/sham/piano/
 54. **Swipe the falling tiles up to go back to notes I missed** (Sham, 2026-11-12). *(done 2026-11-12: drag the
     waterfall up to rewind, down to skip ahead; the tiles follow the finger, and the note left on the "now" line
     becomes the next one to play, lit on the keyboard)*
+55. **Add the Turkish March** (Sham, 2026-11-12). *(done 2026-11-12: it was already in the library as "Rondo alla
+    Turca" (Mozart, right + left hand). Pieces now show their other names, "Rondo alla Turca (Turkish March)",
+    and search finds them by those names too: Turkish March, Für Elise, A Little Night Music, Sonata facile,
+    Cradle Song, Peer Gynt, La primavera, Dreaming)*
 
 ## Done
 

@@ -62,6 +62,19 @@
   mySongs = mySongs.map((x) => ({ title: x.title.replace(/ - My songs$/, ""), notes: x.notes, beats: x.beats, durs: x.durs, bpm: x.bpm }));
   const saveMySongs = () => store.set("mysongs", JSON.stringify(mySongs));
   let SONGS = [];
+  // Other names a piece goes by: shown next to the title and found by search
+  // (Sham, 2026-11-12: "Add Turkish march" - it was already in as Rondo alla Turca).
+  const AKA = {
+    "Rondo alla Turca": "Turkish March",
+    "Fur Elise": "Für Elise",
+    "Eine kleine Nachtmusik, 1st movement": "A Little Night Music",
+    "Piano Sonata No. 16 (K. 545), 1st movement": "Sonata facile",
+    "Minute Waltz (Op. 64 No. 1)": "Waltz in D flat",
+    "Lullaby": "Wiegenlied, Cradle Song",
+    "In the Hall of the Mountain King": "Peer Gynt",
+    "Spring (Four Seasons)": "La primavera",
+    "Traumerei": "Träumerei, Dreaming",
+  };
   function buildLibrary() {
     SONGS = [
       ...mySongs.map((x) => ({ title: x.title, composer: "", notes: x.notes, beats: x.beats, durs: x.durs, bpm: x.bpm, mine: true })),
@@ -70,7 +83,7 @@
       ...LIBRARY.filter((x) => !x.mine && !x.title.includes(" - ") && x.title !== "Brahms' Lullaby" /* songs.json has the whole piece */ && !fullPieces.some((f) => f.title === x.title))
         .map((x) => ({ title: x.title, composer: "", notes: x.full, kind: "song", level: "beginner", hands: "right" })),
     ];
-    SONGS.forEach((x) => { x.key = (x.mine ? "mine:" : "") + x.title + (x.composer ? " - " + x.composer : ""); });
+    SONGS.forEach((x) => { if (!x.mine && AKA[x.title]) x.aka = AKA[x.title]; x.key = (x.mine ? "mine:" : "") + x.title + (x.composer ? " - " + x.composer : ""); });
   }
   // How hard each piece in songs.json / chords.json is (Sham, 2026-11-10: separate songs by difficulty).
   // lessons.json carries its own level; anything unknown is judged by length.
@@ -739,7 +752,7 @@
     const order = ["My songs", "Beginner", "Middle", "Advanced"];
     order.forEach((g) => groups.set(g, []));
     for (const s of SONGS) {
-      if (q) { if (!(s.title + " " + s.composer).toLowerCase().includes(q)) continue; }
+      if (q) { if (!(s.title + " " + s.composer + " " + (s.aka || "")).toLowerCase().includes(q)) continue; }
       else if (!s.mine && ((s.kind || "song") !== libKind || (libLevel !== "all" && s.level !== libLevel))) continue;
       if (s.mine && !q && libKind !== "song") continue;
       groups.get(s.mine ? "My songs" : LEVEL_NAMES[s.level] || "Middle").push(s);
@@ -764,6 +777,7 @@
         const name = document.createElement("b");
         if (!s.mine) { const dot = document.createElement("i"); dot.className = "lvl " + s.level; name.append(dot); }
         name.append(s.title);
+        if (s.aka) { const ak = document.createElement("span"); ak.className = "aka"; ak.textContent = " (" + s.aka + ")"; name.append(ak); }
         if (s.hands === "both") { const bh = document.createElement("span"); bh.className = "both"; bh.textContent = "both hands"; name.append(bh); }
         if (s.hands === "left") { const bh = document.createElement("span"); bh.className = "both"; bh.textContent = "left hand"; name.append(bh); }
         if (s.left) { const bh = document.createElement("span"); bh.className = "both"; bh.textContent = "right + left"; name.append(bh); }
