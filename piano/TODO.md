@@ -203,6 +203,9 @@ Live app: https://mrboby1.github.io/sham/piano/
     Turca" (Mozart, right + left hand). Pieces now show their other names, "Rondo alla Turca (Turkish March)",
     and search finds them by those names too: Turkish March, Für Elise, A Little Night Music, Sonata facile,
     Cradle Song, Peer Gynt, La primavera, Dreaming)*
+56. **Raise the play line so the note just played stays visible as a reference** (Sham, 2026-11-12). *(done
+    2026-11-12: the "now" line sits about a quarter of the waterfall above the keys; the last note played stays
+    below it, clearer than older ones, so you can see where the hand was before the next jump)*
 
 ## Done
 

@@ -1090,9 +1090,13 @@
     if (!p.song.medDur) { const d = durs.slice().sort((x, y) => x - y); p.song.medDur = d[Math.floor(d.length / 2)] || 1; }
     const ppb = Math.max(Hc / 5, Math.min(Hc / 1.2, 24 / p.song.medDur));
     roll.ppb = ppb;
+    // The "now" line sits a little above the keys (Sham, 2026-11-12), so the note just played stays in
+    // sight below it as a reference for where the hand was.
+    const base = Hc - Math.round(Math.min(70, Math.max(40, Hc * 0.24)));
+    g.fillStyle = lineC; g.globalAlpha = 0.35; g.fillRect(0, base, Wc, Hc - base); g.globalAlpha = 1;
     const font = getComputedStyle(document.body).fontFamily;
     for (let i = Math.max(0, p.pos - 4); i < notes.length; i++) {
-      const bottom = Hc - (onsets[i] - roll.beat) * ppb;
+      const bottom = base - (onsets[i] - roll.beat) * ppb;
       if (bottom < 0) break;
       const top = bottom - durs[i] * ppb + 2;
       if (top > Hc) continue;
@@ -1103,7 +1107,7 @@
       const fi = p.song.chords ? p.song.chords[i].fingers[j] : fingers[i];
       const x = dx + el.offsetLeft + 1, w = el.offsetWidth - 2;
       const color = FINGER_COLORS[fi] || muted;
-      g.globalAlpha = i < p.pos ? 0.25 : 1;
+      g.globalAlpha = i < p.pos - 1 ? 0.2 : i === p.pos - 1 ? 0.6 : 1; // the last note played stays clear
       g.fillStyle = color;
       const r = Math.min(5, w / 2, (bottom - top) / 2);
       g.beginPath();
@@ -1135,7 +1139,7 @@
     }
     // the "now" line where the bars meet the keys
     g.fillStyle = muted;
-    g.fillRect(0, Hc - 2, Wc, 2);
+    g.fillRect(0, base - 1, Wc, 2);
   }
 
   // Swipe the waterfall up to go back to notes already passed (or missed), down to skip ahead
