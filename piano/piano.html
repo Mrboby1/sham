@@ -342,7 +342,7 @@ input:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
 .rollctl output { min-width: 3.2em; font-variant-numeric: tabular-nums; color: var(--ink); font-weight: 700; }
 /* Play-along: the falling-notes waterfall takes the staff's place, right above the keyboard. */
 .rollwrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-#roll { display: block; width: 100%; height: 100%; background: color-mix(in srgb, var(--panel) 70%, var(--bg)); border-radius: 10px 10px 0 0; }
+#roll { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; background: color-mix(in srgb, var(--panel) 70%, var(--bg)); border-radius: 10px 10px 0 0; }
 body.playing .staff { display: none; }
 body.playing .rollwrap { height: 220px; }
 body.playing .kbd-scroll { margin-top: 0; }
@@ -473,11 +473,11 @@ body.playing .kbd-scroll { margin-top: 0; }
       <input id="speed" type="range" min="20" max="150" step="5" value="60">
       <output id="speedOut" for="speed">60%</output>
     </div>
-    <p class="hint" id="songHint">Tap <b>Songs</b>, pick a piece and play along. It lights up the next key and only moves on when you play the right one.</p>
+    <p class="hint" id="songHint">Tap <b>Songs</b>, pick a piece and play along. It lights up the next key and only moves on when you play the right one. Swipe the falling tiles up to go back.</p>
   </section>
   </div>
 
-  <div class="rollwrap" id="rollwrap" hidden><canvas id="roll" aria-label="Falling notes: each bar is a note over its key, as long as it is held, numbered by finger"></canvas></div>
+  <div class="rollwrap" id="rollwrap" hidden><canvas id="roll" aria-label="Falling notes: each bar is a note over its key, as long as it is held, numbered by finger. Swipe up to go back, down to skip ahead"></canvas></div>
   <div class="kbd-scroll" id="kbdScroll"><div class="kbd" id="kbd"></div></div>
   <div class="foot wrap">All 88 keys, A0 to C8.<span class="rotate"> Turn your phone sideways for bigger keys.</span></div>
 </div>
@@ -485,6 +485,6 @@ body.playing .kbd-scroll { margin-top: 0; }
 <script src="detect.js"></script>
 <script src="melody.js"></script>
 <script src="fingering.js"></script>
-<script src="app.js?v=5"></script>
+<script src="app.js?v=6"></script>
 </body>
 </html>

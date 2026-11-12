@@ -196,6 +196,9 @@ Live app: https://mrboby1.github.io/sham/piano/
     tiles on again, each in its finger colour with the finger number (pink thumb, orange index, green middle, blue
     ring, purple little), and a "Falling tiles" on/off button next to Right / Left / Both (remembered). The
     keyboard still lights only the next key)*
+54. **Swipe the falling tiles up to go back to notes I missed** (Sham, 2026-11-12). *(done 2026-11-12: drag the
+    waterfall up to rewind, down to skip ahead; the tiles follow the finger, and the note left on the "now" line
+    becomes the next one to play, lit on the keyboard)*
 
 ## Done
 

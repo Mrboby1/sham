@@ -1030,7 +1030,9 @@
     const dt = Math.min(0.1, (now - roll.last) / 1000); // a hidden tab doesn't jump ahead
     roll.last = now;
     const target = rollTarget();
-    if (roll.running) {
+    if (roll.drag) {
+      // a finger is on the waterfall: it follows the finger, nothing else moves it
+    } else if (roll.running) {
       // at the end there is nothing to wait for: run out to the last note's end
       roll.beat = Math.min(target, roll.beat + dt * ((p.song.bpm || BPM) / 60) * (speed / 100));
     } else {
@@ -1073,6 +1075,7 @@
     // pixels per beat: the piece's typical note gets a bar about 24px tall, and at least ~4 notes show
     if (!p.song.medDur) { const d = durs.slice().sort((x, y) => x - y); p.song.medDur = d[Math.floor(d.length / 2)] || 1; }
     const ppb = Math.max(Hc / 5, Math.min(Hc / 1.2, 24 / p.song.medDur));
+    roll.ppb = ppb;
     const font = getComputedStyle(document.body).fontFamily;
     for (let i = Math.max(0, p.pos - 4); i < notes.length; i++) {
       const bottom = Hc - (onsets[i] - roll.beat) * ppb;
@@ -1120,6 +1123,52 @@
     g.fillStyle = muted;
     g.fillRect(0, Hc - 2, Wc, 2);
   }
+
+  // Swipe the waterfall up to go back to notes already passed (or missed), down to skip ahead
+  // (Sham, 2026-11-12). The bars follow the finger; the note sitting on the "now" line becomes the
+  // next one to play, and the keyboard lights it up straight away.
+  function posAtBeat(b) {
+    const o = state.practice.song.onsets;
+    let lo = 0, hi = o.length - 1;
+    while (lo < hi) { const mid = (lo + hi) >> 1; if (o[mid] < b) lo = mid + 1; else hi = mid; }
+    return lo > 0 && b - o[lo - 1] < o[lo] - b ? lo - 1 : lo;
+  }
+  function setPos(i) {
+    const p = state.practice;
+    if (i === p.pos) return;
+    p.pos = i;
+    state.follow = practiceView();
+    render();
+  }
+  rollCanvas.addEventListener("pointerdown", (e) => {
+    if (!state.practice || roll.drag) return;
+    roll.drag = { id: e.pointerId, y: e.clientY, beat: roll.beat, moved: false };
+    try { rollCanvas.setPointerCapture(e.pointerId); } catch {}
+  });
+  rollCanvas.addEventListener("pointermove", (e) => {
+    const d = roll.drag, p = state.practice;
+    if (!d || d.id !== e.pointerId || !p) return;
+    const dy = e.clientY - d.y;
+    if (!d.moved && Math.abs(dy) < 6) return; // a tap is not a swipe
+    d.moved = true;
+    const o = p.song.onsets;
+    roll.beat = Math.max(o[0] - 2, Math.min(o[o.length - 1], d.beat + dy / (roll.ppb || 24)));
+    setPos(posAtBeat(roll.beat));
+    drawRoll();
+  });
+  function endDrag(e) {
+    const d = roll.drag;
+    if (!d || d.id !== e.pointerId) return;
+    roll.drag = null;
+    const p = state.practice;
+    if (d.moved && p) {
+      setPos(posAtBeat(roll.beat));
+      if (p.pos < p.song.notes.length) scrollToKey(p.song.notes[p.pos]);
+    }
+    animateRoll(); // eases onto the chosen note
+  }
+  rollCanvas.addEventListener("pointerup", endDrag);
+  rollCanvas.addEventListener("pointercancel", endDrag);
 
   // ---------------------------------------------------------------- the hand picture
   const FINGER_NAMES = ["", "thumb", "index finger", "middle finger", "ring finger", "little finger"];
