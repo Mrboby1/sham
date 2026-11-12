@@ -25,6 +25,7 @@ Melodies taken from Creative Commons Attribution-ShareAlike scores are shared un
 | Canon in D | Pachelbel | PachelbelJ/CanonInD | Creative Commons Attribution 3.0 |
 | Lullaby | Brahms | BrahmsJ/LullabyBrahms-C | Public Domain |
 | The Entertainer | Joplin | JoplinS/entertainer | Public Domain |
+| Habanera (Carmen) | Bizet | not from Mutopia: the vocal melody and the habanera bass line, typed in by hand | Public Domain (1875) |
 
 ## Chord songs (chords.json, made by tools/make_chords.py)
 
