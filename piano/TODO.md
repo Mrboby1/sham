@@ -183,6 +183,15 @@ Live app: https://mrboby1.github.io/sham/piano/
     phone and never dealt again; "Do again" on a card repeats it, "Start over" forgets them. Easy has ~300, Medium
     thousands)*
 
+51. **Add the Habanera (Carmen, Bizet) to the songs** (Sham, 2026-11-12, after Sham played it and asked me to name it).
+    *(done 2026-11-12: vocal melody + the habanera bass line, typed in (not on Mutopia); public domain)*
+
+52. **Two sets of notes for each song: right hand / left hand** (Sham, 2026-11-12). *(done 2026-11-12:
+    tools/make_hands.py takes the left hand from each piece's MIDI (lowest part, lowest note per onset; the Toccata
+    uses the left-hand manual; Canon in D gets Pachelbel's ground bass). All 19 pieces in songs.json have one. While
+    practising: Right / Left / Both buttons (remembered); Both = every key starting at the same moment is one step,
+    with fingering for each hand. Traditional tunes (melody.js) and My songs are still one hand)*
+
 ## Done
 
 - Whistle to Notes home page: whistle, hum or upload a recording, get clean piano notes, play, save and practise them
