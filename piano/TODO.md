@@ -208,7 +208,9 @@ Live app: https://mrboby1.github.io/sham/piano/
     below it, clearer than older ones, so you can see where the hand was before the next jump)*
 57. **A trading bot working before market open** (Sham, 2026-11-15; next open Mon 2026-11-16, 16:30 Israel).
     *(asked in Telegram 2026-11-15: fake or real money; is the IBKR account approved; SPY 0DTE like the existing
-    paper bot or Signal's stock ideas. Warned the SPY strategy lost money over 59 days of testing. Waiting for Sham)*
+    paper bot or Signal's stock ideas. Warned the SPY strategy lost money over 59 days of testing. 2026-11-15 16:00:
+    Sham's IBKR account is open, sending a ₪2,000 deposit. Warned about 0DTE risk at that size and the US 3-day-trades
+    rule under $25k; proposed a week on IBKR paper first. Waiting for: paper first? SPY 0DTE or Signal's ideas?)*
 58. **Easy songs with both hands, and arpeggios, to practise joining the hands** (Sham, 2026-11-15). *(done
     2026-11-15: a "(both hands)" version of every easy song (11 now): the left hand plays one bass note per bar and
     stays in one place (C / F / G, or G / C / D under low tunes). New exercises: 11-13 Arpeggios C, F, G, Am (right,
