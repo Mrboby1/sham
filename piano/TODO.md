@@ -214,6 +214,12 @@ Live app: https://mrboby1.github.io/sham/piano/
     stays in one place (C / F / G, or G / C / D under low tunes). New exercises: 11-13 Arpeggios C, F, G, Am (right,
     left, hands together) and C major arpeggio 2 octaves (left hand; hands together). Two-hand steps now remember
     which keys are the left hand's, so a left hand reaching middle C and above is labelled right)*
+59. **Sheet music in my face: hide everything above the falling tiles, and hide the URL bar** (Sham, 2026-11-15,
+    with a screenshot). *(done 2026-11-15: "Sheet view" while practising (on by default, remembered): the header,
+    buttons, speed and title are hidden; a slim bar keeps the song and progress, Listen, Full screen (where the
+    browser allows it) and Controls (brings everything back). The staff returns as a page of the coming notes with
+    finger numbers, the last played on the left. The URL bar: Safari on iPhone doesn't let a page hide it; Add to
+    Home Screen opens the app without it)*
 
 ## Done
 

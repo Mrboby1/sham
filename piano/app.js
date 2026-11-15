@@ -855,6 +855,10 @@
     const btn = $("listen");
     btn.textContent = state.listening ? "Stop" : "Listen";
     btn.classList.toggle("on", state.listening);
+    $("fbListen").textContent = state.listening ? "Stop" : "Listen";
+    $("fbListen").classList.toggle("on", state.listening);
+    const f = state.follow;
+    $("fbProg").textContent = state.practice && f ? `${state.practice.song.title} · ${Math.min(f.at + 1, f.of)} of ${f.of}` : "";
   }
 
   function renderNow() {
@@ -981,6 +985,13 @@
       tiles.setAttribute("aria-pressed", String(SHOW_ROLL));
       tiles.addEventListener("click", () => setTiles(!SHOW_ROLL));
       lock.append(tiles);
+      const sheet = document.createElement("button");
+      sheet.type = "button";
+      sheet.className = "tilesbtn sheetbtn";
+      sheet.textContent = "Sheet view";
+      sheet.setAttribute("aria-pressed", String(focusOn()));
+      sheet.addEventListener("click", () => setFocus(!focusOn()));
+      lock.append(sheet);
     } else lock.textContent = !f.sure
       ? "Sounds like this. Keep playing to make sure."
       : f.lost
@@ -1310,7 +1321,20 @@
     g.fillText("\u{1D122}", 14, bt + 4 * hs + 2);
 
     const colW = 30;
-    const next = state.follow ? (state.follow.steps || state.follow.next.map((m) => [m])).slice(0, 4) : [];
+    let next = state.follow ? (state.follow.steps || state.follow.next.map((m) => [m])).slice(0, 4) : [];
+    let fingersNext = state.follow && state.follow.fingers ? state.follow.fingers : null;
+    let names = state.follow && state.follow.names ? state.follow.names : [];
+    if (state.practice && focusOn()) {
+      // sheet view: the staff reads like a page, the coming notes fill it and the last few played stay on the left
+      const p = state.practice, n = p.song.notes.length;
+      const ahead = Math.max(4, Math.floor((right - left - 14) / colW) - 3);
+      next = []; fingersNext = []; names = [];
+      for (let i = p.pos; i < Math.min(n, p.pos + ahead); i++) {
+        next.push(stepKeys(p.song, i).slice().sort((a, b) => a - b));
+        fingersNext.push(p.song.chords ? null : (p.song.fingers || [])[i]);
+        names.push(p.song.chords ? p.song.chords[i].name : "");
+      }
+    }
     const room = Math.max(1, Math.floor((right - left - (next.length ? next.length * colW + 14 : 0)) / colW));
     const events = state.history.slice(-room);
 
@@ -1377,20 +1401,19 @@
       g.strokeStyle = line; g.setLineDash([3, 4]); g.lineWidth = 1;
       g.beginPath(); g.moveTo(x0 - 8, trebleTop - 8); g.lineTo(x0 - 8, bt + 8 * hs + 8); g.stroke();
       g.setLineDash([]);
-      const fingersNext = state.follow && state.follow.fingers ? state.follow.fingers : null;
       next.forEach((step, i) => {
         const x = x0 + 8 + i * colW;
-        step.forEach((k) => head(x, k, teal, true, 1 - i * 0.22));
+        step.forEach((k) => head(x, k, teal, i > 0, next.length > 4 ? Math.max(0.45, 1 - i * 0.05) : 1 - i * 0.22));
         const m = step[0];
         if (state.follow.chord) {
           g.fillStyle = teal;
           g.font = "700 11px " + getComputedStyle(document.body).fontFamily;
           g.textAlign = "center";
-          g.fillText(state.follow.names[i] || "", x, trebleTop - 6);
+          g.fillText(names[i] || "", x, trebleTop - 6);
           g.textAlign = "start";
           return;
         }
-        if (fingersNext) {
+        if (fingersNext && fingersNext[i]) {
           g.fillStyle = FINGER_COLORS[fingersNext[i]] || teal;
           g.font = "700 12px " + getComputedStyle(document.body).fontFamily;
           g.textAlign = "center";
@@ -1434,6 +1457,28 @@
   // ---------------------------------------------------------------- wiring
   function showMsg(text) { const m = $("msg"); m.textContent = text; m.hidden = !text; }
   $("listen").addEventListener("click", () => (state.listening ? stopListening() : startListening()));
+  // Sheet view (Sham, 2026-11-15): while practising, everything above the falling tiles is hidden and the
+  // staff comes back as a page of the coming notes. A slim bar keeps Listen and brings the controls back.
+  function focusOn() { return document.body.classList.contains("focus"); }
+  function setFocus(on) {
+    store.set("focus", on ? "on" : "off");
+    document.body.classList.toggle("focus", on);
+    render();
+    requestAnimationFrame(() => { buildKeyboard(); renderKeys(); drawRoll(); drawStaff(); });
+  }
+  document.body.classList.toggle("focus", store.get("focus", "on") === "on");
+  $("fbControls").addEventListener("click", () => setFocus(false));
+  $("fbListen").addEventListener("click", () => $("listen").click());
+  // full screen hides the browser's bars where the browser allows it (not Safari on iPhone: there,
+  // Add to Home Screen opens the app without them)
+  const fsEl = document.documentElement;
+  const canFull = !!(fsEl.requestFullscreen || fsEl.webkitRequestFullscreen) && (document.fullscreenEnabled || document.webkitFullscreenEnabled);
+  $("fbFull").hidden = !canFull;
+  $("fbFull").addEventListener("click", () => {
+    if (document.fullscreenElement || document.webkitFullscreenElement) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    else (fsEl.requestFullscreen || fsEl.webkitRequestFullscreen).call(fsEl);
+  });
+  document.addEventListener("fullscreenchange", () => requestAnimationFrame(() => { buildKeyboard(); renderKeys(); drawRoll(); drawStaff(); }));
   $("demo").addEventListener("click", demo);
   let noteTimer = 0;
   function clearAll(note) {
