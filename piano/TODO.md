@@ -206,6 +206,9 @@ Live app: https://mrboby1.github.io/sham/piano/
 56. **Raise the play line so the note just played stays visible as a reference** (Sham, 2026-11-12). *(done
     2026-11-12: the "now" line sits about a quarter of the waterfall above the keys; the last note played stays
     below it, clearer than older ones, so you can see where the hand was before the next jump)*
+57. **A trading bot working before market open** (Sham, 2026-11-15; next open Mon 2026-11-16, 16:30 Israel).
+    *(asked in Telegram 2026-11-15: fake or real money; is the IBKR account approved; SPY 0DTE like the existing
+    paper bot or Signal's stock ideas. Warned the SPY strategy lost money over 59 days of testing. Waiting for Sham)*
 
 ## Done
 
