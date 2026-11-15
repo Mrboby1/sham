@@ -125,7 +125,7 @@
   }
   // songs.json: classical pieces note by note; chords.json: songs played chord by chord; lessons.json:
   // exercises and easy songs, some for both hands (built by tools/make_lessons.js)
-  Promise.all([...["songs.json", "chords.json", "lessons.json"].map((f) => fetch(f).then((r) => (r.ok ? r.json() : [])).catch(() => [])), privateSongs()])
+  Promise.all([...["songs.json", "chords.json", "lessons.json"].map((f) => fetch(f + "?v=20261115").then((r) => (r.ok ? r.json() : [])).catch(() => [])), privateSongs()])
     .then(([pieces, chordSongs, lessons, mine]) => {
       fullPieces = [...mine, ...lessons, ...pieces, ...chordSongs];
       buildLibrary();
@@ -317,6 +317,7 @@
         title: p.song.title + (p.song.composer ? " - " + p.song.composer : ""),
         at: p.pos, of: n.length, done, chord: true, unit: c.every((x) => x.name) ? "chord" : "step",
         next: done ? [] : now.keys.slice(), fingers: done ? [] : now.fingers.slice(),
+        lefts: done ? [] : (now.lefts || now.keys.map(isLeft)), // which keys are the left hand's
         names: c.slice(p.pos, p.pos + 4).map((x) => x.name), section: done ? "" : now.section,
         steps: c.slice(p.pos, p.pos + 4).map((x) => x.keys),
         sure: true, lost: 0, practice: true,
@@ -692,16 +693,16 @@
     } else {
       const rf = base.fingers || window.Fingering.fingerRH(base.notes), lf = fingerLH(base.left);
       const at = new Map();
-      const add = (m, b, f) => {
+      const add = (m, b, f, l) => {
         if (!at.has(b)) at.set(b, new Map());
-        if (!at.get(b).has(m)) at.get(b).set(m, f);
+        if (!at.get(b).has(m)) at.get(b).set(m, [f, l]);
       };
-      base.notes.forEach((m, i) => add(m, base.beats[i], rf[i]));
-      base.left.forEach((m, i) => add(m, base.leftBeats[i], lf[i]));
+      base.notes.forEach((m, i) => add(m, base.beats[i], rf[i], false));
+      base.left.forEach((m, i) => add(m, base.leftBeats[i], lf[i], true));
       const beats = [...at.keys()].sort((a, b) => a - b);
       const chords = beats.map((b) => {
         const ks = [...at.get(b)].sort((x, y) => x[0] - y[0]);
-        return { name: "", keys: ks.map((k) => k[0]), fingers: ks.map((k) => k[1]), section: "" };
+        return { name: "", keys: ks.map((k) => k[0]), fingers: ks.map((k) => k[1][0]), lefts: ks.map((k) => k[1][1]), section: "" };
       });
       part = { ...common, notes: chords.map((c) => c.keys[c.keys.length - 1]), beats, chords, hands: "both" };
     }
@@ -1203,7 +1204,8 @@
     // the left hand is a mirror image: its thumb is on the right (left-hand exercises, and the left
     // hand's turn in a two-hand piece)
     const song = state.practice.song;
-    const lefty = song.hands === "left" || (song.hands === "both" && isLeft(f.next[0]));
+    const leftAt = (j) => (f.lefts ? f.lefts[j] : isLeft(f.next[j]));
+    const lefty = song.hands === "left" || (song.hands === "both" && leftAt(0));
     const dir = lefty ? -1 : 1;
     const thumb = Math.round(whiteIdx.get(f.next[0]) - dir * (f.fingers[0] - 1));
     const tips = [null];
@@ -1212,7 +1214,7 @@
     f.next.forEach((m, j) => {
       const fj = f.fingers[j];
       if (placed.has(fj) || !keys.has(m)) return;
-      if (song.hands === "both" && f.chord && isLeft(m) !== lefty) return; // the other hand's key
+      if (song.hands === "both" && f.chord && leftAt(j) !== lefty) return; // the other hand's key
       if (Math.abs(whiteIdx.get(m) - (thumb + dir * (fj - 1))) > 1.01) return; // outside this hand position
       const el = keys.get(m);
       tips[fj] = { x: el.offsetLeft + el.offsetWidth / 2, black: IS_BLACK[m % 12] === 1 };
@@ -1229,7 +1231,7 @@
     for (let i = 1; i <= 5; i++) {
       const t = tips[i], x = t.x - x0;
       const y = t.black ? H * 0.36 : H * 0.56;
-      const next = f.chord ? f.fingers.some((fi, j) => fi === i && isLeft(f.next[j]) === lefty) : f.fingers[0] === i;
+      const next = f.chord ? f.fingers.some((fi, j) => fi === i && leftAt(j) === lefty) : f.fingers[0] === i;
       parts.push(`<line x1="${x}" y1="${palmTop + palmH - 2}" x2="${x}" y2="${y}" stroke="${FINGER_COLORS[i]}" stroke-width="${Math.max(3, r * 0.55)}" stroke-linecap="round"/>`);
       parts.push(`<circle cx="${x}" cy="${y}" r="${next ? r + 2 : r}" fill="${FINGER_COLORS[i]}" stroke="#fff" stroke-width="${next ? 2.5 : 1.5}"/>`);
       parts.push(`<text x="${x}" y="${y}" dy="0.35em" font-size="${Math.round(r * 1.15)}">${i}</text>`);
@@ -1253,8 +1255,9 @@
     const finger = f.fingers[0];
     document.querySelectorAll("#hand .finger").forEach((el) => el.classList.toggle("on", Number(el.dataset.f) === finger));
     if (f.chord) {
-      const rh = f.next.map((m, j) => [m, f.fingers[j]]).filter(([m]) => !isLeft(m));
-      const lh = f.next.filter(isLeft);
+      const isL = (j) => (f.lefts ? f.lefts[j] : isLeft(f.next[j]));
+      const rh = f.next.map((m, j) => [m, f.fingers[j]]).filter((_, j) => !isL(j));
+      const lh = f.next.filter((_, j) => isL(j));
       // steps of a two-hand piece have no chord name; an empty hand is left out
       const parts = [];
       if (rh.length) parts.push(`right hand ${rh.map(([m]) => fullName(m)).join(" ")} (finger${rh.length > 1 ? "s" : ""} ${rh.map((x) => x[1]).join(" ")})`);
