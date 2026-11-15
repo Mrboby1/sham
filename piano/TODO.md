@@ -220,6 +220,10 @@ Live app: https://mrboby1.github.io/sham/piano/
     browser allows it) and Controls (brings everything back). The staff returns as a page of the coming notes with
     finger numbers, the last played on the left. The URL bar: Safari on iPhone doesn't let a page hide it; Add to
     Home Screen opens the app without it)*
+60. **Scroll down to hide the controls and make what's below bigger; no text** (Sham, 2026-11-15, with a
+    screenshot). *(done 2026-11-15: sideways, the page is one screen plus the controls tall and snaps; scrolling
+    down leaves the staff and keys (or sheet, tiles and keys while practising) filling the whole screen. The help
+    texts are gone sideways (Tap Listen…, Middle C…, Left/Right, the Tune column, "Notes you play appear here"))*
 
 ## Done
 

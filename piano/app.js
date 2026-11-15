@@ -1427,7 +1427,7 @@
         g.textAlign = "start";
       });
     }
-    if (!events.length) {
+    if (!events.length && !next.length && !(innerWidth > innerHeight && innerWidth >= 560)) { // no help text sideways
       g.fillStyle = muted;
       g.font = "14px " + getComputedStyle(document.body).fontFamily;
       g.fillText("Notes you play appear here.", left + 12, tb + 5 * hs + 4);
@@ -1459,12 +1459,18 @@
   $("listen").addEventListener("click", () => (state.listening ? stopListening() : startListening()));
   // Sheet view (Sham, 2026-11-15): while practising, everything above the falling tiles is hidden and the
   // staff comes back as a page of the coming notes. A slim bar keeps Listen and brings the controls back.
+  // the height of what sits above the staff, so the page is exactly one screen taller than the controls
+  const appEl = document.querySelector(".app"), midEl = document.querySelector(".middle");
+  function measureTop() { appEl.style.setProperty("--toph", Math.max(0, midEl.offsetTop - appEl.offsetTop) + "px"); }
+  if (window.ResizeObserver) { const ro = new ResizeObserver(measureTop); [".top", "#focusbar", "#msg"].forEach((q) => ro.observe(document.querySelector(q))); }
+  window.addEventListener("resize", measureTop);
+  measureTop();
   function focusOn() { return document.body.classList.contains("focus"); }
   function setFocus(on) {
     store.set("focus", on ? "on" : "off");
     document.body.classList.toggle("focus", on);
     render();
-    requestAnimationFrame(() => { buildKeyboard(); renderKeys(); drawRoll(); drawStaff(); });
+    requestAnimationFrame(() => { measureTop(); buildKeyboard(); renderKeys(); drawRoll(); drawStaff(); });
   }
   document.body.classList.toggle("focus", store.get("focus", "on") === "on");
   $("fbControls").addEventListener("click", () => setFocus(false));

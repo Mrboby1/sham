@@ -337,6 +337,19 @@ input:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
   #staff { height: 170px; }
   .big { font-size: 60px; }
 }
+/* Sideways, the controls scroll away (Sham, 2026-11-15: "I want to scroll down to hide it and make the things
+   below it bigger, I don't need the text either"). The page is one screen plus the controls tall; scrolling down
+   (it snaps) leaves the staff and the keys filling the whole screen. No help text sideways. */
+@media (orientation: landscape) and (min-width: 560px) {
+  html { height: auto; overflow-x: hidden; overflow-y: auto; scroll-snap-type: y mandatory; }
+  body { height: auto; overflow: visible; }
+  .app { height: calc(100vh + var(--toph, 0px)); height: calc(100dvh + var(--toph, 0px)); scroll-snap-align: start; }
+  .middle { scroll-snap-align: start; flex: 1 1 45%; min-height: 0; grid-template-columns: minmax(90px, 0.4fr) 3fr auto; grid-template-rows: minmax(0, 1fr); }
+  .staff { min-height: 0; }
+  #staff { height: 100%; }
+  .alt, .freq, .handkey, .songhead, #songHint { display: none; }
+  .kbd-scroll { flex: 1 1 55%; }
+}
 .rollctl { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
 .rollctl button { min-height: 32px; padding: 5px 12px; }
 .rollctl input[type=range] { width: 130px; accent-color: var(--teal); }
@@ -504,6 +517,6 @@ body.playing .kbd-scroll { margin-top: 0; }
 <script src="detect.js"></script>
 <script src="melody.js"></script>
 <script src="fingering.js"></script>
-<script src="app.js?v=10"></script>
+<script src="app.js?v=11"></script>
 </body>
 </html>
