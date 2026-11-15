@@ -234,6 +234,9 @@ Live app: https://mrboby1.github.io/sham/piano/
     practising, every fresh sound the mic hears moves the piece one step, whatever note it was; the tiles fall to
     the line and wait for the next sound. Turn it off for the old right-note checking. Tested with a simulated mic:
     10 sounds = 10 steps)*
+63. **Make the piano keyboard picture smaller, more room on the page** (Sham, 2026-11-15). *(done 2026-11-15:
+    sideways the keys take 28% of the screen (24% while practising, was 34-55%); upright 150px (was 190px); the
+    Chords page keyboard 20-23% (was 26-30%). The staff, sheet and falling tiles get the room)*
 
 ## Done
 

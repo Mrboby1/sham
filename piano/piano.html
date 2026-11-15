@@ -237,7 +237,7 @@ input:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
   margin-top: auto;
   scrollbar-width: thin;
 }
-.kbd { position: relative; height: 190px; margin-inline: max(16px, env(safe-area-inset-left, 0px)); }
+.kbd { position: relative; height: 150px; margin-inline: max(16px, env(safe-area-inset-left, 0px)); }
 .key { position: absolute; top: 0; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; user-select: none; -webkit-user-select: none; touch-action: pan-x; }
 .white {
   width: var(--wkey); height: 100%;
@@ -330,7 +330,7 @@ input:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
   body.playing .song { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 4px 12px; min-height: 0; }
   body.playing .song .title { font-size: 16px; }
   body.playing .rollwrap { flex: 1 1 auto; height: auto; min-height: 70px; }
-  body.playing .kbd-scroll { flex: 0 0 auto; height: 34vh; min-height: 90px; }
+  body.playing .kbd-scroll { flex: 0 0 auto; height: 24vh; min-height: 70px; }
   body.playing .now .big { font-size: 34px; }
 }
 @media (orientation: landscape) and (min-width: 560px) and (min-height: 600px) {
@@ -348,7 +348,8 @@ input:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
   .staff { min-height: 0; }
   #staff { height: 100%; }
   .alt, .freq, .handkey, .songhead, #songHint { display: none; }
-  .kbd-scroll { flex: 1 1 55%; }
+  .kbd-scroll { flex: 0 0 auto; height: 28vh; min-height: 70px; } /* smaller keys, more room above (Sham, 2026-11-15) */
+  .middle { flex: 1 1 auto; }
 }
 .rollctl { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
 .rollctl button { min-height: 32px; padding: 5px 12px; }
