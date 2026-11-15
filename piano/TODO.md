@@ -224,6 +224,11 @@ Live app: https://mrboby1.github.io/sham/piano/
     screenshot). *(done 2026-11-15: sideways, the page is one screen plus the controls tall and snaps; scrolling
     down leaves the staff and keys (or sheet, tiles and keys while practising) filling the whole screen. The help
     texts are gone sideways (Tap Listen…, Middle C…, Left/Right, the Tune column, "Notes you play appear here"))*
+61. **A chord practice mode: random chords one after another, no checking** (Sham, 2026-11-15). *(done 2026-11-15:
+    new Chords tab (chords.html): a big chord name, its notes spelled properly, "Next:" preview, and the keys on a
+    C3-C6 keyboard in finger colours with numbers (left hand: the root in red). Moves on every 2-15 seconds or on a
+    tap; never the same chord twice in a row. Choose Major, Minor, Dim, Sus4, Sus2, 7, Maj7, m7; white-key roots or
+    all 12; inversions (right hand) on/off; C D E or Do Re Mi; sound on/off. Settings hide while it runs)*
 
 ## Done
 

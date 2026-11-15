@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chord Practice</title>
+<meta name="description" content="Random chords one after another, with their keys and fingers. Nothing listens, just practice.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Piano Notes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#121519">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+/* Same lacquer look as the main page. Brass = what you played, teal = the answer, green/red = right/wrong. */
+:root {
+  --bg: #121519; --panel: #1a1e24; --line: #2a3039; --ink: #eceae4; --muted: #8f97a3;
+  --brass: #e2b04e; --brass-ink: #1d1606; --teal: #4fcac0; --ok: #5cc98a; --danger: #ff8a7a;
+  --ivory: #f7f4ec; --ivory-edge: #c9c5ba; --ebony: #1a1c20; --ebony-top: #3a3e46;
+  --card: #f4efe3; --card-ink: #1b1d22; --card-muted: #6a6457; --back: #2c3b55; --back-2: #24324a;
+  --font-display: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --font-ui: "Atkinson Hyperlegible", -apple-system, "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #edeff2; --panel: #ffffff; --line: #d6dae1; --ink: #16191e; --muted: #5d6573;
+    --brass: #b07d12; --brass-ink: #ffffff; --teal: #0d8a81; --ok: #1f8a4c; --danger: #b3261e;
+    --ivory-edge: #b9b5aa; --card: #ffffff; --back: #3b5b8c; --back-2: #2f4b76; color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #edeff2; --panel: #ffffff; --line: #d6dae1; --ink: #16191e; --muted: #5d6573;
+  --brass: #b07d12; --brass-ink: #ffffff; --teal: #0d8a81; --ok: #1f8a4c; --danger: #b3261e;
+  --ivory-edge: #b9b5aa; --card: #ffffff; --back: #3b5b8c; --back-2: #2f4b76; color-scheme: light;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+/* one screen, no scrolling: the tabs stay at the top and the keys at the bottom */
+html, body { height: 100%; overflow: hidden; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.4 var(--font-ui); -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; }
+.app {
+  height: 100vh; height: 100dvh; display: flex; flex-direction: column; gap: 10px; overflow: hidden;
+  padding: max(10px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(12px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+}
+header { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+h1 { margin: 0; font: 700 22px/1.1 var(--font-display); }
+.tabs { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.tabs a { font: 700 14px/1 var(--font-ui); color: var(--muted); text-decoration: none; padding: 10px 14px; min-height: 40px; display: inline-flex; align-items: center; }
+.tabs a[aria-current="page"] { color: var(--ink); background: var(--panel); box-shadow: inset 0 -2px 0 var(--teal); }
+.status { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.status i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); display: inline-block; }
+.status.on i { background: var(--brass); box-shadow: 0 0 0 4px color-mix(in srgb, var(--brass) 25%, transparent); }
+.main { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 10px; }
+.side { display: flex; flex-direction: column; gap: 8px; flex: none; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+button, .seg label, .chk label {
+  font: 700 14px/1 var(--font-ui); color: var(--ink); background: var(--panel); border: 1px solid var(--line);
+  border-radius: 10px; padding: 10px 12px; min-height: 40px; cursor: pointer; touch-action: manipulation;
+}
+button:focus-visible, .seg input:focus-visible + label, .chk input:focus-visible + label { outline: 2px solid var(--teal); outline-offset: 2px; }
+button:disabled { opacity: 0.45; cursor: default; }
+.primary { background: var(--brass); color: var(--brass-ink); border-color: transparent; padding-inline: 16px; }
+.ghost { background: transparent; color: var(--muted); }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.seg input, .chk input { position: absolute; opacity: 0; pointer-events: none; }
+.seg label { border: 0; border-radius: 0; background: transparent; color: var(--muted); }
+.seg input:checked + label { background: var(--panel); color: var(--ink); box-shadow: inset 0 -2px 0 var(--teal); }
+.chk { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+.chk label { color: var(--muted); background: transparent; }
+.chk input:checked + label { color: var(--teal); border-color: var(--teal); }
+.msg { margin: 0; color: var(--danger); font-size: 14px; }
+
+
+/* Chord practice (Sham, 2026-11-15): random chords one after another, shown big with their keys and
+   fingers; it moves on by itself (or tap). Nothing listens, nothing is checked. */
+:root { --lh: #ff6b6b; }
+.main { align-items: center; justify-content: center; }
+.stage { width: min(100%, 560px); flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; cursor: pointer; user-select: none; -webkit-user-select: none; }
+.chordname { font: 700 clamp(52px, 14vh, 140px)/1 var(--font-display); letter-spacing: 0.01em; }
+.chordname small { font: 700 0.22em/1 var(--font-ui); color: var(--muted); margin-left: 0.3em; vertical-align: middle; }
+.tones { font: 700 clamp(18px, 4.5vh, 28px)/1.2 var(--font-ui); color: var(--muted); display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+.tones .bass { color: var(--lh); }
+.nextup { font-size: 15px; color: var(--muted); min-height: 1.4em; text-align: center; }
+.nextup b { color: var(--ink); font-family: var(--font-display); font-size: 20px; }
+.bar { width: min(100%, 560px); height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; flex: none; }
+.bar i { display: block; height: 100%; width: 0; background: var(--teal); }
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.row output { min-width: 1.6em; font-weight: 700; font-variant-numeric: tabular-nums; }
+.row input[type=range] { width: 120px; accent-color: var(--teal); }
+.count { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+/* while the chords run, only Pause / Next / Seconds stay: the settings come back on Pause */
+body.running .side .row + .row { display: none; }
+/* keyboard C3 to C6: the chord's keys in their finger's colour with the number, the bass key in red */
+.kbd { position: relative; height: 26vh; height: 26dvh; min-height: 80px; max-height: 180px; flex: none; }
+.key { position: absolute; top: 0; display: flex; justify-content: center; align-items: flex-end; user-select: none; -webkit-user-select: none; font-size: 10px; font-weight: 700; }
+.white { height: 100%; background: linear-gradient(var(--ivory) 80%, #ece8de); border: 1px solid var(--ivory-edge); border-top: 0; border-radius: 0 0 6px 6px; color: #6b6658; padding-bottom: 6px; z-index: 1; }
+.black { height: 62%; background: linear-gradient(var(--ebony-top), var(--ebony) 12%); border: 1px solid #000; border-top: 0; border-radius: 0 0 4px 4px; color: #c8c4b8; padding-bottom: 4px; z-index: 2; }
+.key .nm { visibility: hidden; }
+.white.c .nm { visibility: visible; }
+.key.on { color: #fff; }
+.key.on .nm { visibility: visible; font-size: 13px; }
+/* phone sideways: less chrome, the chord and keys get the room */
+@media (orientation: landscape) and (max-height: 500px) {
+  .app { gap: 6px; }
+  header h1 { display: none; }
+  .side { gap: 6px; }
+  button, .seg label, .chk label { min-height: 32px; padding: 6px 9px; font-size: 13px; }
+  .chordname { font-size: clamp(44px, 19vh, 100px); }
+  .stage { gap: 2px; }
+  .tones { font-size: 18px; }
+  .nextup { font-size: 13px; }
+  .kbd { height: 30vh; height: 30dvh; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>Chord practice</h1>
+    <nav class="tabs" aria-label="Sections">
+      <a href="./">Whistle</a>
+      <a href="piano.html">Piano</a>
+      <a href="ear.html">Ear</a>
+      <a href="chords.html" aria-current="page">Chords</a>
+    </nav>
+  </header>
+
+  <div class="side">
+    <div class="row">
+      <button id="go" type="button" class="primary">Start</button>
+      <button id="next" type="button">Next</button>
+      <label for="secs">Seconds</label>
+      <input id="secs" type="range" min="2" max="15" step="1" value="5">
+      <output id="secsOut" for="secs">5</output>
+      <div class="chk"><input type="checkbox" id="sound" checked><label for="sound">Sound</label></div>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="row">
+      <div class="chk" role="group" aria-label="Chord types" id="types"></div>
+    </div>
+    <div class="row">
+      <div class="seg" role="radiogroup" aria-label="Roots">
+        <input type="radio" name="roots" id="r-white" value="white" checked><label for="r-white">White roots</label>
+        <input type="radio" name="roots" id="r-all" value="all"><label for="r-all">All 12</label>
+      </div>
+      <div class="seg" role="radiogroup" aria-label="Position">
+        <input type="radio" name="inv" id="i-root" value="root" checked><label for="i-root">Root position</label>
+        <input type="radio" name="inv" id="i-any" value="any"><label for="i-any">+ Inversions</label>
+      </div>
+      <div class="seg" role="radiogroup" aria-label="Note names">
+        <input type="radio" name="names" id="nm-letter" value="letter" checked><label for="nm-letter">C D E</label>
+        <input type="radio" name="names" id="nm-solfege" value="solfege"><label for="nm-solfege">Do Re Mi</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="stage" id="stage" aria-live="polite" title="Tap for the next chord">
+      <div class="chordname" id="name">C</div>
+      <div class="tones" id="tones"></div>
+      <div class="nextup" id="nextup">Tap Start. The chords change by themselves; tap here to skip ahead.</div>
+    </div>
+    <div class="bar"><i id="bar"></i></div>
+  </div>
+
+  <div class="kbd" id="kbd" aria-label="Keyboard, C3 to C6: the chord's keys are coloured and numbered by finger, the bass note in red"></div>
+</div>
+
+<script>
+(() => {
+  "use strict";
+  const $ = (id) => document.getElementById(id);
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem("pn.chords." + k); return v === null ? d : v; } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem("pn.chords." + k, v); } catch (e) {} },
+  };
+  const FINGER_COLORS = ["", "#e93d82", "#f76b15", "#29a383", "#3e63dd", "#8e4ec6"]; // as on the Piano page
+  const IS_BLACK = [0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0];
+
+  // ------------------------------------------------------------ chords, spelled properly (F# A C#, Eb G Bb)
+  const TYPES = [
+    { key: "maj", label: "Major", suffix: "", iv: [0, 4, 7], deg: [1, 3, 5], on: true },
+    { key: "min", label: "Minor", suffix: "m", iv: [0, 3, 7], deg: [1, 3, 5], on: true },
+    { key: "dim", label: "Dim", suffix: "dim", iv: [0, 3, 6], deg: [1, 3, 5] },
+    { key: "sus4", label: "Sus4", suffix: "sus4", iv: [0, 5, 7], deg: [1, 4, 5] },
+    { key: "sus2", label: "Sus2", suffix: "sus2", iv: [0, 2, 7], deg: [1, 2, 5] },
+    { key: "dom7", label: "7", suffix: "7", iv: [0, 4, 7, 10], deg: [1, 3, 5, 7] },
+    { key: "maj7", label: "Maj7", suffix: "maj7", iv: [0, 4, 7, 11], deg: [1, 3, 5, 7] },
+    { key: "min7", label: "m7", suffix: "m7", iv: [0, 3, 7, 10], deg: [1, 3, 5, 7] },
+  ];
+  const LETTERS = "CDEFGAB", NAT = [0, 2, 4, 5, 7, 9, 11];
+  const SOLF = { C: "Do", D: "Re", E: "Mi", F: "Fa", G: "Sol", A: "La", B: "Si" };
+  const ACC = { "-2": "𝄫", "-1": "♭", "0": "", "1": "♯", "2": "𝄪" };
+  // roots as [letter index, accidental]
+  const WHITE_ROOTS = [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0]];
+  const ALL_ROOTS = [[0, 0], [1, -1], [1, 0], [2, -1], [2, 0], [3, 0], [3, 1], [4, 0], [5, -1], [5, 0], [6, -1], [6, 0]];
+  let names = store.get("names", "letter");
+  const spell = (li, acc) => (names === "solfege" ? SOLF[LETTERS[li]] : LETTERS[li]) + ACC[acc];
+
+  function makeChord(root, type, inversion) {
+    const [rl, ra] = root;
+    const rootPc = (NAT[rl] + ra + 12) % 12;
+    const tones = type.iv.map((iv, i) => {
+      const li = (rl + type.deg[i] - 1) % 7;
+      let acc = (((rootPc + iv - NAT[li]) % 12) + 12) % 12;
+      if (acc > 6) acc -= 12;
+      return { pc: (rootPc + iv) % 12, name: spell(li, acc) };
+    });
+    // right hand: stacked from the root, the lowest notes moved up an octave for an inversion,
+    // then placed so the lowest key is in the octave from middle C
+    let keys = type.iv.map((iv) => 60 + rootPc + iv);
+    for (let k = 0; k < inversion; k++) keys = keys.slice(1).concat(keys[0] + 12);
+    while (keys[0] >= 72) keys = keys.map((m) => m - 12);
+    while (keys[0] < 60) keys = keys.map((m) => m + 12);
+    let fingers;
+    if (keys.length === 4) fingers = [1, 2, 3, 5];
+    else { const g2 = keys[2] - keys[1]; fingers = g2 <= 2 ? [1, 4, 5] : g2 >= 5 ? [1, 2, 5] : [1, 3, 5]; }
+    const order = [];
+    for (let k = 0; k < tones.length; k++) order.push(tones[(k + inversion) % tones.length]);
+    return {
+      type: type.key, rootPc, inversion, root,
+      // an inversion is in the right hand only (the left hand keeps the root), so it is named, not slashed
+      name: spell(rl, ra) + type.suffix, slash: inversion ? " " + ["", "1st", "2nd", "3rd"][inversion] + " inv." : "",
+      tones: order, keys, fingers, bass: 48 + rootPc, rootName: tones[0].name, // left hand: the root, little finger
+    };
+  }
+  const remake = (c) => makeChord(c.root, TYPES.find((t) => t.key === c.type), c.inversion);
+  function pick(prev) {
+    const types = TYPES.filter((t) => t.on);
+    const roots = store.get("roots", "white") === "all" ? ALL_ROOTS : WHITE_ROOTS;
+    const inv = store.get("inv", "root") === "any";
+    for (let tries = 0; tries < 50; tries++) {
+      const t = types[Math.floor(Math.random() * types.length)];
+      const r = roots[Math.floor(Math.random() * roots.length)];
+      const c = makeChord(r, t, inv ? Math.floor(Math.random() * t.iv.length) : 0);
+      if (!prev || c.name !== prev.name) return c; // never the same chord twice in a row
+    }
+    return makeChord(roots[0], types[0], 0);
+  }
+
+  // ------------------------------------------------------------ keyboard
+  const LO = 48, HI = 84;
+  const keyEls = new Map();
+  const cName = (m) => (names === "solfege" ? "Do" : "C") + (Math.floor(m / 12) - 1);
+  function buildKeyboard() {
+    const kbd = $("kbd");
+    kbd.textContent = "";
+    keyEls.clear();
+    let whites = 0;
+    for (let m = LO; m <= HI; m++) if (!IS_BLACK[m % 12]) whites++;
+    const w = 100 / whites;
+    let wi = 0;
+    for (let m = LO; m <= HI; m++) {
+      const el = document.createElement("div");
+      const black = IS_BLACK[m % 12] === 1;
+      el.className = "key " + (black ? "black" : "white") + (m % 12 === 0 ? " c" : "");
+      if (black) { el.style.left = `calc(${wi * w}% - ${w * 0.32}%)`; el.style.width = `${w * 0.64}%`; }
+      else { el.style.left = `${wi * w}%`; el.style.width = `${w}%`; wi++; }
+      const nm = document.createElement("span");
+      nm.className = "nm";
+      el.append(nm);
+      kbd.append(el);
+      keyEls.set(m, el);
+    }
+    showKeys(cur);
+  }
+  function showKeys(c) {
+    for (const [m, el] of keyEls) {
+      el.classList.remove("on");
+      el.style.background = "";
+      el.querySelector(".nm").textContent = m % 12 === 0 ? cName(m) : "";
+    }
+    if (!c) return;
+    const mark = (m, color, label) => {
+      const el = keyEls.get(m);
+      if (!el) return;
+      el.classList.add("on");
+      el.style.background = color;
+      el.querySelector(".nm").textContent = label;
+    };
+    c.keys.forEach((m, i) => mark(m, FINGER_COLORS[c.fingers[i]], String(c.fingers[i])));
+    mark(c.bass, getComputedStyle(document.documentElement).getPropertyValue("--lh").trim(), "5");
+  }
+
+  // ------------------------------------------------------------ sound (a plucked tone like the other pages)
+  let ctx = null, master = null;
+  function audio() {
+    if (!ctx) {
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      master = ctx.createWaveShaper();
+      const n = 2048, curve = new Float32Array(n);
+      for (let i = 0; i < n; i++) { const x = (i / (n - 1)) * 2 - 1; curve[i] = Math.tanh(1.5 * x) / Math.tanh(1.5); }
+      master.curve = curve;
+      master.connect(ctx.destination);
+    }
+    if (ctx.state === "suspended") ctx.resume();
+    return ctx;
+  }
+  function tone(m, t, len, vol) {
+    const ac = audio(), f = 440 * Math.pow(2, (m - 69) / 12);
+    const out = ac.createGain();
+    out.gain.setValueAtTime(0.0001, t);
+    out.gain.exponentialRampToValueAtTime(vol, t + 0.006);
+    out.gain.exponentialRampToValueAtTime(0.0001, t + len);
+    out.connect(master);
+    [1, 0.5, 0.28, 0.14, 0.08].forEach((a, i) => {
+      const h = i + 1, o = ac.createOscillator(), g = ac.createGain();
+      o.frequency.value = f * h;
+      g.gain.setValueAtTime(a, t);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + len / h);
+      o.connect(g).connect(out);
+      o.start(t); o.stop(t + len + 0.05);
+    });
+  }
+  function play(c) {
+    if (!$("sound").checked) return;
+    try {
+      const t = audio().currentTime + 0.03;
+      [c.bass, ...c.keys].forEach((m) => tone(m, t, 1.6, 0.32));
+    } catch (e) { /* no audio here: the page still works silently */ }
+  }
+
+  // ------------------------------------------------------------ the loop
+  let cur = null, nxt = null, running = false, t0 = 0, raf = 0, shown = 0, frac = 0;
+  let secs = Math.max(2, Math.min(15, Number(store.get("secs", "5")) || 5));
+  function render() {
+    if (!cur) return;
+    const nm = $("name");
+    nm.textContent = cur.name;
+    if (cur.slash) { const s = document.createElement("small"); s.textContent = cur.slash; nm.append(s); }
+    const tones = $("tones");
+    tones.textContent = "";
+    cur.tones.forEach((t) => { const b = document.createElement("span"); b.textContent = t.name; tones.append(b); });
+    const bs = document.createElement("span"); bs.className = "bass"; bs.textContent = "bass " + cur.rootName; tones.append(bs);
+    const nu = $("nextup");
+    nu.textContent = "Next: ";
+    const b = document.createElement("b"); b.textContent = nxt.name; nu.append(b);
+    if (nxt.slash) nu.append(nxt.slash);
+    $("count").textContent = shown + (shown === 1 ? " chord" : " chords");
+    showKeys(cur);
+  }
+  function advance() {
+    cur = nxt || pick(null);
+    nxt = pick(cur);
+    shown++;
+    t0 = performance.now(); frac = 0;
+    $("bar").style.width = "0%";
+    render();
+    play(cur);
+  }
+  function frame(now) {
+    if (!running) { raf = 0; return; }
+    frac = Math.min(1, (now - t0) / (secs * 1000));
+    $("bar").style.width = frac * 100 + "%";
+    if (frac >= 1) advance();
+    raf = requestAnimationFrame(frame);
+  }
+  function setRunning(on) {
+    running = on;
+    document.body.classList.toggle("running", on);
+    $("go").textContent = on ? "Pause" : cur ? "Go on" : "Start";
+    if (on) {
+      if (!cur) advance(); else t0 = performance.now() - frac * secs * 1000;
+      if (!raf) raf = requestAnimationFrame(frame);
+    }
+  }
+  $("go").addEventListener("click", () => setRunning(!running));
+  $("next").addEventListener("click", advance);
+  $("stage").addEventListener("click", advance);
+  document.addEventListener("keydown", (e) => {
+    if (e.target.closest && e.target.closest("input, button")) return;
+    if (e.key === " ") { e.preventDefault(); setRunning(!running); }
+    if (e.key === "ArrowRight" || e.key === "Enter") advance();
+  });
+  $("secs").value = secs; $("secsOut").textContent = secs;
+  $("secs").addEventListener("input", (e) => { secs = Number(e.target.value); $("secsOut").textContent = secs; store.set("secs", String(secs)); });
+
+  // chord types (at least one stays on)
+  const saved = store.get("types", "");
+  if (saved) TYPES.forEach((t) => { t.on = saved.split(",").includes(t.key); });
+  if (!TYPES.some((t) => t.on)) TYPES[0].on = true;
+  for (const t of TYPES) {
+    const inp = document.createElement("input"); inp.type = "checkbox"; inp.id = "t-" + t.key; inp.checked = !!t.on;
+    const lab = document.createElement("label"); lab.htmlFor = inp.id; lab.textContent = t.label;
+    inp.addEventListener("change", () => {
+      t.on = inp.checked;
+      if (!TYPES.some((x) => x.on)) { t.on = true; inp.checked = true; return; }
+      store.set("types", TYPES.filter((x) => x.on).map((x) => x.key).join(","));
+      if (cur) { nxt = pick(cur); render(); }
+    });
+    $("types").append(inp, lab);
+  }
+  for (const name of ["roots", "inv", "names"]) {
+    const v = store.get(name, document.querySelector(`input[name=${name}]:checked`).value);
+    const el = document.querySelector(`input[name=${name}][value="${v}"]`);
+    if (el) el.checked = true;
+    document.querySelectorAll(`input[name=${name}]`).forEach((r) => r.addEventListener("change", () => {
+      store.set(name, r.value);
+      if (name === "names") { names = r.value; if (cur) { cur = remake(cur); nxt = remake(nxt); } buildKeyboard(); }
+      else if (cur) nxt = pick(cur);
+      render();
+    }));
+  }
+  $("sound").checked = store.get("sound", "on") === "on";
+  $("sound").addEventListener("change", () => store.set("sound", $("sound").checked ? "on" : "off"));
+  buildKeyboard();
+  window.ChordPractice = { makeChord, TYPES, ALL_ROOTS }; // for testing
+})();
+</script>
+</body>
+</html>
