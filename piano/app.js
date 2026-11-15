@@ -382,6 +382,11 @@
     render();
   }
 
+  // "Any sound moves on" (Sham, 2026-11-15: "eliminate listen to notes ... I'm encountering too many errors"):
+  // while practising, the mic no longer checks which note was played. Every fresh sound (a strike) moves the
+  // piece on one step and the tiles keep falling to the line until then. Off: the old right-note checking.
+  let anySound = store.get("anysound", "on") === "on";
+  let lastAnyStep = 0;
   function loop() {
     raf = requestAnimationFrame(loop);
     const now = performance.now();
@@ -397,9 +402,15 @@
     if (cal) { calibrate(r, now, sr); return; }
     const strike = r > gate * 2 && r > det.env * 1.6; // a fresh hammer strike, even on the same key
     det.env = Math.max(r, det.env * 0.9);
+    if (state.practice && anySound && strike && now >= state.tapUntil && now - lastAnyStep > 150) {
+      // one sound, one step: both hands striking together arrive within a few hundredths of a second
+      lastAnyStep = now;
+      const p = state.practice;
+      if (p.pos < p.song.notes.length) playAlong(stepKeys(p.song, p.pos));
+    }
 
     if (r < gate) {
-      if (state.practice) practiceHear(now, sr, true);
+      if (state.practice && !anySound) practiceHear(now, sr, true);
       if (++det.quiet > 4 && (det.held !== null || state.sounding.length)) {
         det.held = null; det.chordKey = ""; det.freq = 0;
         state.sounding = [];
@@ -409,7 +420,7 @@
     }
     det.quiet = 0;
     const tapEcho = now < state.tapUntil;
-    if (state.practice && !tapEcho) practiceHear(now, sr, false);
+    if (state.practice && !tapEcho && !anySound) practiceHear(now, sr, false);
 
     if (state.mode === "single") {
       const p = yinPitch(timeBuf.subarray(timeBuf.length - 4096), sr);
@@ -955,7 +966,7 @@
     lock.className = "chips lockline";
     if (state.practice) {
       const done = f.done || f.at >= f.of;
-      lock.textContent = done ? "Finished! " : `${Math.round((f.at / f.of) * 100)}% done · wrong notes are ignored · `;
+      lock.textContent = done ? "Finished! " : `${Math.round((f.at / f.of) * 100)}% done · ${anySound ? "any sound moves on" : "wrong notes are ignored"} · `;
       const again = document.createElement("button");
       again.type = "button";
       again.className = "linkbtn";
@@ -992,6 +1003,14 @@
       sheet.setAttribute("aria-pressed", String(focusOn()));
       sheet.addEventListener("click", () => setFocus(!focusOn()));
       lock.append(sheet);
+      const anyb = document.createElement("button");
+      anyb.type = "button";
+      anyb.className = "tilesbtn";
+      anyb.textContent = "Any sound moves on";
+      anyb.title = "On: every sound the mic hears moves to the next note, without checking which note it was";
+      anyb.setAttribute("aria-pressed", String(anySound));
+      anyb.addEventListener("click", () => { anySound = !anySound; store.set("anysound", anySound ? "on" : "off"); render(); });
+      lock.append(anyb);
     } else lock.textContent = !f.sure
       ? "Sounds like this. Keep playing to make sure."
       : f.lost

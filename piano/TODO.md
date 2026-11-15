@@ -229,6 +229,11 @@ Live app: https://mrboby1.github.io/sham/piano/
     C3-C6 keyboard in finger colours with numbers (left hand: the root in red). Moves on every 2-15 seconds or on a
     tap; never the same chord twice in a row. Choose Major, Minor, Dim, Sus4, Sus2, 7, Maj7, m7; white-key roots or
     all 12; inversions (right hand) on/off; C D E or Do Re Mi; sound on/off. Settings hide while it runs)*
+62. **Stop checking notes by ear; tiles keep falling until the next sound** (Sham, 2026-11-15: "I'm encountering too
+    many errors"). *(done 2026-11-15: "Any sound moves on" (on by default, button next to Sheet view): while
+    practising, every fresh sound the mic hears moves the piece one step, whatever note it was; the tiles fall to
+    the line and wait for the next sound. Turn it off for the old right-note checking. Tested with a simulated mic:
+    10 sounds = 10 steps)*
 
 ## Done
 
