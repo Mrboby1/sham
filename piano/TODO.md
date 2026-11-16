@@ -266,3 +266,7 @@ Live app: https://mrboby1.github.io/sham/piano/
     revenue / EPS / guidance vs consensus + first after-hours move, then a limit order: NVDA shares on a beat, an
     inverse NVDA fund on a miss, nothing if mixed. Asked Sham: real or paper and how much; automatic or ask first;
     untick Read-Only API for real money)*
+65. **The bot follows up on each exit: was selling a good or bad decision?** (Sham, 2026-11-16). *(done 2026-11-16:
+    bot/exit_review.py checks the sold option at +5/+15/+30/+60 min and at the end of the day, logs REVIEW lines
+    (GOOD EXIT / SOLD TOO EARLY / ABOUT THE SAME, with what holding would have made) and saves data/exit_reviews.json.
+    Also: paper bot on a $100 all-in mission today (`sham live --sizing all_in`); `sham reset --cash` now works)*
