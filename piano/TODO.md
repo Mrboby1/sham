@@ -212,7 +212,10 @@ Live app: https://mrboby1.github.io/sham/piano/
     Sham's IBKR account is open, sending a ₪2,000 deposit. Warned about 0DTE risk at that size and the US 3-day-trades
     rule under $25k; proposed a week on IBKR paper first. Waiting for: paper first? SPY 0DTE or Signal's ideas? 2026-11-16: Sham asked where to get an API key.
     Explained IBKR has none: the bot connects to IB Gateway on this PC (Linux Mint) after Sham logs in; make a
-    paper account in Client Portal first. Asked whether to install IB Gateway)*
+    paper account in Client Portal first. Asked whether to install IB Gateway. Sham: "install" -> IB Gateway 10.50
+    in ~/Jts/ibgateway/stable, ib_async 2.1.0 in sham-venv. Sham: no paper, going live. Logged in live (port 4001);
+    read-only check OK: $618 cash, no positions, looks like a cash account. Bot NOT trading; waiting for strategy
+    choice (SPY 0DTE or Signal's ideas) and Sham's "go")*
 58. **Easy songs with both hands, and arpeggios, to practise joining the hands** (Sham, 2026-11-15). *(done
     2026-11-15: a "(both hands)" version of every easy song (11 now): the left hand plays one bass note per bar and
     stays in one place (C / F / G, or G / C / D under low tunes). New exercises: 11-13 Arpeggios C, F, G, Am (right,
