@@ -261,3 +261,8 @@ Live app: https://mrboby1.github.io/sham/piano/
 - 4 next keys numbered (finger or play order)
 - Finger numbers for every note, worked out per piece
 - Floating hand over the keyboard, a colour per finger, black frame on the key to play now
+64. **NVDA earnings tool: get the result as soon as it's posted, read it, buy or sell** (Sham, 2026-11-16; NVDA
+    reports Tue 2026-11-17 after the close, ~23:20 Israel). *(planned: watch NVIDIA press releases + SEC filings, parse
+    revenue / EPS / guidance vs consensus + first after-hours move, then a limit order: NVDA shares on a beat, an
+    inverse NVDA fund on a miss, nothing if mixed. Asked Sham: real or paper and how much; automatic or ask first;
+    untick Read-Only API for real money)*
