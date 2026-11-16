@@ -214,7 +214,7 @@ Live app: https://mrboby1.github.io/sham/piano/
     Explained IBKR has none: the bot connects to IB Gateway on this PC (Linux Mint) after Sham logs in; make a
     paper account in Client Portal first. Asked whether to install IB Gateway. Sham: "install" -> IB Gateway 10.50
     in ~/Jts/ibgateway/stable, ib_async 2.1.0 in sham-venv. Sham: no paper, going live. Logged in live (port 4001);
-    read-only check OK: $618 cash, no positions, looks like a cash account. Bot NOT trading; waiting for strategy
+    read-only check OK (funded, no positions, cash account). Bot NOT trading; waiting for strategy
     choice (SPY 0DTE or Signal's ideas) and Sham's "go")*
 58. **Easy songs with both hands, and arpeggios, to practise joining the hands** (Sham, 2026-11-15). *(done
     2026-11-15: a "(both hands)" version of every easy song (11 now): the left hand plays one bass note per bar and
