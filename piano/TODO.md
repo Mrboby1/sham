@@ -217,7 +217,10 @@ Live app: https://mrboby1.github.io/sham/piano/
     read-only check OK (funded, no positions, cash account). Bot NOT trading; waiting for strategy
     choice (SPY 0DTE or Signal's ideas) and Sham's "go". 2026-11-16 16:37: Sham: "let the bot try his strategies,
     don't limit him" -> `sham live` started in PAPER mode ($10k fake, SIA on), log data/logs/live-2026-11-16.log;
-    trades reported to Telegram. Real-money hookup to IBKR only after paper results and an explicit OK)*
+    trades reported to Telegram. Real-money hookup to IBKR only after paper results and an explicit OK. 2026-11-17 11:11: Sham:
+    "real money", no fixed strategy, "let the bot assess how to make the most money the fastest". A lead.sham on
+    Gabi's Windows PC (which lacks the Linux setup) answered from stale notes; corrected. Needs lead.sham back on the
+    Linux PC; real trades also need Read-Only API unticked. Proposed: Sham approves each trade, ₪200 cap, ₪300 day stop)*
 58. **Easy songs with both hands, and arpeggios, to practise joining the hands** (Sham, 2026-11-15). *(done
     2026-11-15: a "(both hands)" version of every easy song (11 now): the left hand plays one bass note per bar and
     stays in one place (C / F / G, or G / C / D under low tunes). New exercises: 11-13 Arpeggios C, F, G, Am (right,
