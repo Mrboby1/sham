@@ -273,3 +273,8 @@ Live app: https://mrboby1.github.io/sham/piano/
     bot/exit_review.py checks the sold option at +5/+15/+30/+60 min and at the end of the day, logs REVIEW lines
     (GOOD EXIT / SOLD TOO EARLY / ABOUT THE SAME, with what holding would have made) and saves data/exit_reviews.json.
     Also: paper bot on a $100 all-in mission today (`sham live --sizing all_in`); `sham reset --cash` now works)*
+66. **Crypto day-trading bot: BTC/USD or SOL/USD at 10x, short 10-minute plays when it sees a good chance**
+    (Sham, 2026-11-21). *(asked first: warned 10x = liquidated by a ~9% move, fees/funding hurt short trades, most
+    leveraged short-term traders lose. Proposed steps: 1) backtest on 1-2 years of 1-minute data with fees, stop if no
+    edge; 2) two weeks paper; 3) small real money (~$100) with stop-losses and a daily loss limit, on crypto perps
+    (Bybit / OKX / Hyperliquid API). Waiting for Sham's OK to start the backtest)*
