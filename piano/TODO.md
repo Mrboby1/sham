@@ -281,4 +281,4 @@ Live app: https://mrboby1.github.io/sham/piano/
 67. **"Big Short" plays: high-reward bets on an AI-bubble crash** (Sham, 2026-11-22). *(sent ideas with Friday prices
     from Yahoo: far-out long-dated puts, e.g. NVDA ($125.5) $75 put June 2027 ~$385 (3x at -50%, 9x at $40), $90 put
     ~$700; ORCL ($101) and CRWV ($39.5) puts as the AI-debt angle. Warned: likely total loss of premium, ~1 contract max
-    with ~$550, needs IBKR options permission. Asked if Sham wants one picked with an exact order to place himself)*
+    with ~$550, needs IBKR options permission. Asked if Sham wants one picked with an exact order to place themselves)*
