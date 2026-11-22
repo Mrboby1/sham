@@ -278,3 +278,7 @@ Live app: https://mrboby1.github.io/sham/piano/
     leveraged short-term traders lose. Proposed steps: 1) backtest on 1-2 years of 1-minute data with fees, stop if no
     edge; 2) two weeks paper; 3) small real money (~$100) with stop-losses and a daily loss limit, on crypto perps
     (Bybit / OKX / Hyperliquid API). Sham OK'd step 1 on 2026-11-22. Backtest done 2026-11-22 (sham/crypto/backtest.py, Binance 1m perps, Nov 2024-Oct 2026, 10x, 0.05% taker fee, 0.02% slippage, funding, liquidation; train year 1, test year 2): 6 strategy types x 22 settings x 9 stop/target pairs x BTC+SOL = 396 runs. 0 made money in the test year, 1 made money in the train year (SOL fade after 8-sigma shock, +0.02%/trade, 109 trades) and lost 29% in the test year. Even before fees, no setup beat ~0.01% per trade, while costs are ~0.12% per trade (=1.2% of margin at 10x). Random entries lost ~80% a year at 10% margin per trade. Verdict: no edge; stopped at step 1 as planned. Asked Sham whether to stop or try slower trades)*
+67. **"Big Short" plays: high-reward bets on an AI-bubble crash** (Sham, 2026-11-22). *(sent ideas with Friday prices
+    from Yahoo: far-out long-dated puts, e.g. NVDA ($125.5) $75 put June 2027 ~$385 (3x at -50%, 9x at $40), $90 put
+    ~$700; ORCL ($101) and CRWV ($39.5) puts as the AI-debt angle. Warned: likely total loss of premium, ~1 contract max
+    with ~$550, needs IBKR options permission. Asked if Sham wants one picked with an exact order to place himself)*
