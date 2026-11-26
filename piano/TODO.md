@@ -282,3 +282,7 @@ Live app: https://mrboby1.github.io/sham/piano/
     from Yahoo: far-out long-dated puts, e.g. NVDA ($125.5) $75 put June 2027 ~$385 (3x at -50%, 9x at $40), $90 put
     ~$700; ORCL ($101) and CRWV ($39.5) puts as the AI-debt angle. Warned: likely total loss of premium, ~1 contract max
     with ~$550, needs IBKR options permission. Asked if Sham wants one picked with an exact order to place themselves. Sham then asked "maybe crypto": sent IBIT (BTC ETF, BTC ~$61k) June 2027 calls ($50 ~$96, $66 ~$29) and puts ($21 ~$91), MSTR $40 put ~$457. Asked which direction Sham believes in)*
+68. **Price quote + execution steps for a facade stone job (Haifa client, via WhatsApp screenshots)** (Sham,
+    2026-11-27). *(done: fire-damaged corner, up to 10 stones 30x100 to replace by rope access. Sent summary + quote
+    ~₪7,500 + VAT (labour ~₪5,000, stones ~₪1,500, anchors/adhesive ~₪500, travel ~₪500) and a ready-to-send Russian
+    quote with 7 steps; questions to ask: floor/roof access, cracked vs stained, close-up photo)*
