@@ -286,3 +286,7 @@ Live app: https://mrboby1.github.io/sham/piano/
     2026-11-27). *(done: fire-damaged corner, up to 10 stones 30x100 to replace by rope access. Sent summary + quote
     ~₪7,500 + VAT (labour ~₪5,000, stones ~₪1,500, anchors/adhesive ~₪500, travel ~₪500) and a ready-to-send Russian
     quote with 7 steps; questions to ask: floor/roof access, cracked vs stained, close-up photo)*
+69. **Price quote for a balcony concrete repair (from a video)** (Sham, 2026-11-28). *(done: balcony overhang with
+    spalled concrete, exposed rusted rebar, long crack. Sent quote ~₪3,500 + VAT (range ₪2,800-4,500): labour ~₪2,500,
+    materials ~₪600, paint ~₪400; 8 steps from chipping out to finding the water leak; engineer first if the steel is badly
+    corroded)*
